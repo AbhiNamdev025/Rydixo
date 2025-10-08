@@ -1,0 +1,24 @@
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1440px;
+  height: auto;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    max-width: 100%;
+  }
+}

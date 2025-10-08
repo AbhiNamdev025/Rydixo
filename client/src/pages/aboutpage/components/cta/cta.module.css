@@ -1,0 +1,150 @@
+.ctaSection {
+  position: relative;
+  background: url("../../../../assets/images/aboutpage/cta/cta.png") center
+    35% / cover no-repeat;
+  width: 100%;
+  max-width: 1440px;
+  height: 410px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #fff;
+  overflow: hidden;
+}
+
+.ctaSection::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    89.91deg,
+    rgba(0, 0, 0, 0.76) 50.15%,
+    rgba(102, 102, 102, 0) 99.88%
+  );
+  z-index: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: auto;
+  top: auto;
+  padding-left: 62px;
+}
+
+.content h2 {
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  font-size: 48px;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.content p {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  margin-bottom: 32px;
+}
+
+.ctaButton {
+  display: inline-block;
+  background-color: #fff;
+  color: #000;
+  transition: all 0.3s ease;
+  width: 418px;
+  height: 60px;
+  border-radius: 10px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  line-height: 60px;
+  cursor: pointer;
+}
+
+.ctaButton:hover {
+  transform: scale(1.03);
+}
+
+
+/* Responsive  */
+
+@media (max-width: 1024px) {
+  .ctaSection {
+    height: 376px;
+  }
+
+  .content {
+    padding-left: 40px;
+  }
+
+  .content h2 {
+    font-size: 36px;
+  }
+
+  .content p {
+    font-size: 18px;
+  }
+
+  .ctaButton {
+    width: 280px;
+    height: 50px;
+    font-size: 16px;
+    line-height: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ctaSection {
+    height: 320px;
+  }
+
+  .content h2 {
+    font-size: 28px;
+ 
+  }
+
+  .content p {
+    font-size: 16px;
+  }
+
+  .ctaButton {
+    width: 220px;
+    height: 45px;
+    font-size: 14px;
+    line-height: 45px;
+  }
+
+  .content {
+    padding-left: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ctaSection {
+    height: 180px;
+  }
+
+  .content h2 {
+    font-size: 20px;
+  }
+
+  .content p {
+    font-size: 12px;
+  }
+
+  .ctaButton {
+    width: 120px;
+    height: 20px;
+    font-size: 12px;
+    line-height: 100%;
+    border-radius: 6px;
+    padding: 3px;
+  }
+
+  .content {
+    padding-left: 15px;
+  }
+}

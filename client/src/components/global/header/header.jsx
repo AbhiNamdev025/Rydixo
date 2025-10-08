@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import styles from "./header.module.css";
 import logo from "../../../assets/svgs/mainlogo.svg";
 
@@ -9,9 +10,12 @@ function Header() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleLinkClick = () => setIsMenuOpen(false);
+
   return (
     <>
       <div className={styles.header}>
+        {/* Logo */}
         <div className={styles.logoContainer}>
           <div className={styles.logoImageContainer}>
             <img src={logo} alt="logo" className={styles.logo} />
@@ -21,19 +25,63 @@ function Header() {
           </div>
         </div>
 
+        {/* Desktop Navlinks */}
         <div className={styles.navlinks}>
-          <div className={`${styles.navlink} ${styles.active}`}>Home</div>
-          <div className={styles.navlink}>Book A Ride</div>
-          <div className={styles.navlink}>About Us</div>
-          <div className={styles.navlink}>Contact Us</div>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `${styles.navlink} ${isActive ? styles.active : ""}`
+            }
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/book-ride"
+            className={({ isActive }) =>
+              `${styles.navlink} ${isActive ? styles.active : ""}`
+            }
+          >
+            Book A Ride
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `${styles.navlink} ${isActive ? styles.active : ""}`
+            }
+          >
+            About Us
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              `${styles.navlink} ${isActive ? styles.active : ""}`
+            }
+          >
+            Contact Us
+          </NavLink>
         </div>
 
+        {/* navActions */}
         <div className={styles.navActions}>
-          <div className={`${styles.navlink} ${styles.active}`}>Sign Up</div>
-          <div className={styles.navlink}>Sign In</div>
+          <NavLink
+            to="/signup"
+            className={({ isActive }) =>
+              `${styles.navlink} ${isActive ? styles.active : ""}`
+            }
+          >
+            Sign Up
+          </NavLink>
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              `${styles.navlink} ${isActive ? styles.active : ""}`
+            }
+          >
+            Sign In
+          </NavLink>
         </div>
 
-        {/* Ham Menu */}
+        {/* Hamburger */}
         <div className={styles.hamburger} onClick={toggleMenu}>
           <div className={styles.hamburgerLine}></div>
           <div className={styles.hamburgerLine}></div>
@@ -48,15 +96,63 @@ function Header() {
         }`}
       >
         <div className={styles.mobileNavlinks}>
-          <div className={`${styles.mobileNavlink} ${styles.active}`}>Home</div>
-          <div className={styles.mobileNavlink}>Book A Ride</div>
-          <div className={styles.mobileNavlink}>About Us</div>
-          <div className={styles.mobileNavlink}>Contact Us</div>
+          <NavLink
+            to="/"
+            onClick={handleLinkClick}
+            className={({ isActive }) =>
+              `${styles.mobileNavlink} ${isActive ? styles.active : ""}`
+            }
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/book-ride"
+            onClick={handleLinkClick}
+            className={({ isActive }) =>
+              `${styles.mobileNavlink} ${isActive ? styles.active : ""}`
+            }
+          >
+            Book A Ride
+          </NavLink>
+          <NavLink
+            to="/about"
+            onClick={handleLinkClick}
+            className={({ isActive }) =>
+              `${styles.mobileNavlink} ${isActive ? styles.active : ""}`
+            }
+          >
+            About Us
+          </NavLink>
+          <NavLink
+            to="/contact"
+            onClick={handleLinkClick}
+            className={({ isActive }) =>
+              `${styles.mobileNavlink} ${isActive ? styles.active : ""}`
+            }
+          >
+            Contact Us
+          </NavLink>
         </div>
 
         <div className={styles.mobileNavActions}>
-          <div className={styles.mobileNavlink}>Sign Up</div>
-          <div className={styles.mobileNavlink}>Sign In</div>
+          <NavLink
+            to="/signup"
+            onClick={handleLinkClick}
+            className={({ isActive }) =>
+              `${styles.mobileNavlink} ${isActive ? styles.active : ""}`
+            }
+          >
+            Sign Up
+          </NavLink>
+          <NavLink
+            to="/login"
+            onClick={handleLinkClick}
+            className={({ isActive }) =>
+              `${styles.mobileNavlink} ${isActive ? styles.active : ""}`
+            }
+          >
+            Sign In
+          </NavLink>
         </div>
       </div>
     </>

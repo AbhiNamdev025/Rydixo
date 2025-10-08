@@ -42,7 +42,7 @@
 .navlinks {
   width: 700px;
   height: auto;
-  gap: 54px;
+  gap: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,6 +55,10 @@
   font-size: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
 }
 
 .navActions {
@@ -67,19 +71,17 @@
 }
 
 .active {
-  gap: 10px;
-  padding: 10px 35px;
-  border-radius: 30px;
   background-color: white;
   color: black;
+  padding: 10px 35px;
+  border-radius: 30px;
 }
 
 .navlink:hover {
-  gap: 10px;
-  padding: 10px 35px;
-  border-radius: 30px;
   background-color: white;
   color: black;
+  padding: 10px 35px;
+  border-radius: 30px;
 }
 
 /* Ham Menu */
@@ -133,21 +135,21 @@
   cursor: pointer;
   transition: all 0.3s ease;
   color: white;
-}
-.mobileNavlinks .active {
-  padding: 20px;
+  text-decoration: none;
   width: 100%;
-  border-radius: 0px;
   text-align: center;
-  color: black;
 }
+
 .mobileNavlink:hover {
-  padding: 20px;
-  width: 100%;
-  border-radius: 0px;
-  text-align: center;
   background-color: white;
   color: black;
+  padding: 20px;
+}
+
+.mobileNavlink.active {
+  background-color: white;
+  color: black;
+  padding: 20px;
 }
 
 /* Responsive */
@@ -176,7 +178,7 @@
   .hamburger {
     display: flex;
   }
-   /* to open */
+
   .mobileMenuOpen {
     display: flex;
   }
