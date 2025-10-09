@@ -1,0 +1,407 @@
+.container {
+  display: flex;
+  align-items: center;
+  max-width: 1440px;
+  width: 100%;
+  padding: 48px;
+  height: auto;
+  transition: all 0.3s ease;
+}
+
+.left {
+  background: url(../../assets/images/signup/signupimg.png);
+  background-size: cover;
+  width: 633px;
+  height: 953px;
+  border-radius: 30px;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 527px;
+  height: 953px;
+  gap: 40px;
+  color: #000;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  padding-left: 48px;
+}
+
+.heading {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.title {
+  color: #000;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 48px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  width: 477px;
+  height: 58px;
+}
+
+.subTitle {
+  color: #000;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  width: 477px;
+  height: 19px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 477px;
+  height: auto;
+  gap: 24px;
+}
+
+.nameRow,
+.contactRow {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.nameRow .inputGroup,
+.contactRow .inputGroup {
+  flex: 1;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  width: 100%;
+  height: 60px;
+  gap: 10px;
+  border-radius: 10px;
+  padding: 10px 16px;
+  border: none;
+  background: #f5f7fb;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.input::placeholder {
+  color: #8b8e94;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: left;
+}
+
+.input:focus {
+  outline: 1px solid black;
+}
+
+.terms {
+  margin: 8px 0;
+}
+
+.termsLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000;
+  cursor: pointer;
+}
+
+.termsLabel input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 4px;
+}
+
+.submitBtn {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 20px;
+  height: 60px;
+  margin-top: 8px;
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+}
+
+.others {
+  margin-top: 2rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #000;
+}
+
+.divider span {
+  padding: 18px;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+}
+
+.socialButtons {
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+}
+
+.socialBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 64px;
+  border: 1px solid #a18d8d;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.socialBtn:hover {
+  border-color: #000;
+  transform: translateY(-2px);
+}
+
+.socialIcon {
+  font-size: 40px;
+  color: #000;
+}
+
+.footer {
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+  text-align: center;
+  color: #000;
+  margin-top: 16px;
+}
+
+.link {
+  padding-left: 5px;
+  color: #000;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .container {
+    padding: 32px;
+  }
+
+  .left {
+    width: 50%;
+    height: 800px;
+  }
+
+  .right {
+    width: 50%;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 24px;
+    gap: 24px;
+  }
+
+  .left {
+    width: 416px;
+    height: 548px;
+    border-radius: 30px;
+  }
+
+  .right {
+    width: 100%;
+    padding: 24px 16px;
+    gap: 32px;
+  }
+
+  .title,
+  .subTitle {
+    width: 100%;
+    text-align: center;
+  }
+
+  .title {
+    font-size: 36px;
+    height: auto;
+  }
+
+  .form {
+    width: 100%;
+    max-width: 409px;
+    height: auto;
+  }
+
+  .nameRow,
+  .contactRow {
+    gap: 16px;
+  }
+
+  .input {
+    width: 100%;
+    max-width: 409px;
+  }
+
+  .submitBtn {
+    width: 100%;
+    max-width: 409px;
+  }
+
+  .socialButtons {
+    gap: 24px;
+  }
+
+  .socialBtn {
+    width: 80px;
+    height: 56px;
+  }
+
+  .socialIcon {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .left {
+    width: 416px;
+    height: 548px;
+    border-radius: 30px;
+  }
+
+  .right {
+    padding: 20px 12px;
+    gap: 24px;
+  }
+
+  .form {
+    gap: 20px;
+  }
+
+  .input {
+    height: 50px;
+    font-size: 14px;
+  }
+
+  .input::placeholder {
+    font-size: 14px;
+  }
+
+  .submitBtn {
+    height: 50px;
+    font-size: 16px;
+    padding: 15px;
+  }
+
+  .termsLabel {
+    font-size: 14px;
+  }
+
+  .divider span {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .socialButtons {
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .socialBtn {
+    width: 70px;
+    height: 50px;
+  }
+
+  .socialIcon {
+    font-size: 28px;
+  }
+
+  .footer {
+    font-size: 14px;
+  }
+
+  .link {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 12px;
+  }
+
+  .left {
+    height: 150px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .socialButtons {
+    gap: 12px;
+  }
+
+  .socialBtn {
+    width: 60px;
+    height: 45px;
+  }
+
+  .socialIcon {
+    font-size: 24px;
+  }
+}

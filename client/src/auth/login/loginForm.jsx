@@ -1,13 +1,57 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./loginform.module.css";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 import { FaApple } from "react-icons/fa6";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 function LoginForm() {
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const changeHandler = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // baad m likhuga
-    console.log("Form submitted");
+    try {
+      const response = await fetch("http://localhost:2525/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const userData = await response.json();
+
+      if (response.status === 200) {
+        const token = userData.token;
+        localStorage.setItem("token", token);
+        const userName = userData.user.name;
+        localStorage.setItem("userName", userName);
+
+        toast.success("Login successful");
+        console.log("Login successful:", userData);
+
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      } else {
+        toast.error("Wrong Details");
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      toast.error("Wrong Details");
+    }
+  };
+
+  const handleSignUpClick = () => {
+    navigate("/signup");
   };
 
   return (
@@ -30,6 +74,8 @@ function LoginForm() {
               id="email"
               placeholder="Enter your Email"
               className={styles.input}
+              value={formData.email}
+              onChange={changeHandler}
               required
             />
           </div>
@@ -41,6 +87,8 @@ function LoginForm() {
               id="password"
               placeholder="Enter your Password"
               className={styles.input}
+              value={formData.password}
+              onChange={changeHandler}
               required
             />
           </div>
@@ -50,7 +98,7 @@ function LoginForm() {
               <input type="checkbox" name="remember" id="remember" />
               Remember me
             </label>
-            <a href="#" className={styles.action}>
+            <a href="/forgotpassword" className={styles.action}>
               Forgot Password
             </a>
           </div>
@@ -79,7 +127,9 @@ function LoginForm() {
           <div className={styles.footer}>
             <p>
               Don't have any account?{" "}
-              <span className={styles.link}>Sign Up</span>
+              <span className={styles.link} onClick={handleSignUpClick}>
+                Sign Up
+              </span>
             </p>
           </div>
         </form>

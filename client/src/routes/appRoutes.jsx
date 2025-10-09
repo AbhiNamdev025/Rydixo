@@ -4,6 +4,9 @@ import HomePage from "../pages/homepage/homePage";
 import AboutPage from "../pages/aboutpage/aboutPage";
 import ContactPage from "../pages/contactpage/contactPage";
 import LoginForm from "../auth/login/loginForm";
+import SignUpForm from "../auth/signup/signup";
+import ForgotPassword from "../components/local/formactions/forgotpass/forgotpass";
+import ResetPassword from "../components/local/formactions/resetpass/resetpass";
 
 const AppRoutes = () => {
   return (
@@ -12,6 +15,9 @@ const AppRoutes = () => {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/login" element={<LoginForm />} />
+      <Route path="/signup" element={<SignUpForm />} />
+      <Route path="forgotpassword" element={<ForgotPassword />} />
+      <Route path="resetpassword" element={<ResetPassword />} />
     </Routes>
   );
 };
