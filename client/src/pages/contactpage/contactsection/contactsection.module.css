@@ -1,0 +1,272 @@
+.container {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 48px 96px;
+}
+
+/* left */
+
+.formContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+  min-width: 300px;
+}
+
+.formContainer label {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 100%;
+  color: #000;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.title {
+  width: 100%;
+  max-width: 445px;
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title h2 {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 100%;
+  margin: 0;
+}
+
+.title p {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.row .formItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.row .formItem label {
+  margin-bottom: 8px;
+}
+
+.form input,
+.form textarea {
+  width: 100%;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc9c9;
+  background: #f6f7f9;
+  font-family: inherit;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form input {
+  height: 60px;
+}
+
+.form textarea {
+  height: 120px;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+  font-weight: 400;
+  font-size: 16px;
+  color: #8e8989;
+}
+
+.form button {
+  background: #090909;
+  color: #fff;
+  border: none;
+  padding: 18px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.checks {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.checks label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.checks input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+}
+
+.policy {
+  font-size: 0.8rem;
+  color: #000;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+  text-align: justify;
+}
+
+/* Right */
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+  height: 985px;
+}
+
+.image {
+  width: 601px;
+  height: 627px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.item {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.icon {
+  width: 64px;
+  height: 64px;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #a39f9f;
+  color: #555555;
+  flex-shrink: 0;
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.itemInfo h4 {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 100%;
+  margin: 0;
+}
+
+.itemInfo p {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  text-align: left;
+  margin: 0;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    padding: 48px 64px;
+  }
+
+  .image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    aspect-ratio: 4/3;
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    padding: 2rem;
+    gap: 3rem;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .infoContainer {
+    height: auto;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .image {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+  }
+
+  .item {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .formContainer label {
+    font-size: 18px;
+  }
+
+  .title h2 {
+    font-size: 28px;
+  }
+
+  .form input {
+    height: 56px;
+    padding: 12px;
+  }
+}

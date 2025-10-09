@@ -38,7 +38,7 @@
   font-weight: 500;
   font-style: Medium;
   font-size: 20px;
-  line-height: 100%;
+  line-height: 110%;
   letter-spacing: 0%;
   text-align: justify;
   color: #565353;
@@ -82,6 +82,7 @@
 
   .description {
     font-size: 18px;
+    line-height: 100%;
   }
 
   .heroButton {
