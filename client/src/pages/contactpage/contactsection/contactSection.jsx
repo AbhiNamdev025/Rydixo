@@ -32,6 +32,7 @@ const ContactSection = () => {
                 type="text"
                 placeholder="Enter your first name"
                 id="last-name"
+                required
               />
             </div>
           </div>
@@ -42,11 +43,17 @@ const ContactSection = () => {
               type="text"
               placeholder="Enter your phone number"
               id="number"
+              required
             />
           </div>
           <div className={styles.formItem}>
             <label htmlFor="email">Email</label>
-            <input type="email" placeholder="Enter your Email" id="email" />
+            <input
+              type="email"
+              placeholder="Enter your Email"
+              id="email"
+              required
+            />
           </div>
 
           <div className={styles.formItem}>
@@ -57,23 +64,21 @@ const ContactSection = () => {
             ></textarea>
           </div>
 
-          <button type="submit">Submit</button>
-
           <div className={styles.checks}>
             <label>
-              <input type="checkbox" /> I agree to receive other communication
-              messages.
+              <input type="checkbox" required /> I agree to receive other
+              communication messages.
             </label>
             <label>
-              <input type="checkbox" /> I give my consent to RYDXO presenter to
-              store my data.
+              <input type="checkbox" required /> I give my consent to RYDIXO
+              presenter to store my data.
             </label>
           </div>
-
+          <button type="submit">Submit</button>
           <p className={styles.policy}>
-            RYDXO presenter, a project of RYDXO, is committed to protecting and
-            respecting your privacy according to our Privacy Policy. From time
-            to time we would deal.
+            RYDIXO presenter, a project of RYDIXO, is committed to protecting
+            and respecting your privacy according to our Privacy Policy. From
+            time to time we would deal.
           </p>
         </form>
       </div>
