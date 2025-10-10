@@ -11,11 +11,24 @@ const userSchema = new mongoose.Schema({
   },
   phone: {
     type: Number,
-    required: true,
+    required: false,
   },
   password: {
     type: String,
-    required: true,
+    required: false,
+  },
+  authProvider: {
+    type: String,
+    enum: ["local", "google", "facebook"],
+    default: "local",
+  },
+  googleId: {
+    type: String,
+    sparse: true,
+  },
+  facebookId: {
+    type: String,
+    sparse: true,
   },
 });
 

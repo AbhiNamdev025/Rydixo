@@ -1,11 +1,15 @@
+require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
-
+const session = require("express-session");
 const port = process.env.PORT;
 const mongourl = process.env.MongoURL;
 
+//google and fb auth
+const passport = require("./backend/controller/auth/authController");
+const authRoutes = require("./backend/router/auth/authRoute");
 //User
 const getUserData = require("./backend/router/userroute/post/postRoute");
 const postUserData = require("./backend/router/userroute/get/getRoute");
@@ -31,6 +35,21 @@ app.use("/user", putUserData);
 app.use("/user", deleteUserData);
 app.use("/user", loginUser);
 
+//Auth
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "your-secret-key",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Use auth routes
+app.use("/auth", authRoutes);
 app.get("/", (req, res) => {
   res.json({ message: "Server is running!" });
 });
