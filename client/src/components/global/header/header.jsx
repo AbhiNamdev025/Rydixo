@@ -62,15 +62,16 @@ function Header() {
         </div>
 
         {/* navActions */}
+        
         <div className={styles.navActions}>
-          {/* <NavLink
+          <NavLink
             to="/signup"
             className={({ isActive }) =>
               `${styles.navlink} ${isActive ? styles.active : ""}`
             }
           >
             Sign Up
-          </NavLink> */}
+          </NavLink>
           <NavLink
             to="/login"
             className={({ isActive }) =>

@@ -12,11 +12,11 @@
 }
 
 .left {
-  background: url(../../../../assets/images/login/actions/lock.svg);
+  background: url(../../../../assets/images/login/actions/verification.svg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 138px;
+  width: 172px;
   height: 172px;
   border-radius: 30px;
 }
@@ -30,7 +30,7 @@
   height: auto;
   gap: 40px;
   color: #000;
-  padding: 70px 48px;
+  padding: 70px 0 70px 48px;
   box-sizing: border-box;
 }
 
@@ -54,7 +54,7 @@
 
 .subTitle {
   color: #000;
-  font-family: Inter, sans-serif;
+  font-family: Inter;
   font-weight: 400;
   font-size: 16px;
   line-height: 130%;
@@ -62,51 +62,69 @@
   margin: 0;
 }
 
+.emailText {
+  color: #000;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 130%;
+  text-align: center;
+  margin: 0;
+}
+
+.email {
+  font-weight: 600;
+  color: #333;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 588px;
+  width: 514px;
   height: auto;
   gap: 40px;
   margin-top: 20px;
 }
 
-.inputGroup {
+.codeInputs {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
+  gap: 16px;
 }
 
-.input {
-  width: 100%;
-  height: 69px;
+.codeInput {
+  width: 80px;
+  height: 80px;
   border-radius: 10px;
-  padding: 10px 16px;
   border: none;
   background: #f5f7fb;
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
   transition: all 0.3s ease;
-  font-size: 16px;
   box-sizing: border-box;
   font-family: inherit;
 }
 
-.input::placeholder {
+.codeInput:focus {
+  outline: 2px solid #000;
+  background: #fff;
+  transform: scale(1.05);
+}
+
+.codeInput::placeholder {
   color: #8b8e94;
   font-weight: 400;
   font-size: 16px;
 }
 
-.input:focus {
-  outline: 2px solid #000;
-  background: #fff;
-}
-
 .submitBtn {
   background: #000;
   color: white;
-  height: 69px;
+  height: 60px;
   width: 100%;
   border: none;
   padding: 24px;
@@ -116,6 +134,9 @@
   font-weight: 700;
   font-size: 20px;
   font-family: inherit;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
 }
 
 .submitBtn:hover {
@@ -127,39 +148,37 @@
   transform: translateY(0);
 }
 
-.footer {
-  padding: 24px;
-  display: flex;
-  gap: 10px;
+.resendContainer {
   text-align: center;
-  justify-content: center;
-  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
-.link {
+.resendText {
+  color: #000;
+  font-family: Inter;
   font-weight: 400;
   font-size: 16px;
-  color: #6b6868;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  text-decoration: none;
-  transition: color 0.3s ease;
+  line-height: 130%;
+  margin: 0;
 }
 
-.link span {
+.resendBtn {
+  background: none;
+  border: none;
   color: #000;
-  font-weight: 600;
-  font-size: 16px;
-}
-
-.link:hover {
   text-decoration: underline;
-  color: #000;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0;
+  margin: 0;
 }
 
-/* Responsive */
+.resendBtn:hover {
+  color: #333;
+  text-decoration: none;
+}
 
 @media (max-width: 768px) {
   .container {
@@ -180,7 +199,8 @@
     font-size: 36px;
   }
 
-  .subTitle {
+  .subTitle,
+  .emailText {
     font-size: 16px;
     padding: 0 20px;
     line-height: 140%;
@@ -191,9 +211,15 @@
     gap: 32px;
   }
 
-  .input {
-    max-width: 409px;
-    height: 60px;
+  .codeInputs {
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .codeInput {
+    width: 70px;
+    height: 70px;
+    font-size: 28px;
   }
 
   .submitBtn {
@@ -201,10 +227,6 @@
     height: 60px;
     padding: 20px;
     font-size: 18px;
-  }
-
-  .footer {
-    padding: 20px;
   }
 }
 
@@ -227,7 +249,8 @@
     font-size: 32px;
   }
 
-  .subTitle {
+  .subTitle,
+  .emailText {
     font-size: 15px;
     padding: 0 16px;
   }
@@ -237,13 +260,14 @@
     margin-top: 10px;
   }
 
-  .input {
-    height: 50px;
-    font-size: 14px;
+  .codeInputs {
+    gap: 8px;
   }
 
-  .input::placeholder {
-    font-size: 14px;
+  .codeInput {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
   }
 
   .submitBtn {
@@ -252,16 +276,9 @@
     padding: 15px;
   }
 
-  .footer {
-    padding: 15px;
-  }
-
-  .link {
-    font-size: 14px;
-  }
-
-  .link span {
-    font-size: 14px;
+  .resendText,
+  .resendBtn {
+    font-size: 15px;
   }
 }
 
@@ -278,11 +295,23 @@
     font-size: 28px;
   }
 
-  .subTitle {
+  .subTitle,
+  .emailText {
     font-size: 14px;
   }
 
   .form {
     gap: 20px;
+  }
+
+  .codeInput {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .resendText,
+  .resendBtn {
+    font-size: 14px;
   }
 }

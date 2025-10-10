@@ -1,19 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./resetpass.module.css";
+import { toast } from "react-toastify";
 
 function ResetPassword() {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    navigate("/login");
+    toast.success("Password changed successfully");
     // see uh
     console.log("Password reset");
-  };
-
-  const handleBackToLogin = () => {
-    navigate("/login");
   };
 
   return (

@@ -8,7 +8,7 @@ function ForgotPassword() {
   const handleSubmit = (e) => {
     e.preventDefault();
     //dekhte baad mai
-    navigate("/resetpassword")
+    navigate("/verification");
     console.log("Password reset requested");
   };
 

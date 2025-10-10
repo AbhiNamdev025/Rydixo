@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./loginform.module.css";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
-import { FaApple } from "react-icons/fa6";
+import { FaGoogle } from "react-icons/fa6";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -116,10 +116,7 @@ function LoginForm() {
                 <FaFacebook className={styles.socialIcon} />
               </button>
               <button className={styles.socialBtn}>
-                <FaTwitter className={styles.socialIcon} />
-              </button>
-              <button className={styles.socialBtn}>
-                <FaApple className={styles.socialIcon} />
+                <FaGoogle className={styles.socialIcon} />
               </button>
             </div>
           </div>
