@@ -9,6 +9,7 @@ import ForgotPassword from "../components/local/formactions/forgotpass/forgotpas
 import ResetPassword from "../components/local/formactions/resetpass/resetpass";
 import BookRide from "../pages/bookride/bookRide";
 import VerificationCode from "../components/local/formactions/verification/verification";
+import GoogleAuthCallback from "../auth/googleAuth/googleAuthCallback";
 
 const AppRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const AppRoutes = () => {
       <Route path="forgotpassword" element={<ForgotPassword />} />
       <Route path="/resetpassword" element={<ResetPassword />} />
       <Route path="/verification" element={<VerificationCode />} />
+      <Route path="/auth/google/success" element={<GoogleAuthCallback />} />
     </Routes>
   );
 };

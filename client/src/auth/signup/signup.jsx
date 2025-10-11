@@ -192,28 +192,27 @@ function SignUpForm() {
             <div className={styles.divider}>
               <span>Or Sign Up With</span>
             </div>
-            <div className={styles.socialButtons}>
-              <button type="button" className={styles.socialBtn}>
-                <FaFacebook className={styles.socialIcon} />
-              </button>
-              <button type="button" className={styles.socialBtn}>
-                <FaGoogle
-                  className={styles.socialIcon}
-                  onClick={handleGoogleSignup}
-                />
-              </button>
-            </div>
-          </div>
-
-          <div className={styles.footer}>
-            <p>
-              Already a member?{" "}
-              <span className={styles.link} onClick={handleLoginClick}>
-                Login
-              </span>
-            </p>
           </div>
         </form>
+        <div className={styles.socialButtons}>
+          <button type="button" className={styles.socialBtn}>
+            <FaFacebook className={styles.socialIcon} />
+          </button>
+          <button type="button" className={styles.socialBtn}>
+            <FaGoogle
+              className={styles.socialIcon}
+              onClick={handleGoogleSignup}
+            />
+          </button>
+        </div>
+        <div className={styles.footer}>
+          <p>
+            Already a member?{" "}
+            <span className={styles.link} onClick={handleLoginClick}>
+              Login
+            </span>
+          </p>
+        </div>
       </div>
       <ToastContainer
         position="top-right"

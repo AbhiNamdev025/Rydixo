@@ -116,6 +116,10 @@
   margin: 8px 0;
 }
 
+.terms input {
+  accent-color: black;
+}
+
 .termsLabel {
   display: flex;
   align-items: center;

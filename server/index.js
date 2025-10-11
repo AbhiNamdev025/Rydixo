@@ -8,8 +8,8 @@ const port = process.env.PORT;
 const mongourl = process.env.MongoURL;
 
 //google and fb auth
-const passport = require("./backend/controller/auth/authController");
-const authRoutes = require("./backend/router/auth/authRoute");
+const passport = require("./backend/controller/auth/googleAuth");
+const authRoutes = require("./backend/router/auth/googleRoute");
 //User
 const getUserData = require("./backend/router/userroute/post/postRoute");
 const postUserData = require("./backend/router/userroute/get/getRoute");
@@ -28,13 +28,6 @@ mongoose
   .then(() => console.log("DB connected"))
   .catch((err) => console.log("DB connection failed:", err));
 
-//For User
-app.use("/user", getUserData);
-app.use("/user", postUserData);
-app.use("/user", putUserData);
-app.use("/user", deleteUserData);
-app.use("/user", loginUser);
-
 //Auth
 
 app.use(
@@ -47,6 +40,13 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+
+//For User
+app.use("/user", getUserData);
+app.use("/user", postUserData);
+app.use("/user", putUserData);
+app.use("/user", deleteUserData);
+app.use("/user", loginUser);
 
 // Use auth routes
 app.use("/auth", authRoutes);

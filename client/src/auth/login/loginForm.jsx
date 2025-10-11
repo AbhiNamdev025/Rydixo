@@ -53,6 +53,9 @@ function LoginForm() {
   const handleSignUpClick = () => {
     navigate("/signup");
   };
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:2525/auth/google";
+  };
 
   return (
     <div className={styles.container}>
@@ -116,7 +119,10 @@ function LoginForm() {
                 <FaFacebook className={styles.socialIcon} />
               </button>
               <button className={styles.socialBtn}>
-                <FaGoogle className={styles.socialIcon} />
+                <FaGoogle
+                  className={styles.socialIcon}
+                  onClick={handleGoogleLogin}
+                />
               </button>
             </div>
           </div>

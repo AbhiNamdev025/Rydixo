@@ -8,7 +8,7 @@ function VerificationCode() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add verification logic here
+    // add here
     navigate("/resetpassword");
   };
 
