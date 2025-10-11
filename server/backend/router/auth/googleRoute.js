@@ -23,7 +23,6 @@ router.get(
       // Generate JWT token
       const token = jwt.sign({ id: req.user._id }, process.env.JWT_Secret_Key, { expiresIn: "1h" });
 
-      // Redirect to frontend with token & user info
       const redirectUrl = `${FRONTEND_URL}/auth/google/success?token=${token}&name=${encodeURIComponent(req.user.name)}`;
       res.redirect(redirectUrl);
     } catch (err) {
