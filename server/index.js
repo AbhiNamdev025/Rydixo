@@ -15,17 +15,21 @@ const getUserData = require("./backend/router/userroute/post/postRoute");
 const postUserData = require("./backend/router/userroute/get/getRoute");
 const putUserData = require("./backend/router/userroute/put/putRoute");
 const deleteUserData = require("./backend/router/userroute/delete/delRoute");
-
+//login
 const loginUser = require("./backend/router/loginroute/loginRoute");
 
 //contact form
-
 const contactRoute = require("./backend/router/contact/mailRoute");
 
+//passwordReset
+
+const passwordRoute = require("./backend/router/auth/passwordRoute");
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+//mongoose
 
 mongoose
   .connect(mongourl)
@@ -33,7 +37,6 @@ mongoose
   .catch((err) => console.log("DB connection failed:", err));
 
 //Auth
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "your-secret-key",
@@ -58,9 +61,15 @@ app.use("/auth", authRoutes);
 //contact
 app.use("/api", contactRoute);
 
+//pass reset
+app.use("/auth/password", passwordRoute);
+
+//test
 app.get("/", (req, res) => {
   res.json({ message: "Server is running!" });
 });
+
+//port
 app.listen(port, () => {
   console.log(`Running at port ${port}`);
 });
