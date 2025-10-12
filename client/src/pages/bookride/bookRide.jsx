@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import Header from "../../components/global/header/header";
+import Footer from "../../components/global/footer/footer";
 
 function BookRide() {
   return (
-    <div>BookRide</div>
-  )
+    <>
+      <Header />
+      <div>BookRide</div>
+    <Footer/>
+    </>
+  );
 }
 
-export default BookRide
+export default BookRide;

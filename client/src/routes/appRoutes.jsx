@@ -10,14 +10,21 @@ import ResetPassword from "../components/local/formactions/resetpass/resetpass";
 import BookRide from "../pages/bookride/bookRide";
 import VerificationCode from "../components/local/formactions/verification/verification";
 import GoogleAuthCallback from "../auth/googleAuth/googleAuthCallback";
-
+import ProtectedPath from "./protectedPath";
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/contact" element={<ContactPage />} />
-      <Route path="book-ride" element={<BookRide />} />
+      <Route
+        path="book-ride"
+        element={
+          <ProtectedPath>
+            <BookRide />
+          </ProtectedPath>
+        }
+      />
       <Route path="/login" element={<LoginForm />} />
       <Route path="/signup" element={<SignUpForm />} />
       <Route path="forgotpassword" element={<ForgotPassword />} />

@@ -1,16 +1,27 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
 import logo from "../../../assets/svgs/mainlogo.svg";
+import NavActions from "../../local/navactions/navActions";
 
 function Header() {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   const handleLinkClick = () => setIsMenuOpen(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userName");
+    navigate("/login");
+    setIsDropdownOpen(false);
+  };
+
+  const userName = localStorage.getItem("userName");
 
   return (
     <>
@@ -20,11 +31,8 @@ function Header() {
           <div className={styles.logoImageContainer}>
             <img src={logo} alt="logo" className={styles.logo} />
           </div>
-          <div className={styles.logoName}>
-            <span>Rydixo</span>
-          </div>
+          <div className={styles.logoName}>Rydixo</div>
         </div>
-
         {/* Desktop Navlinks */}
         <div className={styles.navlinks}>
           <NavLink
@@ -60,28 +68,37 @@ function Header() {
             Contact Us
           </NavLink>
         </div>
+        {/* NavActions */}
+        {/* <div className={styles.navActions}>
+          {userName ? (
+            <div className={styles.userDropdown}>
+              <div onClick={toggleDropdown} className={styles.userButton}>
+                {userName} ▼
+              </div>
+              {isDropdownOpen && (
+                <div className={styles.dropdownMenu}>
+                  <button onClick={handleLogout} className={styles.dropdownItem}>
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <NavLink to="/signup" className={({ isActive }) => `${styles.navlink} ${isActive ? styles.active : ""}`}>Sign Up</NavLink>
+              <NavLink to="/login" className={({ isActive }) => `${styles.navlink} ${isActive ? styles.active : ""}`}>Sign In</NavLink>
+            </>
+          )}
+        </div> */}
 
-        {/* navActions */}
-        
-        <div className={styles.navActions}>
-          <NavLink
-            to="/signup"
-            className={({ isActive }) =>
-              `${styles.navlink} ${isActive ? styles.active : ""}`
-            }
-          >
-            Sign Up
-          </NavLink>
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              `${styles.navlink} ${isActive ? styles.active : ""}`
-            }
-          >
-            Sign In
-          </NavLink>
-        </div>
-
+        <NavActions
+          userName={userName}
+          onLogout={() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("userName");
+            navigate("/login");
+          }}
+        />
         {/* Hamburger */}
         <div className={styles.hamburger} onClick={toggleMenu}>
           <div className={styles.hamburgerLine}></div>
@@ -136,24 +153,42 @@ function Header() {
         </div>
 
         <div className={styles.mobileNavActions}>
-          <NavLink
-            to="/signup"
-            onClick={handleLinkClick}
-            className={({ isActive }) =>
-              `${styles.mobileNavlink} ${isActive ? styles.active : ""}`
-            }
-          >
-            Sign Up
-          </NavLink>
-          <NavLink
-            to="/login"
-            onClick={handleLinkClick}
-            className={({ isActive }) =>
-              `${styles.mobileNavlink} ${isActive ? styles.active : ""}`
-            }
-          >
-            Sign In
-          </NavLink>
+          {userName ? (
+            <>
+              <div className={styles.mobileUserButton} onClick={toggleDropdown}>
+                {userName} ▼
+              </div>
+              {isDropdownOpen && (
+                <button
+                  onClick={handleLogout}
+                  className={styles.mobileDropdownItem}
+                >
+                  Logout
+                </button>
+              )}
+            </>
+          ) : (
+            <>
+              <NavLink
+                to="/signup"
+                onClick={handleLinkClick}
+                className={({ isActive }) =>
+                  `${styles.mobileNavlink} ${isActive ? styles.active : ""}`
+                }
+              >
+                Sign Up
+              </NavLink>
+              <NavLink
+                to="/login"
+                onClick={handleLinkClick}
+                className={({ isActive }) =>
+                  `${styles.mobileNavlink} ${isActive ? styles.active : ""}`
+                }
+              >
+                Sign In
+              </NavLink>
+            </>
+          )}
         </div>
       </div>
     </>

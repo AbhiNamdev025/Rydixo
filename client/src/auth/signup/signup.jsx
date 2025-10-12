@@ -119,7 +119,6 @@ function SignUpForm() {
                 className={styles.input}
                 value={formData.lastName}
                 onChange={handleChange}
-                required
               />
             </div>
           </div>

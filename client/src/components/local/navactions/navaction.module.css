@@ -1,0 +1,242 @@
+.navActions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  width: fit-content;
+  height: 44px;
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.menuIcon {
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 8px;
+}
+
+.menuIcon:hover,
+.icon:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.navlink {
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 2px solid transparent;
+}
+
+.navlink:hover {
+  background-color: white;
+  color: black;
+  padding: 10px 25px;
+  border-radius: 30px;
+}
+
+.navlink.active {
+  background-color: white;
+  color: black;
+  padding: 10px 25px;
+  border-radius: 30px;
+}
+
+.userDropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  object-fit: cover;
+}
+
+.avatar:hover {
+  border-color: white;
+  transform: scale(1.05);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  background: #fff;
+  color: #000;
+  border-radius: 15px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  min-width: 180px;
+  overflow: hidden;
+  animation: dropdownFade 0.2s ease-out;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdownHeader {
+  padding: 12px 20px;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  color: #666;
+  border-bottom: 1px solid #f0f0f0;
+  background-color: #fafafa;
+  line-height: 1.4;
+}
+
+.dropdownHeader strong {
+  color: #000;
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+}
+
+.dropdownItem {
+  padding: 12px 20px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdownItem:last-child {
+  border-bottom: none;
+}
+
+.dropdownItem:hover {
+  background-color: #f8f9fa;
+  color: #000;
+}
+
+@media (max-width: 1024px) {
+  .navActions {
+    gap: 20px;
+  }
+
+  .navlink {
+    font-size: 15px;
+    padding: 8px 18px;
+  }
+
+  .navlink:hover,
+  .navlink.active {
+    padding: 8px 20px;
+  }
+
+  .userDropdown {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navActions {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .navActions {
+    gap: 15px;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+    padding: 6px;
+  }
+
+  .navlink {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .navlink:hover,
+  .navlink.active {
+    padding: 8px 18px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .userDropdown {
+    gap: 10px;
+  }
+
+  .dropdownMenu {
+    top: 50px;
+    min-width: 160px;
+  }
+
+  .dropdownItem {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}
+
+.userDropdown {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.navlink:focus,
+.icon:focus,
+.avatar:focus,
+.dropdownItem:focus {
+  outline: 2px solid #4d90fe;
+  outline-offset: 2px;
+}
+
+.navlink:active {
+  transform: scale(0.98);
+}
+
+.icon:active {
+  transform: scale(0.95);
+}
