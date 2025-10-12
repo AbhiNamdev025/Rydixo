@@ -18,6 +18,10 @@ const deleteUserData = require("./backend/router/userroute/delete/delRoute");
 
 const loginUser = require("./backend/router/loginroute/loginRoute");
 
+//contact form
+
+const contactRoute = require("./backend/router/contact/mailRoute");
+
 const app = express();
 
 app.use(express.json());
@@ -50,6 +54,10 @@ app.use("/user", loginUser);
 
 // Use auth routes
 app.use("/auth", authRoutes);
+
+//contact
+app.use("/api", contactRoute);
+
 app.get("/", (req, res) => {
   res.json({ message: "Server is running!" });
 });
