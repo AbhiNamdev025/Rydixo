@@ -37,7 +37,7 @@ exports.sendVerificationCode = async (req, res) => {
       <p>This code will expire in 15 minutes. If you didn't request a password reset, please ignore this email.</p>
       <p>Thank you,<br>The Rydixo Team</p>
       <hr style="border: none; border-top: 1px solid #eee;">
-      <small style="color: #888;">Rydixo © ${new Date().getFullYear()}. All rights reserved.</small>
+      <small style="color: #888;">Rydixo © 2025. All rights reserved.</small>
     </div>
   `,
     });
@@ -56,12 +56,12 @@ exports.resetPassword = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // hash password 
+    // hash password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
     await user.save();
 
-    // generate 
+    // generate
     const token = jwt.sign({ id: user._id }, process.env.JWT_Secret_Key, {
       expiresIn: "7d",
     });

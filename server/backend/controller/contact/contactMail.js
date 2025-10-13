@@ -12,16 +12,39 @@ const sendContactEmail = async (req, res) => {
       },
     });
 
+    // const mailOptions = {
+    //   from: email,
+    //   to: process.env.EMAIL_USER,
+    //   subject: `Contact form submission from ${firstName} ${lastName}`,
+    //   text: `
+    //     Name: ${firstName} ${lastName}
+    //     Phone: ${number}
+    //     Email: ${email}
+    //     Message: ${message}
+    //   `,
+    // };
+
     const mailOptions = {
       from: email,
       to: process.env.EMAIL_USER,
-      subject: `Contact form submission from ${firstName} ${lastName}`,
+      subject: `New Contact Message from ${firstName} ${lastName}`,
       text: `
-        Name: ${firstName} ${lastName}
-        Phone: ${number}
-        Email: ${email}
-        Message: ${message}
-      `,
+Hello,
+
+You’ve received a new message from your website’s contact form:
+
+━━━━━━━━━━━━━━━━━━━
+👤 Name: ${firstName} ${lastName}
+📞 Phone: ${number}
+📧 Email: ${email}
+
+💬 Message:
+${message}
+━━━━━━━━━━━━━━━━━━━
+
+Kind regards,  
+Rydixo team
+  `,
     };
 
     await transporter.sendMail(mailOptions);
