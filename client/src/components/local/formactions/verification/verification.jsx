@@ -1,19 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./verification.module.css";
+import { toast } from "react-toastify";
 
 function VerificationCode() {
   const navigate = useNavigate();
-  const email = "abhi@gmail.com";
+  const email = localStorage.getItem("userEmail");
+
+  const [codeInput, setCodeInput] = useState(["", "", "", ""]);
+
+  const handleChange = (e, idx) => {
+    const val = e.target.value;
+    if (/^\d?$/.test(val)) {
+      const newCode = [...codeInput];
+      newCode[idx] = val;
+      setCodeInput(newCode);
+
+      if (val && idx < 3) {
+        const nextInput = document.getElementById(`code-${idx + 1}`);
+        nextInput && nextInput.focus();
+      }
+      if (!val && idx > 0) {
+        const prevInput = document.getElementById(`code-${idx - 1}`);
+        prevInput && prevInput.focus();
+      }
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // add here
-    navigate("/resetpassword");
+    const enteredCode = codeInput.join("");
+    const storedCode = localStorage.getItem("verificationCode");
+
+    if (enteredCode === storedCode) {
+      navigate("/resetpassword");
+    } else {
+      toast.error("Invalid code");
+    }
   };
 
-  const handleResend = () => {
-    // Add resend logic here
+  const handleResend = async () => {
+    const response = await fetch(
+      "http://localhost:2525/auth/password/send-code",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      }
+    );
+
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.setItem("verificationCode", data.code);
+      toast.success("Code resent!");
+      setCodeInput(["", "", "", ""]);
+    } else {
+      toast.error(data.message);
+    }
   };
 
   return (
@@ -27,44 +70,26 @@ function VerificationCode() {
             Verification code sent to your Email.
           </p>
           <p className={styles.emailText}>
-            Code Send to <span className={styles.email}>({email})</span>
+            Code sent to <span className={styles.email}>({email})</span>
           </p>
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.codeInputs}>
-            <input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              maxLength="1"
-              className={styles.codeInput}
-              required
-            />
-            <input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              maxLength="1"
-              className={styles.codeInput}
-              required
-            />
-            <input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              maxLength="1"
-              className={styles.codeInput}
-              required
-            />
-            <input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              maxLength="1"
-              className={styles.codeInput}
-              required
-            />
+            {codeInput.map((val, idx) => (
+              <input
+                key={idx}
+                id={`code-${idx}`}
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                maxLength="1"
+                value={val}
+                className={styles.codeInput}
+                required
+                onChange={(e) => handleChange(e, idx)}
+              />
+            ))}
           </div>
 
           <button type="submit" className={styles.submitBtn}>

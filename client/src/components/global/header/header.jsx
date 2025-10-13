@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
-import logo from "../../../assets/svgs/mainlogo.svg";
+import logo from "../../../../public/assets/svgs/mainlogo.svg";
 import NavActions from "../../local/navactions/navActions";
 
 function Header() {

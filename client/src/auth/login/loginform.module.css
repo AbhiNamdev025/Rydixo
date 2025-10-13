@@ -9,7 +9,7 @@
 }
 
 .left {
-  background: url(../../assets/images/login/loginimage.png);
+  background: url(../../../public/assets/images/login/loginimage.png);
   background-size: cover;
   width: 633px;
   height: 953px;

@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./cta.module.css";
-import ctaImage from "../../../../assets/images/homepage/cta/ctaiamage.jpg";
 function Cta() {
   return (
     <>

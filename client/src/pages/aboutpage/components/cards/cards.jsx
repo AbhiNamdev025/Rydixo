@@ -2,12 +2,12 @@ import React from "react";
 import styles from "./cards.module.css";
 
 // Image Imports
-import luxury from "../../../../assets/images/aboutpage/cards/card1.png";
-import promise from "../../../../assets/images/aboutpage/cards/card2.png";
-import booking from "../../../../assets/images/aboutpage/cards/card3.png";
-import safety from "../../../../assets/images/aboutpage/cards/card4.png";
-import customize from "../../../../assets/images/aboutpage/cards/card5.png";
-import taxi from "../../../../assets/images/aboutpage/cards/card6.png";
+import luxury from "../../../../../public/assets/images/aboutpage/cards/card1.png";
+import promise from "../../../../../public/assets/images/aboutpage/cards/card2.png";
+import booking from "../../../../../public/assets/images/aboutpage/cards/card3.png";
+import safety from "../../../../../public/assets/images/aboutpage/cards/card4.png";
+import customize from "../../../../../public/assets/images/aboutpage/cards/card5.png";
+import taxi from "../../../../../public/assets/images/aboutpage/cards/card6.png";
 
 // Card Data
 const cardsData = [

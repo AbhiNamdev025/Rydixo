@@ -6,12 +6,49 @@ import { toast } from "react-toastify";
 function ResetPassword() {
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // see uh
+  //   toast.success("Password changed successfully");
+  //   navigate("/login");
+
+  //   console.log("Password reset");
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate("/login");
-    toast.success("Password changed successfully");
-    // see uh
-    console.log("Password reset");
+    const newPassword = e.target.newPassword.value;
+    const confirmPassword = e.target.confirmPassword.value;
+    const email = localStorage.getItem("userEmail");
+
+    if (newPassword !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost:2525/auth/password/reset-password",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, newPassword }),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        toast.success("Password reset successfully");
+        localStorage.removeItem("verificationCode");
+        localStorage.removeItem("userEmail");
+        navigate("/login");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Error resetting password");
+    }
   };
 
   return (

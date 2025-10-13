@@ -1,7 +1,7 @@
 .ctaSection {
   position: relative;
-  background: url("../../../../assets/images/aboutpage/cta/cta.png") center
-    35% / cover no-repeat;
+  background: url("../../../../../public/assets/images/aboutpage/cta/cta.png")
+    center 35% / cover no-repeat;
   width: 100%;
   max-width: 1440px;
   height: 410px;
@@ -68,7 +68,6 @@
   transform: scale(1.03);
 }
 
-
 /* Responsive  */
 
 @media (max-width: 1024px) {
@@ -103,7 +102,6 @@
 
   .content h2 {
     font-size: 28px;
- 
   }
 
   .content p {

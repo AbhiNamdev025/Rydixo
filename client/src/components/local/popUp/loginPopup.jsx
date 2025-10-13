@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./loginpopup.module.css";
-import { FaCarSide } from "react-icons/fa";
 
 const LoginPopup = ({ isOpen, onClose }) => {
   const navigate = useNavigate();

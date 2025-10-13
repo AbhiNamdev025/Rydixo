@@ -11,7 +11,7 @@
 }
 
 .left {
-  background-image: url(../../../../assets/images/aboutpage/hero/heroimage.png);
+  background-image: url(../../../../../public/assets/images/aboutpage/hero/heroimage.png);
   width: 50%;
   height: 680px;
   border-radius: 20px;

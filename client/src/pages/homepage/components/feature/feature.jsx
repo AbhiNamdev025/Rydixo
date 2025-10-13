@@ -1,13 +1,12 @@
 import React from "react";
 import styles from "./feature.module.css";
 
-
 // Images Import
-import featureimage from "../../../../assets/images/homepage/feature/featureimage.png";
-import svg1 from "../../../../assets/images/homepage/feature/svg1.svg";
-import svg2 from "../../../../assets/images/homepage/feature/svg2.svg";
-import svg3 from "../../../../assets/images/homepage/feature/svg3.svg";
-import svg4 from "../../../../assets/images/homepage/feature/svg4.svg";
+import featureimage from "../../../../../public/assets/images/homepage/feature/featureimage.png";
+import svg1 from "../../../../../public/assets/images/homepage/feature/svg1.svg";
+import svg2 from "../../../../../public/assets/images/homepage/feature/svg2.svg";
+import svg3 from "../../../../../public/assets/images/homepage/feature/svg3.svg";
+import svg4 from "../../../../../public/assets/images/homepage/feature/svg4.svg";
 
 function Feature() {
   return (

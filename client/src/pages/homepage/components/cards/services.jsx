@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./cards.module.css";
 
-import rentalCarImage from "../../../../assets/images/homepage/services/carimage.png";
-import bikeAutoImage from "../../../../assets/images/homepage/services/scooter.png";
-import dailyCarImage from "../../../../assets/images/homepage/services/bluecar.png";
+import rentalCarImage from "../../../../../public/assets/images/homepage/services/carimage.png";
+import bikeAutoImage from "../../../../../public/assets/images/homepage/services/scooter.png";
+import dailyCarImage from "../../../../../public/assets/images/homepage/services/bluecar.png";
 
 const Cards = [
   {

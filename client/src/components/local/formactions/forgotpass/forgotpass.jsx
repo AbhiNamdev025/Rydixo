@@ -1,15 +1,37 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./forget.module.css";
+import { toast } from "react-toastify";
 
 function ForgotPassword() {
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    //dekhte baad mai
-    navigate("/verification");
-    console.log("Password reset requested");
+    const email = e.target.email.value;
+
+    try {
+      const response = await fetch(
+        "http://localhost:2525/auth/password/send-code",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem("verificationCode", data.code);
+        localStorage.setItem("userEmail", email);
+        navigate("/verification");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Error sending code");
+    }
   };
 
   const handleBackToLogin = () => {

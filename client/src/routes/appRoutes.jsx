@@ -11,6 +11,10 @@ import BookRide from "../pages/bookride/bookRide";
 import VerificationCode from "../components/local/formactions/verification/verification";
 import GoogleAuthCallback from "../auth/googleAuth/googleAuthCallback";
 import ProtectedPath from "./protectedPath";
+import PrivacyPolicy from "../components/global/footer/components/privacypolicy/privacyPolicy";
+import TermsAndConditions from "../components/global/footer/components/terms/terms";
+import RefundPolicy from "../components/global/footer/components/refund/refundPolicy";
+import Help from "../components/local/help/help";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -31,6 +35,11 @@ const AppRoutes = () => {
       <Route path="/resetpassword" element={<ResetPassword />} />
       <Route path="/verification" element={<VerificationCode />} />
       <Route path="/auth/google/success" element={<GoogleAuthCallback />} />
+
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+      <Route path="/refund-policy" element={<RefundPolicy />} />
+      <Route path="/help" element={<Help />} />
     </Routes>
   );
 };

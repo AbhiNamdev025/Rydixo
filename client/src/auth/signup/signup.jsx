@@ -68,7 +68,7 @@ function SignUpForm() {
       }
     } catch (err) {
       console.error("Signup error:", err);
-      toast.error(" Please try again.");
+      toast.error("Email Exist.");
     }
   };
 

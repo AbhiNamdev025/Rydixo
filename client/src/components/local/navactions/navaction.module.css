@@ -88,7 +88,7 @@
   border-radius: 15px;
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  min-width: 180px;
+  min-width: 200px;
   overflow: hidden;
   animation: dropdownFade 0.2s ease-out;
 }
@@ -134,6 +134,9 @@
   color: #333;
   transition: all 0.2s ease;
   border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .dropdownItem:last-child {
@@ -142,6 +145,72 @@
 
 .dropdownItem:hover {
   background-color: #f8f9fa;
+  color: #000;
+}
+
+.dropdownItemWithNested {
+  position: relative;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdownItemWithNested:last-child {
+  border-bottom: none;
+}
+
+.hasNested {
+  position: relative;
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+  margin-left: 8px;
+}
+
+.rotated {
+  transform: rotate(90deg);
+}
+
+.nestedDropdown {
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  animation: nestedFade 0.2s ease-out;
+}
+
+@keyframes nestedFade {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 200px;
+  }
+}
+
+.nestedItem {
+  padding: 10px 20px 10px 32px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: #555;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #e9ecef;
+  display: block;
+}
+
+.nestedItem:last-child {
+  border-bottom: none;
+}
+
+.nestedItem:hover {
+  background-color: #e9ecef;
   color: #000;
 }
 
@@ -203,12 +272,22 @@
 
   .dropdownMenu {
     top: 50px;
-    min-width: 160px;
+    min-width: 180px;
   }
 
   .dropdownItem {
     padding: 10px 16px;
     font-size: 13px;
+  }
+
+  .nestedItem {
+    padding: 8px 16px 8px 28px;
+    font-size: 12px;
+  }
+
+  .arrowIcon {
+    width: 14px;
+    height: 14px;
   }
 }
 
@@ -228,7 +307,8 @@
 .navlink:focus,
 .icon:focus,
 .avatar:focus,
-.dropdownItem:focus {
+.dropdownItem:focus,
+.nestedItem:focus {
   outline: 2px solid #4d90fe;
   outline-offset: 2px;
 }

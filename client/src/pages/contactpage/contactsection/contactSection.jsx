@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./contactsection.module.css";
 import { Mail, MapPin, Phone } from "lucide-react";
-import contactImage from "../../../assets/images/contactpage/image.png";
+import contactImage from "../../../../public/assets/images/contactpage/image.png";
 import { toast } from "react-toastify";
 const ContactSection = () => {
   const [formData, setFormData] = useState({
