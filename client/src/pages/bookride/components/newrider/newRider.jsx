@@ -1,27 +1,141 @@
+// import React, { useState } from "react";
+// import Modal from "../../../../components/local/modal/modal";
+// import styles from "./newRider.module.css";
+
+// function NewRider({ isOpen, onClose }) {
+//   const [formData, setFormData] = useState({
+//     firstName: "",
+//     lastName: "",
+//     phoneNumber: "",
+//   });
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({ ...prev, [name]: value }));
+//   };
+
+//   const handleAddPassenger = (e) => {
+//     e.preventDefault();
+//     if (formData.firstName && formData.lastName && formData.phoneNumber) {
+//       console.log("New rider added:", formData);
+//       setFormData({ firstName: "", lastName: "", phoneNumber: "" });
+//       onClose();
+//     } else {
+//       alert("Please fill all fields");
+//     }
+//   };
+
+//   return (
+//     <Modal isOpen={isOpen} onClose={onClose}>
+//       <div className={styles.container}>
+//         <h2 className={styles.title}>New Rider</h2>
+
+//         <div className={styles.description}>
+//           <p>Driver will see this name.</p>
+//         </div>
+
+//         <div className={styles.form}>
+//           <div className={styles.formGroup}>
+//             <input
+//               type="text"
+//               name="firstName"
+//               placeholder="First name"
+//               value={formData.firstName}
+//               onChange={handleChange}
+//               className={styles.input}
+//             />
+//           </div>
+
+//           <div className={styles.formGroup}>
+//             <input
+//               type="text"
+//               name="lastName"
+//               placeholder="Last name"
+//               value={formData.lastName}
+//               onChange={handleChange}
+//               className={styles.input}
+//             />
+//           </div>
+
+//           <div className={styles.formGroup}>
+//             <input
+//               type="tel"
+//               name="phoneNumber"
+//               placeholder="Phone No."
+//               value={formData.phoneNumber}
+//               onChange={handleChange}
+//               className={styles.input}
+//             />
+//           </div>
+
+//           <div className={styles.disclaimer}>
+//             <p>Rydixo won't share this phone number with drivers.</p>
+//             <p>
+//               By tapping 'Add rider', you confirm that your friend agreed to
+//               share their contact information with rydixo and to receive SMS
+//               about this trip
+//             </p>
+//           </div>
+
+//           <button className={styles.addBtn} onClick={handleAddPassenger}>
+//             Add Passenger
+//           </button>
+//         </div>
+//       </div>
+//     </Modal>
+//   );
+// }
+
+// export default NewRider;
+
+
 import React, { useState } from "react";
 import Modal from "../../../../components/local/modal/modal";
 import styles from "./newRider.module.css";
 
-function NewRider({ isOpen, onClose }) {
+function NewRider({ isOpen, onClose, onRiderAdded }) {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     phoneNumber: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleAddPassenger = (e) => {
+  const handleAddPassenger = async (e) => {
     e.preventDefault();
-    if (formData.firstName && formData.lastName && formData.phoneNumber) {
-      console.log("New rider added:", formData);
+    
+    if (!formData.firstName || !formData.lastName || !formData.phoneNumber) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const riderData = {
+        riderName: `${formData.firstName} ${formData.lastName}`,
+        riderPhone: formData.phoneNumber
+      };
+      
+      console.log("New rider added:", riderData);
+      
+     
+      if (onRiderAdded) {
+        onRiderAdded(riderData);
+      }
+      
       setFormData({ firstName: "", lastName: "", phoneNumber: "" });
       onClose();
-    } else {
-      alert("Please fill all fields");
+    } catch (error) {
+      console.error("Error adding rider:", error);
+      alert("Failed to add rider. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -34,15 +148,16 @@ function NewRider({ isOpen, onClose }) {
           <p>Driver will see this name.</p>
         </div>
 
-        <div className={styles.form}>
+        <form className={styles.form} onSubmit={handleAddPassenger}>
           <div className={styles.formGroup}>
             <input
               type="text"
               name="firstName"
-              placeholder="First name"
+              placeholder="First name *"
               value={formData.firstName}
               onChange={handleChange}
               className={styles.input}
+              required
             />
           </div>
 
@@ -50,10 +165,11 @@ function NewRider({ isOpen, onClose }) {
             <input
               type="text"
               name="lastName"
-              placeholder="Last name"
+              placeholder="Last name *"
               value={formData.lastName}
               onChange={handleChange}
               className={styles.input}
+              required
             />
           </div>
 
@@ -61,10 +177,11 @@ function NewRider({ isOpen, onClose }) {
             <input
               type="tel"
               name="phoneNumber"
-              placeholder="Phone No."
+              placeholder="Phone No. *"
               value={formData.phoneNumber}
               onChange={handleChange}
               className={styles.input}
+              required
             />
           </div>
 
@@ -77,10 +194,14 @@ function NewRider({ isOpen, onClose }) {
             </p>
           </div>
 
-          <button className={styles.addBtn} onClick={handleAddPassenger}>
-            Add Passenger
+          <button 
+            type="submit" 
+            className={styles.addBtn}
+            disabled={loading}
+          >
+            {loading ? "Adding..." : "Add Passenger"}
           </button>
-        </div>
+        </form>
       </div>
     </Modal>
   );

@@ -15,8 +15,7 @@ function Header() {
   const handleLinkClick = () => setIsMenuOpen(false);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userName");
+    localStorage.clear();
     navigate("/login");
     setIsDropdownOpen(false);
   };
@@ -27,7 +26,7 @@ function Header() {
     <>
       <div className={styles.header}>
         {/* Logo */}
-        <div className={styles.logoContainer}>
+        <div className={styles.logoContainer} onClick={() => navigate("/")}>
           <div className={styles.logoImageContainer}>
             <img src={logo} alt="logo" className={styles.logo} />
           </div>

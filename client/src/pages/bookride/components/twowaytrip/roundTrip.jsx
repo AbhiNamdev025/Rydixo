@@ -1,18 +1,228 @@
+// import React, { useState } from "react";
+// import Modal from "../../../../components/local/modal/modal";
+// import styles from "./roundTrip.module.css";
+
+// function RoundTrip({ isOpen, onClose }) {
+//   const [formData, setFormData] = useState({
+//     pickup: "",
+//     dropoff: "",
+//     vehicleType: "Sedan",
+//     passengers: "1",
+//     date: "01/01/2025",
+//     time: "12:50",
+//     returnDate: "01/01/2025",
+//     returnTime: "12:50",
+//   });
+
+//   const vehicles = [
+//     {
+//       id: 1,
+//       name: "MINI",
+//       details: "Indica Micro itz",
+//       description: "Affordable AC Cabs with free Wi-Fi",
+//       price: "₹ 1049",
+//     },
+//     {
+//       id: 2,
+//       name: "Sedan",
+//       details: "Desire,Etios,Sunny",
+//       description: "Affordable AC Cabs with free Wi-Fi",
+//       price: "₹ 1231",
+//     },
+//     {
+//       id: 3,
+//       name: "SUV",
+//       details: "Arriving in 6 min",
+//       description: "Affordable AC Cabs with free Wi-Fi",
+//       price: "₹ 1049",
+//     },
+//   ];
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({ ...prev, [name]: value }));
+//   };
+
+//   const handleSubmit = () => {
+//     console.log("Round Trip Data:", formData);
+//     onClose();
+//   };
+
+//   return (
+//     <Modal isOpen={isOpen} onClose={onClose}>
+//       <div className={styles.container}>
+//         <h2 className={styles.title}>Round Trip</h2>
+
+//         <div className={styles.form}>
+//           <div className={styles.formGroup}>
+//             <label className={styles.label}>Pickup Location</label>
+//             <input
+//               type="text"
+//               name="pickup"
+//               placeholder="Enter pickup the Location"
+//               value={formData.pickup}
+//               onChange={handleChange}
+//               className={styles.input}
+//               required
+//             />
+//           </div>
+
+//           <div className={styles.formGroup}>
+//             <label className={styles.label}>Drop-Off Location</label>
+//             <input
+//               type="text"
+//               name="dropoff"
+//               placeholder="Enter Drop off the Location"
+//               value={formData.dropoff}
+//               onChange={handleChange}
+//               className={styles.input}
+//               required
+//             />
+//           </div>
+
+//           <div className={styles.rowGroup}>
+//             <div className={styles.formGroup}>
+//               <label className={styles.label}>Vehicle Type</label>
+//               <select
+//                 name="vehicleType"
+//                 value={formData.vehicleType}
+//                 onChange={handleChange}
+//                 className={styles.input}
+//               >
+//                 <option>Sedan</option>
+//                 <option>Mini</option>
+//                 <option>SUV</option>
+//               </select>
+//             </div>
+//             <div className={styles.formGroup}>
+//               <label className={styles.label}>Passenger count</label>
+//               <input
+//                 type="number"
+//                 name="passengers"
+//                 value={formData.passengers}
+//                 onChange={handleChange}
+//                 className={styles.input}
+//                 min="1"
+//               />
+//             </div>
+//           </div>
+
+//           <div className={styles.rowGroup}>
+//             <div className={styles.formGroup}>
+//               <label className={styles.label}>Date</label>
+//               <input
+//                 type="date"
+//                 name="date"
+//                 value={formData.date}
+//                 onChange={handleChange}
+//                 className={styles.input}
+//               />
+//             </div>
+//             <div className={styles.formGroup}>
+//               <label className={styles.label}>Time</label>
+//               <input
+//                 type="time"
+//                 name="time"
+//                 value={formData.time}
+//                 onChange={handleChange}
+//                 className={styles.input}
+//               />
+//             </div>
+//           </div>
+
+//           <div className={styles.rowGroup}>
+//             <div className={styles.formGroup}>
+//               <label className={styles.label}>Return Date</label>
+
+//               <input
+//                 type="date"
+//                 name="returnDate"
+//                 value={formData.returnDate}
+//                 onChange={handleChange}
+//                 className={styles.input}
+//               />
+//             </div>
+//             <div className={styles.formGroup}>
+//               <label className={styles.label}>Return Time</label>
+//               <input
+//                 type="time"
+//                 name="returnTime"
+//                 value={formData.returnTime}
+//                 onChange={handleChange}
+//                 className={styles.input}
+//               />
+//             </div>
+//           </div>
+
+//           <div className={styles.vehicleList}>
+//             {vehicles.map((vehicle) => (
+//               <div key={vehicle.id} className={styles.vehicleCard}>
+//                 <div className={styles.vehicleIcon}>🚗</div>
+//                 <div className={styles.vehicleInfo}>
+//                   <h4 className={styles.vehicleName}>{vehicle.name}</h4>
+//                   <p className={styles.vehicleDetails}>{vehicle.details}</p>
+//                   <p className={styles.vehicleDesc}>{vehicle.description}</p>
+//                 </div>
+//                 <div className={styles.vehiclePrice}>{vehicle.price}</div>
+//               </div>
+//             ))}
+//           </div>
+
+//           <div className={styles.buttonGroup}>
+//             <button className={styles.cancelBtn} onClick={onClose}>
+//               Cancel
+//             </button>
+//             <button className={styles.nextBtn} onClick={handleSubmit}>
+//               Next
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     </Modal>
+//   );
+// }
+
+// export default RoundTrip;
 import React, { useState } from "react";
 import Modal from "../../../../components/local/modal/modal";
 import styles from "./roundTrip.module.css";
+import { bookingService } from "../../services/bookingServices";
 
-function RoundTrip({ isOpen, onClose }) {
+function RoundTrip({ isOpen, onClose, initialData, onBookingSuccess }) {
+  const getCurrentUser = () => {
+    try {
+      const userData = localStorage.getItem("user");
+      return userData ? JSON.parse(userData) : null;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const getUserName = () => {
+    return localStorage.getItem("userName");
+  };
+
+  const isAuthenticated = () => {
+    return !!localStorage.getItem("token");
+  };
+
+  const user = getCurrentUser();
+
   const [formData, setFormData] = useState({
-    pickup: "",
-    dropoff: "",
+    pickup: initialData?.pickup || "",
+    dropoff: initialData?.dropoff || "",
     vehicleType: "Sedan",
-    passengers: "1",
-    date: "01/01/2025",
-    time: "12:50",
-    returnDate: "01/01/2025",
-    returnTime: "12:50",
+    passengers: 1,
+    date: initialData?.date || "",
+    time: initialData?.time || "",
+    returnDate: "",
+    returnTime: "",
+    riderName: user?.name || getUserName() || "",
+    riderPhone: user?.phone?.toString() || "",
+    bookingType: "roundTrip",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const vehicles = [
     {
@@ -40,13 +250,96 @@ function RoundTrip({ isOpen, onClose }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "passengers" ? parseInt(value) : value,
+    }));
   };
 
-  const handleSubmit = () => {
-    console.log("Round Trip Data:", formData);
+ const handleSubmit = async () => {
+  if (!isAuthenticated() || !user) {
+    alert("Please log in to book a ride");
+    return;
+  }
+
+  if (
+    !formData.pickup ||
+    !formData.dropoff ||
+    !formData.date ||
+    !formData.time ||
+    !formData.returnDate ||
+    !formData.returnTime ||
+    !formData.riderName ||
+    !formData.riderPhone
+  ) {
+    alert("Please fill all required fields including return date and time");
+    return;
+  }
+
+  setLoading(true);
+  try {
+    const bookingData = {
+      userId: user._id,
+      pickup: formData.pickup,
+      dropoff: formData.dropoff,
+      vehicleType: formData.vehicleType,
+      passengers: formData.passengers,
+      date: formData.date,
+      time: formData.time,
+      returnDate: formData.returnDate,
+      returnTime: formData.returnTime,
+      riderName: formData.riderName,
+      riderPhone: formData.riderPhone,
+      bookingType: "roundTrip",
+    };
+
+    const result = await bookingService.createBooking(bookingData);
+    console.log("Booking created:", result);
+    
+    // CLOSE MODAL FIRST
     onClose();
-  };
+    
+    // ADD TIMEOUT TO ENSURE MODAL IS CLOSED BEFORE REDIRECT
+    setTimeout(() => {
+      if (result.booking && result.booking._id) {
+        console.log("Redirecting to booking status...");
+        window.location.href = `/booking-status/${result.booking._id}`;
+      } else {
+        alert("Booking created! Check your bookings.");
+      }
+    }, 100);
+
+  } catch (error) {
+    alert("Failed to create booking. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
+  if (!isAuthenticated()) {
+    return (
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <div className={styles.container}>
+          <h2 className={styles.title}>Authentication Required</h2>
+          <p>Please log in to book a ride.</p>
+          <div className={styles.buttonGroup}>
+            <button className={styles.cancelBtn} onClick={onClose}>
+              Cancel
+            </button>
+            <button
+              className={styles.nextBtn}
+              onClick={() => {
+                onClose();
+                window.location.href = "/login";
+              }}
+            >
+              Go to Login
+            </button>
+          </div>
+        </div>
+      </Modal>
+    );
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -55,11 +348,11 @@ function RoundTrip({ isOpen, onClose }) {
 
         <div className={styles.form}>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Pickup Location</label>
+            <label className={styles.label}>Pickup Location *</label>
             <input
               type="text"
               name="pickup"
-              placeholder="Enter pickup the Location"
+              placeholder="Enter pickup location"
               value={formData.pickup}
               onChange={handleChange}
               className={styles.input}
@@ -68,11 +361,11 @@ function RoundTrip({ isOpen, onClose }) {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>Drop-Off Location</label>
+            <label className={styles.label}>Drop-Off Location *</label>
             <input
               type="text"
               name="dropoff"
-              placeholder="Enter Drop off the Location"
+              placeholder="Enter drop off location"
               value={formData.dropoff}
               onChange={handleChange}
               className={styles.input}
@@ -82,20 +375,21 @@ function RoundTrip({ isOpen, onClose }) {
 
           <div className={styles.rowGroup}>
             <div className={styles.formGroup}>
-              <label className={styles.label}>Vehicle Type</label>
+              <label className={styles.label}>Vehicle Type *</label>
               <select
                 name="vehicleType"
                 value={formData.vehicleType}
                 onChange={handleChange}
                 className={styles.input}
+                required
               >
-                <option>Sedan</option>
-                <option>Mini</option>
-                <option>SUV</option>
+                <option value="Sedan">Sedan</option>
+                <option value="Mini">Mini</option>
+                <option value="SUV">SUV</option>
               </select>
             </div>
             <div className={styles.formGroup}>
-              <label className={styles.label}>Passenger count</label>
+              <label className={styles.label}>Passengers *</label>
               <input
                 type="number"
                 name="passengers"
@@ -103,60 +397,105 @@ function RoundTrip({ isOpen, onClose }) {
                 onChange={handleChange}
                 className={styles.input}
                 min="1"
+                max="10"
+                required
               />
             </div>
           </div>
 
           <div className={styles.rowGroup}>
             <div className={styles.formGroup}>
-              <label className={styles.label}>Date</label>
+              <label className={styles.label}>Departure Date *</label>
               <input
                 type="date"
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
                 className={styles.input}
+                required
               />
             </div>
             <div className={styles.formGroup}>
-              <label className={styles.label}>Time</label>
+              <label className={styles.label}>Departure Time *</label>
               <input
                 type="time"
                 name="time"
                 value={formData.time}
                 onChange={handleChange}
                 className={styles.input}
+                required
               />
             </div>
           </div>
 
           <div className={styles.rowGroup}>
             <div className={styles.formGroup}>
-              <label className={styles.label}>Return Date</label>
-
+              <label className={styles.label}>Return Date *</label>
               <input
                 type="date"
                 name="returnDate"
                 value={formData.returnDate}
                 onChange={handleChange}
                 className={styles.input}
+                required
               />
             </div>
             <div className={styles.formGroup}>
-              <label className={styles.label}>Return Time</label>
+              <label className={styles.label}>Return Time *</label>
               <input
                 type="time"
                 name="returnTime"
                 value={formData.returnTime}
                 onChange={handleChange}
                 className={styles.input}
+                required
+              />
+            </div>
+          </div>
+
+          <div className={styles.riderInfo}>
+            <h4>Rider Information</h4>
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Rider Name *</label>
+              <input
+                type="text"
+                name="riderName"
+                placeholder="Rider name"
+                value={formData.riderName}
+                onChange={handleChange}
+                className={styles.input}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Rider Phone *</label>
+              <input
+                type="tel"
+                name="riderPhone"
+                placeholder="Rider phone number"
+                value={formData.riderPhone}
+                onChange={handleChange}
+                className={styles.input}
+                required
               />
             </div>
           </div>
 
           <div className={styles.vehicleList}>
+            <h4>Select Vehicle Type</h4>
             {vehicles.map((vehicle) => (
-              <div key={vehicle.id} className={styles.vehicleCard}>
+              <div
+                key={vehicle.id}
+                className={`${styles.vehicleCard} ${
+                  formData.vehicleType === vehicle.name ? styles.selected : ""
+                }`}
+                onClick={() =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    vehicleType: vehicle.name,
+                  }))
+                }
+              >
                 <div className={styles.vehicleIcon}>🚗</div>
                 <div className={styles.vehicleInfo}>
                   <h4 className={styles.vehicleName}>{vehicle.name}</h4>
@@ -169,11 +508,21 @@ function RoundTrip({ isOpen, onClose }) {
           </div>
 
           <div className={styles.buttonGroup}>
-            <button className={styles.cancelBtn} onClick={onClose}>
+            <button
+              className={styles.cancelBtn}
+              onClick={onClose}
+              disabled={loading}
+              type="button"
+            >
               Cancel
             </button>
-            <button className={styles.nextBtn} onClick={handleSubmit}>
-              Next
+            <button
+              className={styles.nextBtn}
+              onClick={handleSubmit}
+              disabled={loading}
+              type="button"
+            >
+              {loading ? "Booking..." : "Confirm Booking"}
             </button>
           </div>
         </div>

@@ -1,0 +1,458 @@
+.container {
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.mainContent {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+/* Map Section */
+.mapSection {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.statusBar {
+  padding: 16px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  color: white;
+}
+
+.statusBar.searching {
+  background-color: #3b82f6;
+}
+
+.statusBar.arriving {
+  background-color: #22c55e;
+}
+
+.statusBar.cancelled {
+  background-color: #ef4444;
+}
+
+.mapContainer {
+  width: 100%;
+  height: 400px;
+  position: relative;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Details Section */
+.detailsSection {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  width: 100%;
+}
+
+.cardTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+.cardTitleGreen {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #22c55e;
+}
+
+.cardTitle.cancelledTitle {
+  color: #ef4444;
+}
+
+.cardSubtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+.locationInfo {
+  margin-bottom: 20px;
+}
+
+.locationItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+}
+
+.icon {
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.locationLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  margin: 0;
+}
+
+.locationValue {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 4px 0 0 0;
+}
+
+.changeBtn {
+  margin-left: auto;
+  padding: 6px 16px;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.changeBtn:hover {
+  background-color: #f3f4f6;
+}
+
+.fareInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.fareLabel {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-left: auto;
+}
+
+.fareType {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.cancelBtn {
+  width: 100%;
+  padding: 14px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancelBtn:hover {
+  background-color: #dc2626;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.infoRow:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.driverInfo {
+  margin-top: 24px;
+}
+
+.driverCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.driverImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.driverDetails {
+  flex: 1;
+}
+
+.driverName {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 4px 0;
+}
+
+.driverVehicle {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.callBtn {
+  width: 40px;
+  height: 40px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.callBtn:hover {
+  background-color: #16a34a;
+}
+
+.vehicleInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: #f0fdf4;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.vehicleIcon {
+  font-size: 24px;
+}
+
+.vehicleName {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 4px 0;
+}
+
+.vehicleModel {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.vehicleNumber {
+  margin-left: auto;
+  padding: 6px 12px;
+  background-color: white;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.otpInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: #fef3c7;
+  border-radius: 8px;
+}
+
+.otpIcon {
+  font-size: 24px;
+}
+
+.otpLabel {
+  font-size: 14px;
+  color: #92400e;
+}
+
+.otpValue {
+  margin-left: auto;
+  font-size: 18px;
+  font-weight: 700;
+  color: #92400e;
+}
+
+.supportInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: #f0f9ff;
+  border-radius: 8px;
+}
+
+.supportIcon {
+  font-size: 24px;
+}
+
+.supportLabel {
+  font-size: 16px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.actionButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.keepBtn {
+  padding: 14px;
+  background-color: #111827;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.keepBtn:hover {
+  background-color: #1f2937;
+}
+
+.cancelBtnSecondary {
+  padding: 14px;
+  background-color: white;
+  color: #111827;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelBtnSecondary:hover {
+  background-color: #f9fafb;
+}
+
+.successMessage {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.successIcon {
+  color: #22c55e;
+  margin: 0 auto 16px;
+}
+
+.successTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.successText {
+  font-size: 16px;
+  color: #6b7280;
+}
+
+/* Bottom Cards */
+.bottomCards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .bottomCards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.featureCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.featureCard:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.featureIcon {
+  font-size: 32px;
+  padding: 12px;
+  background-color: #f0f9ff;
+  border-radius: 8px;
+}
+
+.featureContent {
+  flex: 1;
+}
+
+.featureTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 4px 0;
+}
+
+.featureText {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}

@@ -16,6 +16,7 @@
   height: auto;
   display: flex;
   gap: 13.16px;
+  cursor: pointer;
 }
 
 .logoImageContainer {

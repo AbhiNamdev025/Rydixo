@@ -15,6 +15,8 @@ import PrivacyPolicy from "../components/global/footer/components/privacypolicy/
 import TermsAndConditions from "../components/global/footer/components/terms/terms";
 import RefundPolicy from "../components/global/footer/components/refund/refundPolicy";
 import Help from "../components/local/help/help";
+import RideBooking from "../pages/bookride/components/ridebooking/rideBooking";
+import BookingStatus from "../pages/bookride/components/bookingStatus/bookingStatus";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -40,6 +42,9 @@ const AppRoutes = () => {
       <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       <Route path="/refund-policy" element={<RefundPolicy />} />
       <Route path="/help" element={<Help />} />
+
+      <Route path="/ride-book" element={<RideBooking />} />
+      <Route path="/booking-status/:bookingId" element={<BookingStatus />} />
     </Routes>
   );
 };
