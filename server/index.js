@@ -22,8 +22,11 @@ const loginUser = require("./backend/router/loginroute/loginRoute");
 const contactRoute = require("./backend/router/contact/mailRoute");
 
 //passwordReset
-
 const passwordRoute = require("./backend/router/auth/passwordRoute");
+
+//ride
+const rideBook = require("./backend/router/ride/rideBooking");
+
 const app = express();
 
 app.use(express.json());
@@ -63,6 +66,10 @@ app.use("/api", contactRoute);
 
 //pass reset
 app.use("/auth/password", passwordRoute);
+
+//ride
+
+app.use("/ride", rideBook);
 
 //test
 app.get("/", (req, res) => {
