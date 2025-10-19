@@ -18,23 +18,6 @@ const createBooking = async (req, res) => {
       bookingType,
     } = req.body;
 
-    //all required
-    if (
-      !userId ||
-      !pickup ||
-      !dropoff ||
-      !vehicleType ||
-      !date ||
-      !time ||
-      !riderName ||
-      !riderPhone ||
-      !bookingType
-    ) {
-      return res
-        .status(400)
-        .json({ error: "All required fields must be provided" });
-    }
-
     const booking = new Booking({
       userId,
       pickup,
@@ -106,10 +89,77 @@ const getBookingsByUserId = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const updateBookingStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid booking ID" });
+    }
+
+    // Validate status
+    const validStatuses = ["pending", "confirmed", "completed", "cancelled"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({
+        error:
+          "Invalid status. Must be: pending, confirmed, completed, or cancelled",
+      });
+    }
+
+    const booking = await Booking.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true, runValidators: true }
+    );
+
+    if (!booking) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+
+    res.status(200).json({
+      message: "Booking status updated successfully",
+      booking,
+    });
+    console.log("Booking status updated:", booking);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const updateBooking = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid booking ID" });
+    }
+
+    const booking = await Booking.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!booking) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+
+    res.status(200).json({
+      message: "Booking updated successfully",
+      booking,
+    });
+    console.log("Booking updated:", booking);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 module.exports = {
   createBooking,
   getBookings,
   getBookingById,
   getBookingsByUserId,
+  updateBookingStatus,
+  updateBooking,
 };
