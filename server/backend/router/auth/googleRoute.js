@@ -1,11 +1,12 @@
+//GPT
+
 const express = require("express");
 const passport = require("../../controller/auth/googleAuth");
-const router = express.Router();
 const jwt = require("jsonwebtoken");
+const router = express.Router();
 
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
 
-// Start Google OAuth
 router.get(
   "/google",
   passport.authenticate("google", {
@@ -14,16 +15,25 @@ router.get(
   })
 );
 
-// Google callback
 router.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: `${FRONTEND_URL}/login?error=auth_failed` }),
+  passport.authenticate("google", {
+    failureRedirect: `${FRONTEND_URL}/login?error=auth_failed`,
+  }),
   (req, res) => {
     try {
-      // Generate JWT token
-      const token = jwt.sign({ id: req.user._id }, process.env.JWT_Secret_Key, { expiresIn: "1h" });
+      const user = req.user;
 
-      const redirectUrl = `${FRONTEND_URL}/auth/google/success?token=${token}&name=${encodeURIComponent(req.user.name)}`;
+      // Create JWT token
+      const token = jwt.sign({ id: user._id }, process.env.JWT_Secret_Key, {
+        expiresIn: "1h",
+      });
+
+      const redirectUrl = `${FRONTEND_URL}/auth/google/success?token=${token}&name=${encodeURIComponent(
+        user.name
+      )}&email=${encodeURIComponent(user.email)}&userId=${user._id}`;
+
+      console.log("✅ Redirecting after Google login:", redirectUrl);
       res.redirect(redirectUrl);
     } catch (err) {
       console.error("JWT generation error:", err);
@@ -32,7 +42,6 @@ router.get(
   }
 );
 
-// Logout
 router.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) return res.status(500).json({ error: "Logout failed" });

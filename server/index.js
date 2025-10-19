@@ -27,6 +27,10 @@ const passwordRoute = require("./backend/router/auth/passwordRoute");
 //ride
 const rideBook = require("./backend/router/ride/rideBooking");
 
+//driver
+
+const driver = require("./backend/router/driver/driverRoute");
+
 const app = express();
 
 app.use(express.json());
@@ -68,8 +72,11 @@ app.use("/api", contactRoute);
 app.use("/auth/password", passwordRoute);
 
 //ride
-
 app.use("/ride", rideBook);
+
+//driver
+
+app.use("/driver", driver);
 
 //test
 app.get("/", (req, res) => {
