@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./hero.module.css";
 import { FaArrowRight } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+
 function Hero() {
+  const [activeTab, setActiveTab] = useState("daily");
+  const navigate = useNavigate();
+  const handleRedirect = () => {
+    navigate("/book-ride");
+  };
+
   return (
     <div className={styles.heroSection}>
       <div className={styles.hero}>
@@ -12,12 +20,33 @@ function Hero() {
 
         <div className={styles.heroForm}>
           <div className={styles.formTabs}>
-            <div className={`${styles.tabActive} ${styles.tab} `}>Daily</div>
-            <div className={styles.tab}>Rental</div>
-            <div className={styles.tab}>Outstation</div>
+            <div
+              className={`${styles.tab} ${
+                activeTab === "daily" ? styles.tabActive : ""
+              }`}
+              onClick={() => setActiveTab("daily")}
+            >
+              Daily
+            </div>
+            <div
+              className={`${styles.tab} ${
+                activeTab === "rental" ? styles.tabActive : ""
+              }`}
+              onClick={() => setActiveTab("rental")}
+            >
+              Rental
+            </div>
+            <div
+              className={`${styles.tab} ${
+                activeTab === "outstation" ? styles.tabActive : ""
+              }`}
+              onClick={() => setActiveTab("outstation")}
+            >
+              Outstation
+            </div>
           </div>
 
-          <form className={styles.bookingForm}>
+          <form onSubmit={handleRedirect} className={styles.bookingForm}>
             <div className={styles.formGroup}>
               <label htmlFor="pickup">From</label>
               <input

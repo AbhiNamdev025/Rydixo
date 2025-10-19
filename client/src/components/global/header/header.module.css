@@ -75,7 +75,6 @@
   background-color: white;
   color: black;
   padding: 10px 35px;
-  border-radius: 30px;
 }
 
 .navlink:hover {
@@ -197,6 +196,7 @@
   width: 100%;
   text-align: center;
   color: white;
+  cursor: pointer;
 }
 
 .mobileDropdownItem {
@@ -209,6 +209,7 @@
   cursor: pointer;
   margin-top: 5px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 /* Responsive */

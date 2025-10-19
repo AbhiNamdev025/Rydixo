@@ -56,13 +56,19 @@ function Footer() {
               <h3 className={styles.columnTitle}>Services</h3>
               <ul className={styles.linkList}>
                 <li>
-                  <div className={styles.link}>Local Car Rentals</div>
+                  <Link to="/book-ride" className={styles.link}>
+                    Local Car Rentals
+                  </Link>
                 </li>
                 <li>
-                  <div className={styles.link}>Outstation Taxi</div>
+                  <Link to="/book-ride" className={styles.link}>
+                    Outstation Taxi
+                  </Link>
                 </li>
                 <li>
-                  <div className={styles.link}>One Way Cabs</div>
+                  <Link to="/book-ride" className={styles.link}>
+                    One Way Cabs
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -71,10 +77,14 @@ function Footer() {
               <h3 className={styles.columnTitle}>Get In Touch</h3>
               <ul className={styles.linkList}>
                 <li>
-                  <div className={styles.link}>Contact Us</div>
+                  <Link to="/contact" className={styles.link}>
+                    Contact Us
+                  </Link>
                 </li>
                 <li>
-                  <div className={styles.link}>Travel Agent</div>
+                  <Link to="/help" className={styles.link}>
+                    Travel Agent
+                  </Link>
                 </li>
               </ul>
             </div>

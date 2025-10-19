@@ -35,4 +35,45 @@ const userSchema = new mongoose.Schema({
 
 exports.User = mongoose.model("User", userSchema);
 
-// module.exports = mongoose.model("User", userSchema); // export directly
+// // module.exports = mongoose.model("User", userSchema); // export directly
+// const mongoose = require("mongoose");
+
+// const userSchema = new mongoose.Schema({
+//   name: {
+//     type: String,
+//     required: true,
+//   },
+//   email: {
+//     type: String,
+//     required: true,
+//     unique: true,
+//   },
+//   phone: {
+//     type: Number,
+//     required: false,
+//   },
+//   password: {
+//     type: String,
+//     required: false,
+//   },
+//   authProvider: {
+//     type: String,
+//     enum: ["local", "google", "facebook"],
+//     default: "local",
+//   },
+//   googleId: {
+//     type: String,
+//     sparse: true,
+//   },
+//   facebookId: {
+//     type: String,
+//     sparse: true,
+//   },
+//   role: {
+//     type: String,
+//     enum: ["user", "driver"],
+//     default: "user",
+//   },
+// });
+
+// exports.User = mongoose.model("User", userSchema);

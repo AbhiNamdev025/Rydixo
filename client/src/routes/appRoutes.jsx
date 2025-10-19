@@ -17,6 +17,9 @@ import RefundPolicy from "../components/global/footer/components/refund/refundPo
 import Help from "../components/local/help/help";
 import RideBooking from "../pages/bookride/components/ridebooking/rideBooking";
 import BookingStatus from "../pages/bookride/components/bookingStatus/bookingStatus";
+import HistoryPage from "../pages/ridehistory/historyPage";
+import Dashboard from "../pages/driver/dashboard/dashboard";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -42,9 +45,12 @@ const AppRoutes = () => {
       <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       <Route path="/refund-policy" element={<RefundPolicy />} />
       <Route path="/help" element={<Help />} />
-
+      <Route path="/ride-history" element={<HistoryPage />} />
       <Route path="/ride-book" element={<RideBooking />} />
       <Route path="/booking-status/:bookingId" element={<BookingStatus />} />
+
+      {/* driver */}
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
 };

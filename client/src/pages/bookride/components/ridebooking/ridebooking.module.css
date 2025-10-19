@@ -81,15 +81,25 @@
   color: #111827;
 }
 
+.cardTitleblue {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1493F4 !important ;
+}
+
 .cardTitleGreen {
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #22c55e;
+  color: #22c55e !important  ;
 }
 
-.cardTitle.cancelledTitle {
-  color: #ef4444;
+.cardTitlered {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #ef4444 !important ;
 }
 
 .cardSubtitle {

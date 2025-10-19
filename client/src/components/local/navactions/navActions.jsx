@@ -30,7 +30,7 @@ function NavActions({ userName, onLogout }) {
   };
 
   const handleViewPreviousRides = () => {
-    navigate("/my-rides/previous");
+    navigate("/ride-history");
     setIsDropdownOpen(false);
     setIsMyRidesOpen(false);
   };
@@ -104,26 +104,12 @@ function NavActions({ userName, onLogout }) {
                 {isMyRidesOpen && (
                   <div className={styles.nestedDropdown}>
                     <button
-                      onClick={handleMyRides}
-                      className={styles.nestedItem}
-                      aria-label="My Rides"
-                    >
-                      My Rides
-                    </button>
-                    <button
                       onClick={handleViewPreviousRides}
                       className={styles.nestedItem}
                       aria-label="View My Previous Rides"
                     >
                       View My Previous Rides
                     </button>
-                    {/* <button
-                      onClick={handleCancelRide}
-                      className={styles.nestedItem}
-                      aria-label="Cancel Ride"
-                    >
-                      Cancel
-                    </button> */}
                   </div>
                 )}
               </div>

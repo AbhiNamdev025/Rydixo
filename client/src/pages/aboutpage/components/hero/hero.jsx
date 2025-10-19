@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./hero.module.css";
+import { Link } from "react-router-dom";
+
 function Hero() {
   return (
     <>
@@ -30,7 +32,9 @@ function Hero() {
             into something seamless, comfortable, and reliable.
           </p>
           <div>
-            <div className={styles.heroButton}>Explore More</div>
+            <Link to="/contact" className={styles.heroButton}>
+              Explore More
+            </Link>
           </div>
         </div>
       </div>

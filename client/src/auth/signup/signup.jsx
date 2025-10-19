@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./signup.module.css";
-import { FaFacebook, FaTwitter } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,18 +16,17 @@ function SignUpForm() {
     phone: "",
     password: "",
     confirmPassword: "",
+    userType: "user",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
 
-    // Combine first name and last name
     const userData = {
       name: `${formData.firstName} ${formData.lastName}`.trim(),
       email: formData.email,
@@ -35,8 +34,13 @@ function SignUpForm() {
       password: formData.password,
     };
 
+    const apiUrl =
+      formData.userType === "user"
+        ? "http://localhost:2525/user/add"
+        : "http://localhost:2525/driver/add";
+
     try {
-      const response = await fetch("http://localhost:2525/user/add", {
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,19 +60,22 @@ function SignUpForm() {
           phone: "",
           password: "",
           confirmPassword: "",
+          userType: "user",
         });
-
-        console.log("Signup successful:", data);
 
         setTimeout(() => {
           navigate("/login");
         }, 2000);
       } else {
-        response.json(err)(err, "Failed to create account");
+        if (data.message && data.message.toLowerCase().includes("email")) {
+          toast.error("Email already used");
+        } else {
+          toast.error("Email used already");
+        }
       }
     } catch (err) {
       console.error("Signup error:", err);
-      toast.error("Email Exist.");
+      toast.error("Something went wrong. Try again.");
     }
   };
 
@@ -151,6 +158,20 @@ function SignUpForm() {
           </div>
 
           <div className={styles.inputGroup}>
+            <select
+              name="userType"
+              id="userType"
+              className={styles.input}
+              value={formData.userType}
+              onChange={handleChange}
+              required
+            >
+              <option value="user">User</option>
+              <option value="driver">Driver</option>
+            </select>
+          </div>
+
+          <div className={styles.inputGroup}>
             <input
               type="password"
               name="password"
@@ -193,6 +214,7 @@ function SignUpForm() {
             </div>
           </div>
         </form>
+
         <div className={styles.socialButtons}>
           <button type="button" className={styles.socialBtn}>
             <FaFacebook className={styles.socialIcon} />
@@ -204,6 +226,7 @@ function SignUpForm() {
             />
           </button>
         </div>
+
         <div className={styles.footer}>
           <p>
             Already a member?{" "}
@@ -213,6 +236,7 @@ function SignUpForm() {
           </p>
         </div>
       </div>
+
       <ToastContainer
         position="top-right"
         autoClose={2000}

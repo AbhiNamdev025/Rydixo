@@ -62,6 +62,7 @@
   text-align: center;
   line-height: 60px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .ctaButton:hover {

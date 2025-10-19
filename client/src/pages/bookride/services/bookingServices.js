@@ -70,4 +70,48 @@ export const bookingService = {
       throw error;
     }
   },
+
+  // Update booking status
+  async updateBookingStatus(id, status) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/update-status/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update booking status");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Error updating booking status:", error);
+      throw error;
+    }
+  },
+
+  // Update booking
+  async updateBooking(id, updateData) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/update/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update booking");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Error updating booking:", error);
+      throw error;
+    }
+  },
 };

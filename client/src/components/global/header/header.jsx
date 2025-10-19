@@ -8,9 +8,11 @@ function Header() {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMyRidesOpen, setIsMyRidesOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  const toggleMyRides = () => setIsMyRidesOpen(!isMyRidesOpen);
 
   const handleLinkClick = () => setIsMenuOpen(false);
 
@@ -20,19 +22,31 @@ function Header() {
     setIsDropdownOpen(false);
   };
 
+  const handleHelp = () => {
+    navigate("/help");
+    setIsDropdownOpen(false);
+    setIsMenuOpen(false);
+  };
+
+  const handlePreviousRides = () => {
+    navigate("/ride-history");
+    setIsDropdownOpen(false);
+    setIsMyRidesOpen(false);
+    setIsMenuOpen(false);
+  };
+
   const userName = localStorage.getItem("userName");
 
   return (
     <>
       <div className={styles.header}>
-        {/* Logo */}
         <div className={styles.logoContainer} onClick={() => navigate("/")}>
           <div className={styles.logoImageContainer}>
             <img src={logo} alt="logo" className={styles.logo} />
           </div>
           <div className={styles.logoName}>Rydixo</div>
         </div>
-        {/* Desktop Navlinks */}
+
         <div className={styles.navlinks}>
           <NavLink
             to="/"
@@ -67,28 +81,6 @@ function Header() {
             Contact Us
           </NavLink>
         </div>
-        {/* NavActions */}
-        {/* <div className={styles.navActions}>
-          {userName ? (
-            <div className={styles.userDropdown}>
-              <div onClick={toggleDropdown} className={styles.userButton}>
-                {userName} ▼
-              </div>
-              {isDropdownOpen && (
-                <div className={styles.dropdownMenu}>
-                  <button onClick={handleLogout} className={styles.dropdownItem}>
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <>
-              <NavLink to="/signup" className={({ isActive }) => `${styles.navlink} ${isActive ? styles.active : ""}`}>Sign Up</NavLink>
-              <NavLink to="/login" className={({ isActive }) => `${styles.navlink} ${isActive ? styles.active : ""}`}>Sign In</NavLink>
-            </>
-          )}
-        </div> */}
 
         <NavActions
           userName={userName}
@@ -98,7 +90,7 @@ function Header() {
             navigate("/login");
           }}
         />
-        {/* Hamburger */}
+
         <div className={styles.hamburger} onClick={toggleMenu}>
           <div className={styles.hamburgerLine}></div>
           <div className={styles.hamburgerLine}></div>
@@ -106,7 +98,6 @@ function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={`${styles.mobileMenu} ${
           isMenuOpen ? styles.mobileMenuOpen : ""
@@ -158,12 +149,36 @@ function Header() {
                 {userName} ▼
               </div>
               {isDropdownOpen && (
-                <button
-                  onClick={handleLogout}
-                  className={styles.mobileDropdownItem}
-                >
-                  Logout
-                </button>
+                <div className={styles.mobileDropdownMenu}>
+                  <button
+                    onClick={toggleMyRides}
+                    className={styles.mobileDropdownItem}
+                  >
+                    My Rides
+                  </button>
+                  {isMyRidesOpen && (
+                    <div className={styles.mobileNestedMenu}>
+                      <button
+                        onClick={handlePreviousRides}
+                        className={styles.mobileNestedItem}
+                      >
+                        View My Previous Rides
+                      </button>
+                    </div>
+                  )}
+                  <button
+                    onClick={handleHelp}
+                    className={styles.mobileDropdownItem}
+                  >
+                    Help
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className={styles.mobileDropdownItem}
+                  >
+                    Logout
+                  </button>
+                </div>
               )}
             </>
           ) : (

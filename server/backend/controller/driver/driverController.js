@@ -1,13 +1,28 @@
 const Driver = require("../../model/driver/driver");
+const bcrypt = require("bcrypt");
 
 // Create driver
 const createDriver = async (req, res) => {
   try {
-    const driver = new Driver(req.body);
-    await driver.save();
-    res.status(201).json(driver);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.log("Before Hashing request body", req.body.password);
+
+    const password = req.body.password;
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    req.body.password = hashedPassword;
+    console.log("After Updating request body", req.body);
+
+    const driverData = await Driver.create({
+      ...req.body,
+      email: req.body.email.toLowerCase(),
+    });
+
+    res.status(201).json(driverData);
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Error creating driver", error: err.message });
   }
 };
 
@@ -37,7 +52,16 @@ const getDriverById = async (req, res) => {
 // Update driver
 const updateDriver = async (req, res) => {
   try {
-    const driver = await Driver.findByIdAndUpdate(req.params.id, req.body, {
+    const { password, ...otherData } = req.body;
+
+    // Hash password if provided in update
+    let updateData = { ...otherData };
+    if (password) {
+      const saltRounds = 10;
+      updateData.password = await bcrypt.hash(password, saltRounds);
+    }
+
+    const driver = await Driver.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
       runValidators: true,
     });
