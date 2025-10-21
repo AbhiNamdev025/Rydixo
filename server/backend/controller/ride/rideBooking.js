@@ -89,6 +89,7 @@ const getBookingsByUserId = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 const updateBookingStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -98,7 +99,6 @@ const updateBookingStatus = async (req, res) => {
       return res.status(400).json({ error: "Invalid booking ID" });
     }
 
-    // Validate status
     const validStatuses = ["pending", "confirmed", "completed", "cancelled"];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({
@@ -155,6 +155,40 @@ const updateBooking = async (req, res) => {
   }
 };
 
+const respondToRide = async (req, res) => {
+  try {
+    const { rideId } = req.params;
+    const { action, driverId } = req.body;
+
+    if (!["accepted", "rejected"].includes(action)) {
+      return res.status(400).json({ error: "Invalid action" });
+    }
+
+    const booking = await Booking.findById(rideId);
+    if (!booking) {
+      return res.status(404).json({ error: "Ride not found" });
+    }
+
+    if (action === "accepted") {
+      booking.status = "confirmed";
+      booking.driverId = driverId;
+    } else {
+      booking.status = "cancelled";
+    }
+
+    booking.driverResponseTimeout = undefined;
+    await booking.save();
+
+    res.json({
+      message: `Ride ${action} successfully`,
+      booking,
+    });
+  } catch (error) {
+    console.error("Error responding to ride:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   createBooking,
   getBookings,
@@ -162,4 +196,5 @@ module.exports = {
   getBookingsByUserId,
   updateBookingStatus,
   updateBooking,
+  respondToRide,
 };

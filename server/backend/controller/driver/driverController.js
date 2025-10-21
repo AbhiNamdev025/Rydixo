@@ -87,10 +87,34 @@ const deleteDriver = async (req, res) => {
   }
 };
 
+// status Update
+const updateDriverStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const driver = await Driver.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!driver) {
+      return res.status(404).json({ error: "Driver not found" });
+    }
+
+    res.json({ message: "Status updated successfully", driver });
+    console.log("Status Changed");
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   createDriver,
   getDrivers,
   getDriverById,
   updateDriver,
   deleteDriver,
+  updateDriverStatus,
 };

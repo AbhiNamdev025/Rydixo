@@ -6,6 +6,7 @@ const {
   getDriverById,
   updateDriver,
   deleteDriver,
+  updateDriverStatus,
 } = require("../../controller/driver/driverController");
 
 router.post("/add", createDriver);
@@ -13,5 +14,6 @@ router.get("/find", getDrivers);
 router.get("/find/:id", getDriverById);
 router.put("/update/:id", updateDriver);
 router.delete("/delete/:id", deleteDriver);
+router.put("/status/:id", updateDriverStatus);
 
 module.exports = router;
