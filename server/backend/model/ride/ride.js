@@ -33,7 +33,6 @@
 // );
 
 // module.exports = mongoose.model("Booking", bookingSchema);
-
 const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema(
@@ -43,10 +42,7 @@ const bookingSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    driverId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Driver",
-    },
+    driverId: { type: mongoose.Schema.Types.ObjectId, ref: "Driver" },
     pickup: { type: String, required: true },
     dropoff: { type: String, required: true },
     vehicleType: { type: String, required: true },
@@ -63,10 +59,10 @@ const bookingSchema = new mongoose.Schema(
       enum: ["pending", "confirmed", "ongoing", "completed", "cancelled"],
       default: "pending",
     },
-    otp: { type: Number }, // NEW: OTP for ride verification
-    fare: { type: Number, default: 0 }, // NEW: Fare amount
-    startTime: { type: Date }, // NEW: Ride start time
-    endTime: { type: Date }, // NEW: Ride end time
+    otp: { type: Number },
+    fare: { type: Number, default: 199 },
+    startTime: { type: Date },
+    endTime: { type: Date },
     driverResponseTimeout: { type: Date },
   },
   { timestamps: true }
