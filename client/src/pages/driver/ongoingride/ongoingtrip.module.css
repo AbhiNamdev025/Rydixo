@@ -1,0 +1,131 @@
+.ongoingTripPage {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageHeader {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.pageHeader h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.contactSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.contactLabel {
+  font-weight: 600;
+  color: #333;
+  font-size: 16px;
+}
+
+.contactButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.contactBtn {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 20px 0;
+}
+
+.locationSection {
+  margin-bottom: 20px;
+}
+
+.locationItem {
+  margin-bottom: 16px;
+}
+
+.locationHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.locationIcon {
+  color: #666;
+}
+
+.locationLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.locationAddress {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  padding-left: 24px;
+}
+
+.rideStats {
+  display: flex;
+  justify-content: space-between;
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.statItem {
+  text-align: center;
+  flex: 1;
+}
+
+.statIcon {
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.statValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+.actionSection {
+  margin-top: auto;
+}
+
+.endTripBtn {
+  width: 100%;
+  padding: 15px;
+  background: #000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.endTripBtn:hover {
+  background: #333;
+}

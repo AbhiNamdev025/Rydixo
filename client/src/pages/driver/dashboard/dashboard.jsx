@@ -5,11 +5,10 @@ import styles from "./dashboard.module.css";
 
 function Dashboard() {
   return (
-    <div className={styles.dashboardContainer}>
-      <div>
-        <Sidebar />
-      </div>
-      <div>
+    <div className={styles.appContainer}>
+      <Sidebar />
+
+      <div className={styles.mainContent}>
         <DriverDashboard />
       </div>
     </div>

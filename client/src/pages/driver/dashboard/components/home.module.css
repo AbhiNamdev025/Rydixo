@@ -1,254 +1,338 @@
 .container {
   display: flex;
+  flex-wrap: wrap;
   min-height: 100vh;
-  background-color: #f5f5f5;
-  font-family: Arial, sans-serif;
+  background-color: #fafafa;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Helvetica", "Arial", sans-serif;
 }
 
 .main {
   flex: 1;
-  padding: 20px;
+  padding: 24px;
   overflow-y: auto;
   margin-left: 0;
 }
 
 .earningSection {
   background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
 }
 
 .sectionHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.headerIcon {
+  font-size: 20px;
 }
 
 .sectionHeader h2 {
   margin: 0;
-  font-size: 24px;
-  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
 }
 
 .periodSelector {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  font-size: 13px;
   background-color: white;
+  color: #666;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.periodSelector:hover {
+  border-color: #d0d0d0;
 }
 
 .todayEarning {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
-  font-size: 14px;
-  padding: 15px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #666;
+  gap: 10px;
 }
 
 .todayEarning strong {
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 600;
   color: #000;
 }
 
 .withdrawBtn {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   background-color: #000;
   color: #fff;
   border: none;
   border-radius: 8px;
   font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  margin-bottom: 20px;
-  transition: background-color 0.3s;
+  margin-bottom: 24px;
+  transition: background-color 0.2s;
 }
 
 .withdrawBtn:hover {
-  background-color: #333;
+  background-color: #2a2a2a;
 }
 
 .chartContainer {
-  height: 250px;
+  height: 280px;
   margin-bottom: 20px;
 }
 
 .incentives {
   display: flex;
   justify-content: space-between;
-  padding: 15px;
-  background-color: #f8f9fa;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: #fafafa;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
+  color: #666;
+  border: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.incentiveValue {
+  font-weight: 600;
+  color: #000;
 }
 
 .performanceSection {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-bottom: 20px;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 24px;
+  margin-bottom: 24px;
 }
 
 .driveRating {
   background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 16px;
+  padding: 28px 24px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
 }
 
 .driveRating h3 {
-  margin: 0 0 15px 0;
-  color: #333;
-  font-size: 18px;
+  margin: 0 0 20px 0;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .ratingScore {
-  font-size: 48px;
-  font-weight: bold;
-  margin: 15px 0;
+  font-size: 56px;
+  font-weight: 700;
+  margin: 20px 0 16px 0;
   color: #000;
 }
 
 .stars {
   font-size: 24px;
-  margin: 10px 0;
-  color: #ffc107;
+  margin: 12px 0;
 }
 
 .ratingMessage {
   color: #666;
-  font-size: 14px;
-  margin: 10px 0 0;
+  font-size: 13px;
+  margin: 16px 0 0;
 }
 
 .performance {
   background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
 }
 
 .performance h3 {
-  margin: 0 0 15px 0;
-  color: #333;
-  font-size: 18px;
+  margin: 0 0 20px 0;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .perfGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 16px;
 }
 
 .perfItem {
   text-align: center;
-  padding: 15px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
+  padding: 20px 16px;
+  background-color: #fafafa;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
 }
 
 .perfValue {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
   color: #000;
 }
 
 .perfLabel {
   font-size: 12px;
   color: #666;
+  line-height: 1.4;
 }
 
 .shortcuts {
   background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
 }
 
 .shortcuts h3 {
-  margin: 0 0 15px 0;
-  color: #333;
-  font-size: 18px;
+  margin: 0 0 20px 0;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .shortcutGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  gap: 16px;
 }
 
 .shortcutBtn {
-  padding: 20px;
-  background-color: #f8f9fa;
-  border: none;
-  border-radius: 8px;
+  padding: 24px 20px;
+  background-color: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  transition: background-color 0.3s;
+  gap: 12px;
+  transition: all 0.2s;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1a1a;
 }
 
 .shortcutBtn:hover {
-  background-color: #e9ecef;
+  background-color: #f5f5f5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.shortcutIcon {
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .rightSidebar {
-  width: 320px;
-  padding: 20px;
+  width: 460px;
+  padding: 24px 24px 24px 0;
   overflow-y: auto;
-  background-color: #f8f9fa;
+  background-color: #fafafa;
 }
 
 .vehicleCard {
   background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
 }
 
 .vehicleHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.vehicleHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vehicleIcon {
+  font-size: 18px;
 }
 
 .vehicleHeader h3 {
   margin: 0;
-  color: #333;
-  font-size: 18px;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .activeBadge {
   font-size: 12px;
-  padding: 4px 8px;
-  background-color: #d4edda;
-  border-radius: 12px;
-  color: #155724;
+  font-weight: 500;
+  padding: 6px 12px;
+  background-color: #e8f5e9;
+  border-radius: 20px;
+  color: #2e7d32;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.activeIndicator {
+  color: #4caf50;
+  font-size: 10px;
 }
 
 .vehicleInfo {
-  text-align: center;
+  display: flex;
+  gap: 24px;
 }
-
+.vehicleData {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .vehicleImage {
   width: 100%;
-  height: 120px;
-  margin-bottom: 15px;
-  border-radius: 8px;
+  height: 140px;
+  margin-bottom: 20px;
+  border-radius: 12px;
   overflow: hidden;
+  background-color: #f5f5f5;
 }
 
 .carImage {
@@ -259,63 +343,84 @@
 
 .vehicleInfo h4 {
   margin: 0 0 8px 0;
-  color: #333;
+  color: #1a1a1a;
   font-size: 16px;
+  font-weight: 600;
 }
 
-.vehicleInfo p {
+.vehicleNumber {
   margin: 4px 0;
   color: #666;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.fuelType {
+  margin: 4px 0;
+  color: #999;
+  font-size: 13px;
 }
 
 .rideRequests {
   background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
 }
 
 .rideRequests h3 {
-  margin: 0 0 15px 0;
-  color: #333;
-  font-size: 18px;
+  margin: 0 0 20px 0;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .requestsList {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
 .noRides {
   text-align: center;
   color: #999;
-  padding: 20px;
+  padding: 32px 20px;
   margin: 0;
-  font-style: italic;
+  font-size: 13px;
 }
 
 .requestItem {
   display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background-color: #fafafa;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+}
+
+.requestLeft {
+  display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
+  flex: 1;
+  min-width: 0;
 }
 
 .requestAvatar {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background-color: #007bff;
+  background-color: #000;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 16px;
   flex-shrink: 0;
 }
 
@@ -327,14 +432,18 @@
 .requestInfo strong {
   display: block;
   margin-bottom: 4px;
-  color: #333;
+  color: #1a1a1a;
   font-size: 14px;
+  font-weight: 600;
 }
 
 .requestInfo p {
   margin: 0;
   color: #666;
   font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .requestActions {
@@ -342,72 +451,88 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .fare {
-  font-weight: bold;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 15px;
   color: #000;
 }
 
 .viewDetailsBtn {
-  padding: 6px 12px;
+  padding: 6px 14px;
   background-color: #000;
   color: #fff;
   border: none;
   border-radius: 6px;
   font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s;
 }
 
 .viewDetailsBtn:hover {
-  background-color: #333;
+  background-color: #2a2a2a;
 }
 
 .rideHistory {
   background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
 }
 
 .historyHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .historyHeader h3 {
   margin: 0;
-  color: #333;
-  font-size: 18px;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .viewAll {
-  font-size: 14px;
-  color: #007bff;
+  font-size: 13px;
+  color: #000;
   text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.viewAll:hover {
+  text-decoration: underline;
 }
 
 .historySubtitle {
   font-size: 12px;
-  color: #666;
-  margin-bottom: 15px;
+  color: #999;
+  margin: 0 0 16px 0;
 }
 
 .historyItem {
   display: flex;
   gap: 12px;
-  padding: 12px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
+  padding: 16px;
+  background-color: #fafafa;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
 }
 
 .historyIcon {
   font-size: 24px;
+  flex-shrink: 0;
 }
 
 .historyDetails {
@@ -416,20 +541,22 @@
 
 .historyDetails strong {
   display: block;
-  margin-bottom: 4px;
-  color: #333;
+  margin-bottom: 6px;
+  color: #1a1a1a;
   font-size: 14px;
+  font-weight: 600;
 }
 
 .historyDetails p {
-  margin: 0 0 4px 0;
+  margin: 0 0 8px 0;
   color: #666;
   font-size: 12px;
+  line-height: 1.5;
 }
 
 .historyFare {
-  font-weight: bold;
-  color: #28a745;
+  font-weight: 600;
+  color: #000;
   font-size: 14px;
 }
 
@@ -438,7 +565,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  font-size: 20px;
+  font-size: 18px;
   color: #666;
 }
 
@@ -447,6 +574,163 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  font-size: 18px;
+  font-size: 16px;
   color: #dc3545;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .rightSidebar {
+    width: 320px;
+  }
+}
+
+@media (max-width: 992px) {
+  .performanceSection {
+    grid-template-columns: 1fr;
+  }
+
+  .shortcutGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .rightSidebar {
+    width: 100%;
+    padding: 0 24px 24px 24px;
+    order: 2;
+  }
+
+  .main {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    background-color: #fff;
+  }
+
+  .main {
+    padding: 16px;
+  }
+
+  .rightSidebar {
+    padding: 0 16px 16px 16px;
+    background-color: #fff;
+  }
+
+  .earningSection,
+  .driveRating,
+  .performance,
+  .shortcuts,
+  .vehicleCard,
+  .rideRequests,
+  .rideHistory {
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .performanceSection {
+    gap: 16px;
+  }
+
+  .shortcutGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .shortcutBtn {
+    padding: 20px 16px;
+  }
+
+  .chartContainer {
+    height: 240px;
+  }
+}
+
+@media (max-width: 576px) {
+  .main {
+    padding: 12px;
+  }
+
+  .rightSidebar {
+    padding: 0 12px 12px 12px;
+  }
+
+  .sectionHeader h2 {
+    font-size: 16px;
+  }
+
+  .headerIcon {
+    font-size: 18px;
+  }
+
+  .todayEarning {
+    font-size: 12px;
+  }
+
+  .todayEarning strong {
+    font-size: 15px;
+  }
+
+  .withdrawBtn {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .performance h3,
+  .driveRating h3,
+  .shortcuts h3,
+  .rideRequests h3,
+  .rideHistory h3,
+  .vehicleHeader h3 {
+    font-size: 15px;
+  }
+
+  .ratingScore {
+    font-size: 48px;
+  }
+
+  .stars {
+    font-size: 20px;
+  }
+
+  .perfValue {
+    font-size: 24px;
+  }
+
+  .perfLabel {
+    font-size: 11px;
+  }
+
+  .shortcutGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .shortcutBtn {
+    flex-direction: row;
+    justify-content: center;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .shortcutIcon {
+    font-size: 24px;
+  }
+
+  .requestItem {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .requestActions {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .chartContainer {
+    height: 200px;
+  }
 }

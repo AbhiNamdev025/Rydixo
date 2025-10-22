@@ -1,0 +1,171 @@
+.tripCompletePage {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageHeader {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.pageHeader h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.fareBreakdown {
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.fareTotal {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  margin: 15px 0;
+  color: #000;
+}
+
+.fareDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fareItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 20px 0;
+}
+
+.paymentSection {
+  margin-bottom: 20px;
+}
+
+.paymentMethods {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.paymentMethod {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #f8f9fa;
+}
+
+.checkIcon {
+  color: #4caf50;
+}
+
+.tripSummary {
+  margin-bottom: 20px;
+}
+
+.summaryItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.summaryIcon {
+  color: #666;
+  margin-top: 2px;
+}
+
+.summaryItem strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.summaryItem p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.rideStats {
+  display: flex;
+  justify-content: space-between;
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+.statItem {
+  text-align: center;
+  flex: 1;
+}
+
+.statIcon {
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.statItem span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+.actionSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.dashboardBtn {
+  padding: 15px;
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nextRideBtn {
+  padding: 15px;
+  background: #000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.dashboardBtn:hover {
+  background: #e9ecef;
+}
+
+.nextRideBtn:hover {
+  background: #333;
+}

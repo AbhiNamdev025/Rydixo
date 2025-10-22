@@ -59,6 +59,7 @@ const driverSchema = new mongoose.Schema(
       ],
     },
   },
+
   { timestamps: true }
 );
 

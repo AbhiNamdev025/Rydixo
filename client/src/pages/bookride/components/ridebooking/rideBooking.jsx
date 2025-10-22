@@ -1,355 +1,15 @@
-// import React, { useState, useEffect } from "react";
-// import { MapPin, Phone, Clock, Check, X } from "lucide-react";
-// import styles from "./ridebooking.module.css";
-// import { bookingService } from "../../services/bookingServices";
-
-// const RideBookingFlow = ({ bookingId }) => {
-//   const [bookingStage, setBookingStage] = useState("searching");
-//   const [countdown, setCountdown] = useState(20);
-//   const [bookingData, setBookingData] = useState(null);
-//   const [driverData, setDriverData] = useState(null);
-
-//   // Get user data from localStorage
-//   const getCurrentUser = () => {
-//     try {
-//       const userData = localStorage.getItem("user");
-//       return userData ? JSON.parse(userData) : null;
-//     } catch (error) {
-//       console.error("Error getting user data:", error);
-//       return null;
-//     }
-//   };
-
-//   useEffect(() => {
-//     if (bookingId) {
-//       fetchBookingData();
-//     }
-//   }, [bookingId]);
-
-//   useEffect(() => {
-//     if (bookingStage === "searching" && countdown > 0) {
-//       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-//       return () => clearTimeout(timer);
-//     } else if (bookingStage === "searching" && countdown === 0) {
-//       setBookingStage("requested");
-//       //  driver
-//       driverAssignment();
-//     }
-//   }, [bookingStage, countdown]);
-
-//   const fetchBookingData = async () => {
-//     try {
-//       const data = await bookingService.getBookingById(bookingId);
-//       setBookingData(data);
-//     } catch (error) {
-//       console.error("Error fetching booking data:", error);
-//     }
-//   };
-
-//   const driverAssignment = () => {
-//     const driver = {
-//       name: "Rajesh Kumar",
-//       phone: "+91 9876543210",
-//       vehicle: {
-//         model: "Maruti Suzuki Dzire",
-//         number: "DL01AB1234",
-//         type: "Sedan",
-//       },
-//       rating: 4.8,
-//       otp: Math.floor(1000 + Math.random() * 9000),
-//     };
-//     setDriverData(driver);
-//   };
-
-//   const handleKeepBooking = () => {
-//     setBookingStage("confirmed");
-//   };
-
-//   const handleCancelBooking = async () => {
-//     try {
-//       setBookingStage("cancelled");
-//     } catch (error) {
-//       console.error("Error cancelling booking:", error);
-//     }
-//   };
-
-//   const handleCallDriver = () => {
-//     if (driverData) {
-//       window.open(`tel:${driverData.phone}`, "_self");
-//     }
-//   };
-
-//   const user = getCurrentUser();
-
-//   return (
-//     <div className={styles.container}>
-//       <div className={styles.mainContent}>
-//         <div className={styles.grid}>
-//           <div className={styles.mapSection}>
-//             {bookingStage === "searching" && (
-//               <div className={`${styles.statusBar} ${styles.searching}`}>
-//                 Searching For Car - {countdown}s
-//               </div>
-//             )}
-//             {bookingStage === "requested" && (
-//               <div className={`${styles.statusBar} ${styles.arriving}`}>
-//                 Driver Assigned - Arriving in 5 min
-//               </div>
-//             )}
-//             {bookingStage === "cancelled" && (
-//               <div className={`${styles.statusBar} ${styles.cancelled}`}>
-//                 <X size={18} /> Ride Cancelled
-//               </div>
-//             )}
-//             {bookingStage === "confirmed" && (
-//               <div className={`${styles.statusBar} ${styles.confirmed}`}>
-//                 <Check size={18} /> Ride Confirmed
-//               </div>
-//             )}
-
-//             {/* Map */}
-//             <div className={styles.mapContainer}>
-//               <iframe
-//                 src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d110406.89473621949!2d76.69342292812499!3d30.35622565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x390fb6497e14e649%3A0xe4ee1327c611c26d!2sChandigarh!3m2!1d30.7333148!2d76.7794179!4m5!1s0x390f949b6e0b0f4f%3A0x1bb4f0b3b8b4b0b3!2sAmbala%2C%20Haryana!3m2!1d30.378179!2d76.776695!5e0!3m2!1sen!2sin!4v1234567890"
-//                 className={styles.map}
-//                 allowFullScreen=""
-//                 loading="lazy"
-//                 title="Ride Map"
-//               />
-//             </div>
-//           </div>
-
-//           {/* Details Section */}
-//           <div className={styles.detailsSection}>
-//             {bookingStage === "searching" && (
-//               <div className={styles.card}>
-//                 <h3 className={`${styles.cardTitle} ${styles.cardTitleblue}`}>
-//                   Ride Requested
-//                 </h3>
-//                 <p className={styles.cardSubtitle}>Finding drivers nearby</p>
-
-//                 {bookingData && (
-//                   <div className={styles.locationInfo}>
-//                     <div className={styles.locationItem}>
-//                       <MapPin className={styles.icon} size={20} />
-//                       <div>
-//                         <p className={styles.locationLabel}>Pickup Location</p>
-//                         <p className={styles.locationValue}>
-//                           {bookingData.pickup}
-//                         </p>
-//                       </div>
-//                     </div>
-//                     <div className={styles.locationItem}>
-//                       <MapPin className={styles.icon} size={20} />
-//                       <div>
-//                         <p className={styles.locationLabel}>
-//                           Drop-off Location
-//                         </p>
-//                         <p className={styles.locationValue}>
-//                           {bookingData.dropoff}
-//                         </p>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 )}
-
-//                 <div className={styles.fareInfo}>
-//                   <Clock className={styles.icon} size={20} />
-//                   <span className={styles.fareLabel}>
-//                     Estimated Fare: ₹ 264.51
-//                   </span>
-//                   <span className={styles.fareType}>Cash</span>
-//                 </div>
-
-//                 <button
-//                   className={styles.cancelBtn}
-//                   onClick={handleCancelBooking}
-//                 >
-//                   Cancel Ride
-//                 </button>
-//               </div>
-//             )}
-
-//             {bookingStage === "requested" && driverData && (
-//               <div className={styles.card}>
-//                 <h3 className={`${styles.cardTitle} ${styles.cardTitleGreen}`}>
-//                   Ride Confirmed
-//                 </h3>
-
-//                 {bookingData && (
-//                   <div className={styles.locationInfo}>
-//                     <div className={styles.infoRow}>
-//                       <span className={styles.label}>Pickup Location</span>
-//                       <span className={styles.value}>{bookingData.pickup}</span>
-//                     </div>
-//                     <div className={styles.infoRow}>
-//                       <span className={styles.label}>Drop-off Location</span>
-//                       <span className={styles.value}>
-//                         {bookingData.dropoff}
-//                       </span>
-//                     </div>
-//                   </div>
-//                 )}
-
-//                 <div className={styles.driverInfo}>
-//                   <div className={styles.driverCard}>
-//                     <img
-//                       // src={`https://i.pravatar.cc/150?img=${Math.floor(
-//                       //   Math.random() * 70
-//                       // )}`}
-//                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVcnImBmZ1U-IhsHjdDYaTS9_GpU5CQn9-KA&s"
-//                       alt="Driver"
-//                       className={styles.driverImage}
-//                     />
-//                     <div className={styles.driverDetails}>
-//                       <p className={styles.driverName}>{driverData.name}</p>
-//                       <p className={styles.driverVehicle}>
-//                         ★ {driverData.rating} • {driverData.vehicle.type}
-//                       </p>
-//                     </div>
-//                     <button
-//                       className={styles.callBtn}
-//                       onClick={handleCallDriver}
-//                     >
-//                       <Phone size={20} />
-//                     </button>
-//                   </div>
-
-//                   <div className={styles.vehicleInfo}>
-//                     <div className={styles.vehicleIcon}>🚗</div>
-//                     <div>
-//                       <p className={styles.vehicleName}>
-//                         {driverData.vehicle.model}
-//                       </p>
-//                       <p className={styles.vehicleModel}>
-//                         AC {driverData.vehicle.type}
-//                       </p>
-//                     </div>
-//                     <span className={styles.vehicleNumber}>
-//                       {driverData.vehicle.number}
-//                     </span>
-//                   </div>
-
-//                   <div className={styles.otpInfo}>
-//                     <div className={styles.otpIcon}>🔑</div>
-//                     <span className={styles.otpLabel}>OTP</span>
-//                     <span className={styles.otpValue}>{driverData.otp}</span>
-//                   </div>
-//                 </div>
-
-//                 <div className={styles.actionButtons}>
-//                   <button
-//                     className={styles.keepBtn}
-//                     onClick={handleKeepBooking}
-//                   >
-//                     Continue Ride
-//                   </button>
-//                   <button
-//                     className={styles.cancelBtnSecondary}
-//                     onClick={handleCancelBooking}
-//                   >
-//                     Cancel Booking
-//                   </button>
-//                 </div>
-//               </div>
-//             )}
-
-//             {bookingStage === "cancelled" && (
-//               <div className={styles.card}>
-//                 <h3 className={`${styles.cardTitle} ${styles.cardTitlered}`}>
-//                   Ride Cancelled
-//                 </h3>
-
-//                 {bookingData && (
-//                   <div className={styles.locationInfo}>
-//                     <div className={styles.infoRow}>
-//                       <span className={styles.label}>Pickup Location</span>
-//                       <span className={styles.value}>{bookingData.pickup}</span>
-//                     </div>
-//                     <div className={styles.infoRow}>
-//                       <span className={styles.label}>Drop-off Location</span>
-//                       <span className={styles.value}>
-//                         {bookingData.dropoff}
-//                       </span>
-//                     </div>
-//                   </div>
-//                 )}
-
-//                 <div className={styles.cancelledMessage}>
-//                   <p>Your ride has been cancelled successfully.</p>
-//                   <p>No cancellation charges applied.</p>
-//                 </div>
-
-//                 <button
-//                   className={styles.keepBtn}
-//                   onClick={() => (window.location.href = "/book-ride")}
-//                 >
-//                   Book New Ride
-//                 </button>
-//               </div>
-//             )}
-
-//             {bookingStage === "confirmed" && (
-//               <div className={styles.card}>
-//                 <div className={styles.successMessage}>
-//                   <Check className={styles.successIcon} size={48} />
-//                   <h3 className={styles.successTitle}>Booking Confirmed!</h3>
-//                   <p className={styles.successText}>
-//                     Your driver is on the way to {bookingData?.pickup}
-//                   </p>
-//                   {driverData && (
-//                     <div className={styles.driverEta}>
-//                       <p>
-//                         Driver: <strong>{driverData.name}</strong>
-//                       </p>
-//                       <p>
-//                         ETA: <strong>5 minutes</strong>
-//                       </p>
-//                     </div>
-//                   )}
-//                 </div>
-//               </div>
-//             )}
-//           </div>
-//         </div>
-
-//         {/* Bottom Cards */}
-//         <div className={styles.bottomCards}>
-//           <div className={styles.featureCard}>
-//             <div className={styles.featureIcon}>🚗</div>
-//             <div className={styles.featureContent}>
-//               <h4 className={styles.featureTitle}>Request more rides</h4>
-//               <p className={styles.featureText}>For yourself or guest</p>
-//             </div>
-//           </div>
-
-//           <div className={styles.featureCard}>
-//             <div className={styles.featureIcon}>👥</div>
-//             <div className={styles.featureContent}>
-//               <h4 className={styles.featureTitle}>Send and receive</h4>
-//               <p className={styles.featureText}>One or multiple items</p>
-//             </div>
-//           </div>
-
-//           <div className={styles.featureCard}>
-//             <div className={styles.featureIcon}>📅</div>
-//             <div className={styles.featureContent}>
-//               <h4 className={styles.featureTitle}>Reserve a ride</h4>
-//               <p className={styles.featureText}>Up to 90 days ahead</p>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default RideBookingFlow;
-
-//wokrking without status update
-
 // import React, { useState, useEffect, useRef } from "react";
-// import { MapPin, Phone, Clock, Check, X } from "lucide-react";
+// import {
+//   MapPin,
+//   Phone,
+//   Clock,
+//   Check,
+//   X,
+//   Car,
+//   Key,
+//   Users,
+//   Calendar,
+// } from "lucide-react";
 // import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 // import L from "leaflet";
 // import "leaflet/dist/leaflet.css";
@@ -357,16 +17,6 @@
 // import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 // import styles from "./ridebooking.module.css";
 // import { bookingService } from "../../services/bookingServices";
-
-// delete L.Icon.Default.prototype._getIconUrl;
-// L.Icon.Default.mergeOptions({
-//   iconRetinaUrl:
-//     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-//   iconUrl:
-//     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-//   shadowUrl:
-//     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-// });
 
 // const BookingRoutingMachine = ({ pickup, dropoff }) => {
 //   const map = useMap();
@@ -488,6 +138,8 @@
 //   const [countdown, setCountdown] = useState(20);
 //   const [bookingData, setBookingData] = useState(null);
 //   const [driverData, setDriverData] = useState(null);
+//   const [updatingStatus, setUpdatingStatus] = useState(false);
+//   const [pollingInterval, setPollingInterval] = useState(null);
 
 //   const getCurrentUser = () => {
 //     try {
@@ -502,6 +154,13 @@
 //   useEffect(() => {
 //     if (bookingId) {
 //       fetchBookingData();
+
+//       const interval = setInterval(fetchBookingData, 5000);
+//       setPollingInterval(interval);
+
+//       return () => {
+//         if (interval) clearInterval(interval);
+//       };
 //     }
 //   }, [bookingId]);
 
@@ -510,8 +169,7 @@
 //       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
 //       return () => clearTimeout(timer);
 //     } else if (bookingStage === "searching" && countdown === 0) {
-//       setBookingStage("requested");
-//       driverAssignment();
+//       setBookingStage("pending");
 //     }
 //   }, [bookingStage, countdown]);
 
@@ -519,33 +177,91 @@
 //     try {
 //       const data = await bookingService.getBookingById(bookingId);
 //       setBookingData(data);
+
+//       if (data.status === "pending" && bookingStage !== "pending") {
+//         setBookingStage("pending");
+//       } else if (data.status === "confirmed" && data.driverId) {
+//         setBookingStage("requested");
+
+//         //   fetch driver
+//         if (!driverData) {
+//           fetchDriverData(data.driverId);
+//         }
+//       } else if (data.status === "completed") {
+//         setBookingStage("confirmed");
+//         if (pollingInterval) clearInterval(pollingInterval);
+//       } else if (data.status === "cancelled") {
+//         setBookingStage("cancelled");
+//         if (pollingInterval) clearInterval(pollingInterval);
+//       }
 //     } catch (error) {
 //       console.error("Error fetching booking data:", error);
 //     }
 //   };
 
-//   const driverAssignment = () => {
-//     const driver = {
-//       name: "Rajesh Kumar",
-//       phone: "+91 9876543210",
-//       vehicle: {
-//         model: "Maruti Suzuki Dzire",
-//         number: "DL01AB1234",
-//         type: "Sedan",
-//       },
-//       rating: 4.8,
-//       otp: Math.floor(1000 + Math.random() * 9000),
-//     };
-//     setDriverData(driver);
+//   const fetchDriverData = async (driverId) => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       const response = await fetch(
+//         `http://localhost:2525/driver/find/${driverId}`,
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//             "Content-Type": "application/json",
+//           },
+//         }
+//       );
+
+//       if (response.ok) {
+//         const driver = await response.json();
+
+//         // Only generate OTP if driverData is not already set
+//         setDriverData(
+//           (prev) =>
+//             prev || {
+//               name: driver.name || "Driver",
+//               phone: driver.phone || "+91 0000000000",
+//               vehicle: {
+//                 model: driver.vehicle_details?.vehicle_name || "Car",
+//                 number: driver.vehicle_details?.vehicle_number || "XX00XX0000",
+//                 type: driver.vehicle_type || "Sedan",
+//               },
+//               rating: driver.rating || 4.5,
+//               otp: Math.floor(1000 + Math.random() * 9000),
+//             }
+//         );
+//       }
+//     } catch (error) {
+//       console.error("Error fetching driver data:", error);
+//     }
 //   };
 
-//   const handleKeepBooking = () => {
+//   const updateBookingStatus = async (status) => {
+//     try {
+//       setUpdatingStatus(true);
+//       const result = await bookingService.updateBookingStatus(
+//         bookingId,
+//         status
+//       );
+//       setBookingData(result.booking);
+//       console.log(`Booking status updated to: ${status}`);
+//     } catch (error) {
+//       console.error("Error updating booking status:", error);
+//       alert("Failed to update booking status. Please try again.");
+//     } finally {
+//       setUpdatingStatus(false);
+//     }
+//   };
+
+//   const handleKeepBooking = async () => {
 //     setBookingStage("confirmed");
+//     await updateBookingStatus("completed");
 //   };
 
 //   const handleCancelBooking = async () => {
 //     try {
 //       setBookingStage("cancelled");
+//       await updateBookingStatus("cancelled");
 //     } catch (error) {
 //       console.error("Error cancelling booking:", error);
 //     }
@@ -566,26 +282,38 @@
 //           <div className={styles.mapSection}>
 //             {bookingStage === "searching" && (
 //               <div className={`${styles.statusBar} ${styles.searching}`}>
-//                 Searching For Car - {countdown}s
+//                 {updatingStatus
+//                   ? "Updating..."
+//                   : `Searching For Car - ${countdown}s`}
+//               </div>
+//             )}
+//             {bookingStage === "pending" && (
+//               <div className={`${styles.statusBar} ${styles.pending}`}>
+//                 {updatingStatus
+//                   ? "Updating..."
+//                   : "Waiting for driver acceptance..."}
 //               </div>
 //             )}
 //             {bookingStage === "requested" && (
 //               <div className={`${styles.statusBar} ${styles.arriving}`}>
-//                 Driver Assigned - Arriving in 5 min
+//                 {updatingStatus
+//                   ? "Updating..."
+//                   : "Driver Assigned - Arriving in 5 min"}
 //               </div>
 //             )}
 //             {bookingStage === "cancelled" && (
 //               <div className={`${styles.statusBar} ${styles.cancelled}`}>
-//                 <X size={18} /> Ride Cancelled
+//                 <X size={18} />{" "}
+//                 {updatingStatus ? "Cancelling..." : "Ride Cancelled"}
 //               </div>
 //             )}
 //             {bookingStage === "confirmed" && (
 //               <div className={`${styles.statusBar} ${styles.confirmed}`}>
-//                 <Check size={18} /> Ride Confirmed
+//                 <Check size={18} />{" "}
+//                 {updatingStatus ? "Completing..." : "Ride Completed"}
 //               </div>
 //             )}
 
-//             {/* Dynamic Map */}
 //             <div className={styles.mapContainer}>
 //               {bookingData && bookingData.pickup && bookingData.dropoff ? (
 //                 <MapContainer
@@ -621,7 +349,6 @@
 //             </div>
 //           </div>
 
-//           {/* Details Section */}
 //           <div className={styles.detailsSection}>
 //             {bookingStage === "searching" && (
 //               <div className={styles.card}>
@@ -658,7 +385,7 @@
 //                 <div className={styles.fareInfo}>
 //                   <Clock className={styles.icon} size={20} />
 //                   <span className={styles.fareLabel}>
-//                     Estimated Fare: ₹ 264.51
+//                     Estimated Fare: ₹ 499
 //                   </span>
 //                   <span className={styles.fareType}>Cash</span>
 //                 </div>
@@ -666,8 +393,66 @@
 //                 <button
 //                   className={styles.cancelBtn}
 //                   onClick={handleCancelBooking}
+//                   disabled={updatingStatus}
 //                 >
-//                   Cancel Ride
+//                   {updatingStatus ? "Cancelling..." : "Cancel Ride"}
+//                 </button>
+//               </div>
+//             )}
+
+//             {bookingStage === "pending" && (
+//               <div className={styles.card}>
+//                 <h3 className={`${styles.cardTitle} ${styles.cardTitleblue}`}>
+//                   Ride Request Sent
+//                 </h3>
+//                 <p className={styles.cardSubtitle}>
+//                   Waiting for driver acceptance
+//                 </p>
+
+//                 {bookingData && (
+//                   <div className={styles.locationInfo}>
+//                     <div className={styles.locationItem}>
+//                       <MapPin className={styles.icon} size={20} />
+//                       <div>
+//                         <p className={styles.locationLabel}>Pickup Location</p>
+//                         <p className={styles.locationValue}>
+//                           {bookingData.pickup}
+//                         </p>
+//                       </div>
+//                     </div>
+//                     <div className={styles.locationItem}>
+//                       <MapPin className={styles.icon} size={20} />
+//                       <div>
+//                         <p className={styles.locationLabel}>
+//                           Drop-off Location
+//                         </p>
+//                         <p className={styles.locationValue}>
+//                           {bookingData.dropoff}
+//                         </p>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 )}
+
+//                 <div className={styles.fareInfo}>
+//                   <Clock className={styles.icon} size={20} />
+//                   <span className={styles.fareLabel}>
+//                     Estimated Fare: ₹ 264.51
+//                   </span>
+//                   <span className={styles.fareType}>Cash</span>
+//                 </div>
+
+//                 <div className={styles.pendingMessage}>
+//                   <p>Your ride request has been sent to nearby drivers.</p>
+//                   <p>Waiting for a driver to accept your ride...</p>
+//                 </div>
+
+//                 <button
+//                   className={styles.cancelBtn}
+//                   onClick={handleCancelBooking}
+//                   disabled={updatingStatus}
+//                 >
+//                   {updatingStatus ? "Cancelling..." : "Cancel Ride"}
 //                 </button>
 //               </div>
 //             )}
@@ -715,7 +500,9 @@
 //                   </div>
 
 //                   <div className={styles.vehicleInfo}>
-//                     <div className={styles.vehicleIcon}>🚗</div>
+//                     <div className={styles.vehicleIcon}>
+//                       <Car size={24} className={styles.icon} />
+//                     </div>
 //                     <div>
 //                       <p className={styles.vehicleName}>
 //                         {driverData.vehicle.model}
@@ -730,7 +517,9 @@
 //                   </div>
 
 //                   <div className={styles.otpInfo}>
-//                     <div className={styles.otpIcon}>🔑</div>
+//                     <div className={styles.otpIcon}>
+//                       <Key size={20} className={styles.icon} />
+//                     </div>
 //                     <span className={styles.otpLabel}>OTP</span>
 //                     <span className={styles.otpValue}>{driverData.otp}</span>
 //                   </div>
@@ -740,14 +529,16 @@
 //                   <button
 //                     className={styles.keepBtn}
 //                     onClick={handleKeepBooking}
+//                     disabled={updatingStatus}
 //                   >
-//                     Continue Ride
+//                     {updatingStatus ? "Completing..." : "Complete Ride"}
 //                   </button>
 //                   <button
 //                     className={styles.cancelBtnSecondary}
 //                     onClick={handleCancelBooking}
+//                     disabled={updatingStatus}
 //                   >
-//                     Cancel Booking
+//                     {updatingStatus ? "Cancelling..." : "Cancel Booking"}
 //                   </button>
 //                 </div>
 //               </div>
@@ -792,9 +583,9 @@
 //               <div className={styles.card}>
 //                 <div className={styles.successMessage}>
 //                   <Check className={styles.successIcon} size={48} />
-//                   <h3 className={styles.successTitle}>Booking Confirmed!</h3>
+//                   <h3 className={styles.successTitle}>Ride Completed!</h3>
 //                   <p className={styles.successText}>
-//                     Your driver is on the way to {bookingData?.pickup}
+//                     Thank you for choosing Rydixo
 //                   </p>
 //                   {driverData && (
 //                     <div className={styles.driverEta}>
@@ -802,20 +593,27 @@
 //                         Driver: <strong>{driverData.name}</strong>
 //                       </p>
 //                       <p>
-//                         ETA: <strong>5 minutes</strong>
+//                         Vehicle: <strong>{driverData.vehicle.model}</strong>
 //                       </p>
 //                     </div>
 //                   )}
+//                   <button
+//                     className={styles.keepBtn}
+//                     onClick={() => (window.location.href = "/book-ride")}
+//                   >
+//                     Book Another Ride
+//                   </button>
 //                 </div>
 //               </div>
 //             )}
 //           </div>
 //         </div>
 
-//         {/* Bottom Cards */}
 //         <div className={styles.bottomCards}>
 //           <div className={styles.featureCard}>
-//             <div className={styles.featureIcon}>🚗</div>
+//             <div className={styles.featureIcon}>
+//               <Car size={24} className={styles.icon} />
+//             </div>
 //             <div className={styles.featureContent}>
 //               <h4 className={styles.featureTitle}>Request more rides</h4>
 //               <p className={styles.featureText}>For yourself or guest</p>
@@ -823,7 +621,9 @@
 //           </div>
 
 //           <div className={styles.featureCard}>
-//             <div className={styles.featureIcon}>👥</div>
+//             <div className={styles.featureIcon}>
+//               <Users size={24} className={styles.icon} />
+//             </div>
 //             <div className={styles.featureContent}>
 //               <h4 className={styles.featureTitle}>Send and receive</h4>
 //               <p className={styles.featureText}>One or multiple items</p>
@@ -831,7 +631,9 @@
 //           </div>
 
 //           <div className={styles.featureCard}>
-//             <div className={styles.featureIcon}>📅</div>
+//             <div className={styles.featureIcon}>
+//               <Calendar size={24} className={styles.icon} />
+//             </div>
 //             <div className={styles.featureContent}>
 //               <h4 className={styles.featureTitle}>Reserve a ride</h4>
 //               <p className={styles.featureText}>Up to 90 days ahead</p>
@@ -845,11 +647,20 @@
 
 // export default RideBookingFlow;
 
-// with sts and other bend
 
 import React, { useState, useEffect, useRef } from "react";
-import { MapPin, Phone, Clock, Check, X } from "lucide-react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import {
+  MapPin,
+  Phone,
+  Clock,
+  Check,
+  X,
+  Car,
+  Key,
+  Users,
+  Calendar,
+} from "lucide-react";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
@@ -859,15 +670,11 @@ import { bookingService } from "../../services/bookingServices";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-  iconUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// Add the missing BookingRoutingMachine component
 const BookingRoutingMachine = ({ pickup, dropoff }) => {
   const map = useMap();
   const routingControlRef = useRef(null);
@@ -895,10 +702,7 @@ const BookingRoutingMachine = ({ pickup, dropoff }) => {
       }
 
       for (const [city, coords] of Object.entries(locationDatabase)) {
-        if (
-          normalizedLocation.includes(city) ||
-          city.includes(normalizedLocation)
-        ) {
+        if (normalizedLocation.includes(city) || city.includes(normalizedLocation)) {
           return coords;
         }
       }
@@ -920,20 +724,6 @@ const BookingRoutingMachine = ({ pickup, dropoff }) => {
           return;
         }
 
-        const pickupIcon = L.divIcon({
-          className: "custom-marker",
-          html: '<div style="background: #22c55e; width: 30px; height: 30px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
-          iconSize: [30, 30],
-          iconAnchor: [15, 15],
-        });
-
-        const dropoffIcon = L.divIcon({
-          className: "custom-marker",
-          html: '<div style="background: #ef4444; width: 30px; height: 30px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
-          iconSize: [30, 30],
-          iconAnchor: [15, 15],
-        });
-
         const routingControl = L.Routing.control({
           waypoints: [
             L.latLng(pickupCoords[0], pickupCoords[1]),
@@ -947,15 +737,9 @@ const BookingRoutingMachine = ({ pickup, dropoff }) => {
           lineOptions: {
             styles: [{ color: "#3b82f6", weight: 6, opacity: 0.8 }],
           },
-          createMarker: function (i, waypoint, n) {
-            return L.marker(waypoint.latLng, {
-              draggable: false,
-              icon: i === 0 ? pickupIcon : dropoffIcon,
-            });
+          createMarker: function () {
+            return null;
           },
-          router: L.Routing.osrmv1({
-            serviceUrl: "https://router.project-osrm.org/route/v1",
-          }),
         }).addTo(map);
 
         const container = routingControl.getContainer();
@@ -989,20 +773,32 @@ const RideBookingFlow = ({ bookingId }) => {
   const [bookingData, setBookingData] = useState(null);
   const [driverData, setDriverData] = useState(null);
   const [updatingStatus, setUpdatingStatus] = useState(false);
+  const [pollingInterval, setPollingInterval] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const getCurrentUser = () => {
-    try {
-      const userData = localStorage.getItem("user");
-      return userData ? JSON.parse(userData) : null;
-    } catch (error) {
-      console.error("Error getting user data:", error);
-      return null;
-    }
-  };
+  console.log("=== RIDE BOOKING DEBUG ===");
+  console.log("Booking ID:", bookingId);
+  console.log("Current Stage:", bookingStage);
+  console.log("Booking Data:", bookingData);
+  console.log("Driver Data:", driverData);
+  console.log("Error:", error);
+  console.log("===========================");
 
   useEffect(() => {
     if (bookingId) {
+      console.log("Starting polling for booking:", bookingId);
       fetchBookingData();
+
+      const interval = setInterval(fetchBookingData, 5000);
+      setPollingInterval(interval);
+
+      return () => {
+        if (interval) clearInterval(interval);
+      };
+    } else {
+      setError("No booking ID provided");
+      setLoading(false);
     }
   }, [bookingId]);
 
@@ -1011,38 +807,100 @@ const RideBookingFlow = ({ bookingId }) => {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
     } else if (bookingStage === "searching" && countdown === 0) {
-      setBookingStage("requested");
-      updateBookingStatus("confirmed");
-      driverAssignment();
+      setBookingStage("pending");
     }
   }, [bookingStage, countdown]);
 
   const fetchBookingData = async () => {
     try {
+      console.log("Fetching booking data for:", bookingId);
+      
       const data = await bookingService.getBookingById(bookingId);
-      setBookingData(data);
+      console.log("Received booking data:", data);
+      
+      if (!data) {
+        setError("No booking data received");
+        setLoading(false);
+        return;
+      }
 
-      // Set initial stage based on current backend status
-      if (data.status === "confirmed") {
+      setBookingData(data);
+      setError(null);
+
+      // Handle status transitions
+      if (data.status === "pending" && bookingStage !== "pending") {
+        console.log("Setting stage to: pending");
+        setBookingStage("pending");
+      } else if (data.status === "confirmed" && data.driverId) {
+        console.log("Setting stage to: requested (confirmed with driver)");
         setBookingStage("requested");
-        driverAssignment();
+        if (!driverData) {
+          fetchDriverData(data.driverId);
+        }
+      } else if (data.status === "ongoing") {
+        console.log("Setting stage to: ongoing");
+        setBookingStage("ongoing");
+        if (!driverData && data.driverId) {
+          fetchDriverData(data.driverId);
+        }
       } else if (data.status === "completed") {
+        console.log("Setting stage to: confirmed (completed)");
         setBookingStage("confirmed");
+        if (pollingInterval) clearInterval(pollingInterval);
       } else if (data.status === "cancelled") {
+        console.log("Setting stage to: cancelled");
         setBookingStage("cancelled");
+        if (pollingInterval) clearInterval(pollingInterval);
       }
     } catch (error) {
       console.error("Error fetching booking data:", error);
+      setError("Failed to load booking: " + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchDriverData = async (driverId) => {
+    try {
+      console.log("Fetching driver data for:", driverId);
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `http://localhost:2525/driver/find/${driverId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const driver = await response.json();
+        console.log("Received driver data:", driver);
+
+        setDriverData({
+          name: driver.name || "Driver",
+          phone: driver.phone || "+91 0000000000",
+          vehicle: {
+            model: driver.vehicle_details?.vehicle_name || "Car",
+            number: driver.vehicle_details?.vehicle_number || "XX00XX0000",
+            type: driver.vehicle_type || "Sedan",
+          },
+          rating: driver.rating || 4.5,
+          otp: bookingData?.otp || Math.floor(1000 + Math.random() * 9000),
+        });
+      } else {
+        console.error("Failed to fetch driver data");
+      }
+    } catch (error) {
+      console.error("Error fetching driver data:", error);
     }
   };
 
   const updateBookingStatus = async (status) => {
     try {
       setUpdatingStatus(true);
-      const result = await bookingService.updateBookingStatus(
-        bookingId,
-        status
-      );
+      const result = await bookingService.updateBookingStatus(bookingId, status);
       setBookingData(result.booking);
       console.log(`Booking status updated to: ${status}`);
     } catch (error) {
@@ -1051,21 +909,6 @@ const RideBookingFlow = ({ bookingId }) => {
     } finally {
       setUpdatingStatus(false);
     }
-  };
-
-  const driverAssignment = () => {
-    const driver = {
-      name: "Rajesh Kumar",
-      phone: "+91 9876543210",
-      vehicle: {
-        model: "Maruti Suzuki Dzire",
-        number: "DL01AB1234",
-        type: "Sedan",
-      },
-      rating: 4.8,
-      otp: Math.floor(1000 + Math.random() * 9000),
-    };
-    setDriverData(driver);
   };
 
   const handleKeepBooking = async () => {
@@ -1088,45 +931,96 @@ const RideBookingFlow = ({ bookingId }) => {
     }
   };
 
-  const user = getCurrentUser();
+  // Loading state
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loading}>
+          <div className={styles.spinner}></div>
+          <p>Loading ride details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.error}>
+          <h3>Error Loading Ride</h3>
+          <p>{error}</p>
+          <p>Booking ID: {bookingId}</p>
+          <button 
+            className={styles.keepBtn} 
+            onClick={() => window.location.href = "/book-ride"}
+          >
+            Book New Ride
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // No booking data
+  if (!bookingData) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.error}>
+          <h3>No Booking Found</h3>
+          <p>Unable to find booking with ID: {bookingId}</p>
+          <button 
+            className={styles.keepBtn} 
+            onClick={() => window.location.href = "/book-ride"}
+          >
+            Book New Ride
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.mainContent}>
         <div className={styles.grid}>
           <div className={styles.mapSection}>
+            {/* Status Bar */}
             {bookingStage === "searching" && (
               <div className={`${styles.statusBar} ${styles.searching}`}>
-                {updatingStatus
-                  ? "Updating..."
-                  : `Searching For Car - ${countdown}s`}
+                {updatingStatus ? "Updating..." : `Searching For Car - ${countdown}s`}
+              </div>
+            )}
+            {bookingStage === "pending" && (
+              <div className={`${styles.statusBar} ${styles.pending}`}>
+                {updatingStatus ? "Updating..." : "Waiting for driver acceptance..."}
               </div>
             )}
             {bookingStage === "requested" && (
               <div className={`${styles.statusBar} ${styles.arriving}`}>
-                {updatingStatus
-                  ? "Updating..."
-                  : "Driver Assigned - Arriving in 5 min"}
+                {updatingStatus ? "Updating..." : "Driver Assigned - Arriving in 5 min"}
+              </div>
+            )}
+            {bookingStage === "ongoing" && (
+              <div className={`${styles.statusBar} ${styles.ongoing}`}>
+                {updatingStatus ? "Updating..." : "Ride in Progress"}
               </div>
             )}
             {bookingStage === "cancelled" && (
               <div className={`${styles.statusBar} ${styles.cancelled}`}>
-                <X size={18} />{" "}
-                {updatingStatus ? "Cancelling..." : "Ride Cancelled"}
+                <X size={18} /> {updatingStatus ? "Cancelling..." : "Ride Cancelled"}
               </div>
             )}
             {bookingStage === "confirmed" && (
               <div className={`${styles.statusBar} ${styles.confirmed}`}>
-                <Check size={18} />{" "}
-                {updatingStatus ? "Completing..." : "Ride Completed"}
+                <Check size={18} /> {updatingStatus ? "Completing..." : "Ride Completed"}
               </div>
             )}
 
-            {/* Dynamic Map */}
+            {/* Map Container */}
             <div className={styles.mapContainer}>
               {bookingData && bookingData.pickup && bookingData.dropoff ? (
                 <MapContainer
-                  key={`booking-map-${bookingId}`}
                   center={[30.7333, 76.7794]}
                   zoom={10}
                   style={{ height: "100%", width: "100%" }}
@@ -1141,25 +1035,16 @@ const RideBookingFlow = ({ bookingId }) => {
                   />
                 </MapContainer>
               ) : (
-                <div
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "#f3f4f6",
-                    color: "#6b7280",
-                  }}
-                >
-                  <MapPin size={48} style={{ opacity: 0.3 }} />
+                <div className={styles.noMap}>
+                  <MapPin size={48} />
+                  <p>Map not available</p>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Details Section */}
           <div className={styles.detailsSection}>
+            {/* SEARCHING STATE */}
             {bookingStage === "searching" && (
               <div className={styles.card}>
                 <h3 className={`${styles.cardTitle} ${styles.cardTitleblue}`}>
@@ -1173,20 +1058,14 @@ const RideBookingFlow = ({ bookingId }) => {
                       <MapPin className={styles.icon} size={20} />
                       <div>
                         <p className={styles.locationLabel}>Pickup Location</p>
-                        <p className={styles.locationValue}>
-                          {bookingData.pickup}
-                        </p>
+                        <p className={styles.locationValue}>{bookingData.pickup}</p>
                       </div>
                     </div>
                     <div className={styles.locationItem}>
                       <MapPin className={styles.icon} size={20} />
                       <div>
-                        <p className={styles.locationLabel}>
-                          Drop-off Location
-                        </p>
-                        <p className={styles.locationValue}>
-                          {bookingData.dropoff}
-                        </p>
+                        <p className={styles.locationLabel}>Drop-off Location</p>
+                        <p className={styles.locationValue}>{bookingData.dropoff}</p>
                       </div>
                     </div>
                   </div>
@@ -1195,7 +1074,7 @@ const RideBookingFlow = ({ bookingId }) => {
                 <div className={styles.fareInfo}>
                   <Clock className={styles.icon} size={20} />
                   <span className={styles.fareLabel}>
-                    Estimated Fare: ₹ 264.51
+                    Estimated Fare: ₹ {bookingData?.fare || 499}
                   </span>
                   <span className={styles.fareType}>Cash</span>
                 </div>
@@ -1210,11 +1089,63 @@ const RideBookingFlow = ({ bookingId }) => {
               </div>
             )}
 
+            {/* PENDING STATE */}
+            {bookingStage === "pending" && (
+              <div className={styles.card}>
+                <h3 className={`${styles.cardTitle} ${styles.cardTitleblue}`}>
+                  Ride Request Sent
+                </h3>
+                <p className={styles.cardSubtitle}>Waiting for driver acceptance</p>
+
+                {bookingData && (
+                  <div className={styles.locationInfo}>
+                    <div className={styles.locationItem}>
+                      <MapPin className={styles.icon} size={20} />
+                      <div>
+                        <p className={styles.locationLabel}>Pickup Location</p>
+                        <p className={styles.locationValue}>{bookingData.pickup}</p>
+                      </div>
+                    </div>
+                    <div className={styles.locationItem}>
+                      <MapPin className={styles.icon} size={20} />
+                      <div>
+                        <p className={styles.locationLabel}>Drop-off Location</p>
+                        <p className={styles.locationValue}>{bookingData.dropoff}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className={styles.fareInfo}>
+                  <Clock className={styles.icon} size={20} />
+                  <span className={styles.fareLabel}>
+                    Estimated Fare: ₹ {bookingData?.fare || 264.51}
+                  </span>
+                  <span className={styles.fareType}>Cash</span>
+                </div>
+
+                <div className={styles.pendingMessage}>
+                  <p>Your ride request has been sent to nearby drivers.</p>
+                  <p>Waiting for a driver to accept your ride...</p>
+                </div>
+
+                <button
+                  className={styles.cancelBtn}
+                  onClick={handleCancelBooking}
+                  disabled={updatingStatus}
+                >
+                  {updatingStatus ? "Cancelling..." : "Cancel Ride"}
+                </button>
+              </div>
+            )}
+
+            {/* REQUESTED STATE (Confirmed with driver) */}
             {bookingStage === "requested" && driverData && (
               <div className={styles.card}>
                 <h3 className={`${styles.cardTitle} ${styles.cardTitleGreen}`}>
-                  Ride Confirmed
+                  Driver Assigned
                 </h3>
+                <p className={styles.cardSubtitle}>Waiting for driver to start ride</p>
 
                 {bookingData && (
                   <div className={styles.locationInfo}>
@@ -1224,9 +1155,7 @@ const RideBookingFlow = ({ bookingId }) => {
                     </div>
                     <div className={styles.infoRow}>
                       <span className={styles.label}>Drop-off Location</span>
-                      <span className={styles.value}>
-                        {bookingData.dropoff}
-                      </span>
+                      <span className={styles.value}>{bookingData.dropoff}</span>
                     </div>
                   </div>
                 )}
@@ -1244,44 +1173,35 @@ const RideBookingFlow = ({ bookingId }) => {
                         ★ {driverData.rating} • {driverData.vehicle.type}
                       </p>
                     </div>
-                    <button
-                      className={styles.callBtn}
-                      onClick={handleCallDriver}
-                    >
+                    <button className={styles.callBtn} onClick={handleCallDriver}>
                       <Phone size={20} />
                     </button>
                   </div>
 
                   <div className={styles.vehicleInfo}>
-                    <div className={styles.vehicleIcon}>🚗</div>
-                    <div>
-                      <p className={styles.vehicleName}>
-                        {driverData.vehicle.model}
-                      </p>
-                      <p className={styles.vehicleModel}>
-                        AC {driverData.vehicle.type}
-                      </p>
+                    <div className={styles.vehicleIcon}>
+                      <Car size={24} className={styles.icon} />
                     </div>
-                    <span className={styles.vehicleNumber}>
-                      {driverData.vehicle.number}
-                    </span>
+                    <div>
+                      <p className={styles.vehicleName}>{driverData.vehicle.model}</p>
+                      <p className={styles.vehicleModel}>AC {driverData.vehicle.type}</p>
+                    </div>
+                    <span className={styles.vehicleNumber}>{driverData.vehicle.number}</span>
                   </div>
 
                   <div className={styles.otpInfo}>
-                    <div className={styles.otpIcon}>🔑</div>
-                    <span className={styles.otpLabel}>OTP</span>
+                    <div className={styles.otpIcon}>
+                      <Key size={20} className={styles.icon} />
+                    </div>
+                    <span className={styles.otpLabel}>Your OTP</span>
                     <span className={styles.otpValue}>{driverData.otp}</span>
                   </div>
+                  <p className={styles.otpNote}>
+                    Share this OTP with the driver to start your ride
+                  </p>
                 </div>
 
                 <div className={styles.actionButtons}>
-                  <button
-                    className={styles.keepBtn}
-                    onClick={handleKeepBooking}
-                    disabled={updatingStatus}
-                  >
-                    {updatingStatus ? "Completing..." : "Complete Ride"}
-                  </button>
                   <button
                     className={styles.cancelBtnSecondary}
                     onClick={handleCancelBooking}
@@ -1293,6 +1213,65 @@ const RideBookingFlow = ({ bookingId }) => {
               </div>
             )}
 
+            {/* ONGOING STATE */}
+            {bookingStage === "ongoing" && driverData && (
+              <div className={styles.card}>
+                <h3 className={`${styles.cardTitle} ${styles.cardTitleGreen}`}>
+                  Ride in Progress
+                </h3>
+                <p className={styles.cardSubtitle}>Enjoy your ride!</p>
+
+                {bookingData && (
+                  <div className={styles.locationInfo}>
+                    <div className={styles.infoRow}>
+                      <span className={styles.label}>Pickup Location</span>
+                      <span className={styles.value}>{bookingData.pickup}</span>
+                    </div>
+                    <div className={styles.infoRow}>
+                      <span className={styles.label}>Drop-off Location</span>
+                      <span className={styles.value}>{bookingData.dropoff}</span>
+                    </div>
+                  </div>
+                )}
+
+                <div className={styles.driverInfo}>
+                  <div className={styles.driverCard}>
+                    <img
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVcnImBmZ1U-IhsHjdDYaTS9_GpU5CQn9-KA&s"
+                      alt="Driver"
+                      className={styles.driverImage}
+                    />
+                    <div className={styles.driverDetails}>
+                      <p className={styles.driverName}>{driverData.name}</p>
+                      <p className={styles.driverVehicle}>
+                        ★ {driverData.rating} • {driverData.vehicle.type}
+                      </p>
+                    </div>
+                    <button className={styles.callBtn} onClick={handleCallDriver}>
+                      <Phone size={20} />
+                    </button>
+                  </div>
+
+                  <div className={styles.vehicleInfo}>
+                    <div className={styles.vehicleIcon}>
+                      <Car size={24} className={styles.icon} />
+                    </div>
+                    <div>
+                      <p className={styles.vehicleName}>{driverData.vehicle.model}</p>
+                      <p className={styles.vehicleModel}>AC {driverData.vehicle.type}</p>
+                    </div>
+                    <span className={styles.vehicleNumber}>{driverData.vehicle.number}</span>
+                  </div>
+                </div>
+
+                <div className={styles.ongoingMessage}>
+                  <p>Your ride is in progress</p>
+                  <p>Driver will complete the ride at destination</p>
+                </div>
+              </div>
+            )}
+
+            {/* CANCELLED STATE */}
             {bookingStage === "cancelled" && (
               <div className={styles.card}>
                 <h3 className={`${styles.cardTitle} ${styles.cardTitlered}`}>
@@ -1307,9 +1286,7 @@ const RideBookingFlow = ({ bookingId }) => {
                     </div>
                     <div className={styles.infoRow}>
                       <span className={styles.label}>Drop-off Location</span>
-                      <span className={styles.value}>
-                        {bookingData.dropoff}
-                      </span>
+                      <span className={styles.value}>{bookingData.dropoff}</span>
                     </div>
                   </div>
                 )}
@@ -1328,6 +1305,7 @@ const RideBookingFlow = ({ bookingId }) => {
               </div>
             )}
 
+            {/* CONFIRMED STATE (Completed) */}
             {bookingStage === "confirmed" && (
               <div className={styles.card}>
                 <div className={styles.successMessage}>
@@ -1361,7 +1339,9 @@ const RideBookingFlow = ({ bookingId }) => {
         {/* Bottom Cards */}
         <div className={styles.bottomCards}>
           <div className={styles.featureCard}>
-            <div className={styles.featureIcon}>🚗</div>
+            <div className={styles.featureIcon}>
+              <Car size={24} className={styles.icon} />
+            </div>
             <div className={styles.featureContent}>
               <h4 className={styles.featureTitle}>Request more rides</h4>
               <p className={styles.featureText}>For yourself or guest</p>
@@ -1369,7 +1349,9 @@ const RideBookingFlow = ({ bookingId }) => {
           </div>
 
           <div className={styles.featureCard}>
-            <div className={styles.featureIcon}>👥</div>
+            <div className={styles.featureIcon}>
+              <Users size={24} className={styles.icon} />
+            </div>
             <div className={styles.featureContent}>
               <h4 className={styles.featureTitle}>Send and receive</h4>
               <p className={styles.featureText}>One or multiple items</p>
@@ -1377,7 +1359,9 @@ const RideBookingFlow = ({ bookingId }) => {
           </div>
 
           <div className={styles.featureCard}>
-            <div className={styles.featureIcon}>📅</div>
+            <div className={styles.featureIcon}>
+              <Calendar size={24} className={styles.icon} />
+            </div>
             <div className={styles.featureContent}>
               <h4 className={styles.featureTitle}>Reserve a ride</h4>
               <p className={styles.featureText}>Up to 90 days ahead</p>

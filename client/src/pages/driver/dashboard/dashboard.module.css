@@ -1,5 +1,20 @@
-.dashboardContainer {
+.appContainer {
   display: flex;
   min-height: 100vh;
-  background-color: #f5f5f5;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .appContainer {
+    display: block;
+  }
+
+  .mainContent {
+    padding: 60px 20px 20px 20px;
+  }
 }

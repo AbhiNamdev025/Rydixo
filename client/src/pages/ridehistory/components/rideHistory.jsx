@@ -399,7 +399,7 @@ const RideHistory = () => {
                           </div>
                           <div className={styles.rideFare}>
                             <IndianRupee size={16} />
-                            {ride.fare || ride.price || ride.amount || "N/A"}
+                            {ride.fare || ride.price || ride.amount || "499"}
                           </div>
                         </div>
 

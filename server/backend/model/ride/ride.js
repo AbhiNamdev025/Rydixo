@@ -7,6 +7,10 @@
 //       ref: "User",
 //       required: true,
 //     },
+//     driverId: {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: "Driver",
+//     },
 //     pickup: { type: String, required: true },
 //     dropoff: { type: String, required: true },
 //     vehicleType: { type: String, required: true },
@@ -20,9 +24,10 @@
 //     bookingType: { type: String, required: true },
 //     status: {
 //       type: String,
-//       enum: ["pending", "confirmed", "completed", "cancelled"],
+//       enum: ["pending", "confirmed", "ongoing", "completed", "cancelled"],
 //       default: "pending",
 //     },
+//     driverResponseTimeout: { type: Date },
 //   },
 //   { timestamps: true }
 // );
@@ -55,9 +60,13 @@ const bookingSchema = new mongoose.Schema(
     bookingType: { type: String, required: true },
     status: {
       type: String,
-      enum: ["pending", "confirmed", "completed", "cancelled"],
+      enum: ["pending", "confirmed", "ongoing", "completed", "cancelled"],
       default: "pending",
     },
+    otp: { type: Number }, // NEW: OTP for ride verification
+    fare: { type: Number, default: 0 }, // NEW: Fare amount
+    startTime: { type: Date }, // NEW: Ride start time
+    endTime: { type: Date }, // NEW: Ride end time
     driverResponseTimeout: { type: Date },
   },
   { timestamps: true }
