@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "../modal/modal";
 import { MapPin, IndianRupee, User, Shield } from "lucide-react";
+import { toast } from "react-toastify";
 import styles from "./confirmotp.module.css";
 
 const OTPVerificationModal = ({ isOpen, onClose, ride, onVerifyOTP }) => {
@@ -45,15 +46,22 @@ const OTPVerificationModal = ({ isOpen, onClose, ride, onVerifyOTP }) => {
         }
       );
 
+      const responseData = await response.json();
+
       if (!response.ok) {
-        throw new Error("Failed to complete ride");
+        throw new Error(
+          responseData.error ||
+            responseData.message ||
+            "Failed to complete ride"
+        );
       }
 
       onClose();
+      toast.success("Ride completed successfully!");
       window.location.href = "/complete-ride";
     } catch (error) {
       console.error("Error completing ride:", error);
-      alert("Failed to complete ride. Please try again.");
+      toast.error("Failed to complete ride. Please try again.");
     } finally {
       setVerifying(false);
     }

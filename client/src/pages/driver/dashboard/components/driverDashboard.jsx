@@ -10,7 +10,12 @@ import {
   Circle,
   ArrowRight,
   User,
+  CreditCard,
+  Wrench,
+  FileText,
 } from "lucide-react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./home.module.css";
 import RideModal from "./modal/rideModal";
 import SendOTPModal from "../../../../components/local/sendotp/sendOtpModal";
@@ -24,11 +29,11 @@ const DriverDashboard = () => {
   const [selectedPeriod, setSelectedPeriod] = useState("weekly");
   const [selectedRide, setSelectedRide] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [isSendOTPModalOpen, setIsSendOTPModalOpen] = useState(false);
   const [isConfirmOTPModalOpen, setIsConfirmOTPModalOpen] = useState(false);
   const [activeRide, setActiveRide] = useState(null);
   const [responding, setResponding] = useState(false);
+  const [verifying, setVerifying] = useState(false);
 
   const openSendOTPModal = (ride) => {
     if (!ride || !ride._id) return;
@@ -53,7 +58,7 @@ const DriverDashboard = () => {
       openConfirmOTPModal();
     } catch (error) {
       console.error("Error sending OTP:", error);
-      alert("Failed to send OTP. Please try again.");
+      toast.error("Failed to send OTP. Please try again.");
     }
   };
 
@@ -79,11 +84,11 @@ const DriverDashboard = () => {
       }
 
       closeConfirmOTPModal();
-      alert("Ride Started Successfully!");
+      toast.success("Ride Started Successfully!");
       await fetchAllRides();
     } catch (error) {
       console.error("Error starting ride:", error);
-      alert(error.message || "Invalid OTP. Please try again.");
+      toast.error(error.message || "Invalid OTP. Please try again.");
     }
   };
 
@@ -188,9 +193,50 @@ const DriverDashboard = () => {
       openSendOTPModal(ride);
     } catch (error) {
       console.error("Accept failed:", error);
-      alert("Failed to confirm ride. Please try again.");
+      toast.error("Failed to confirm ride. Please try again.");
     } finally {
       setResponding(false);
+    }
+  };
+
+  const handleEndTrip = async (ride) => {
+    try {
+      setVerifying(true);
+      const token = localStorage.getItem("token");
+
+      console.log("Ending trip for ride:", ride._id, "Status:", ride.status);
+
+      const response = await fetch(
+        `http://localhost:2525/ride/${ride._id}/complete`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const responseData = await response.json();
+      console.log("Complete ride response:", response.status, responseData);
+
+      if (!response.ok) {
+        throw new Error(
+          responseData.error ||
+            responseData.message ||
+            "Failed to complete ride"
+        );
+      }
+
+      toast.success("Ride completed successfully!");
+      await fetchAllRides();
+    } catch (error) {
+      console.error("Error completing ride:", error);
+      toast.error(
+        error.message || "Failed to complete ride. Please try again."
+      );
+    } finally {
+      setVerifying(false);
     }
   };
 
@@ -228,10 +274,18 @@ const DriverDashboard = () => {
 
   const chartData = getChartData();
 
+  const getCompletedRides = () => {
+    return rides.filter((ride) => ride.status === "completed").slice(0, 3); //  3 rides
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "Recent";
+    const date = new Date(dateString);
+    return `${date.getDate()}/${date.getMonth() + 1}`; // DD/MM format
+  };
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        {/* Earnings Section */}
         <section className={styles.earningSection}>
           <div className={styles.sectionHeader}>
             <div className={styles.headerLeft}>
@@ -265,8 +319,8 @@ const DriverDashboard = () => {
               borderRadius={8}
               axisTop={null}
               axisRight={null}
-              axisBottom={{ tickSize: 0, tickPadding: 10, tickRotation: 0 }}
-              axisLeft={{ tickSize: 0, tickPadding: 10, tickRotation: 0 }}
+              axisBottom={{ tickSize: 0, tickPadding: 10 }}
+              axisLeft={{ tickSize: 0, tickPadding: 10 }}
               enableLabel={false}
               enableGridY={true}
               gridYValues={5}
@@ -284,25 +338,62 @@ const DriverDashboard = () => {
           </div>
         </section>
 
-        {/* Performance Section */}
         <section className={styles.performanceSection}>
           <div className={styles.driveRating}>
             <h3>My Drive Rating</h3>
             <div className={styles.ratingScore}>4.0</div>
             <div className={styles.stars}>
-              <Star size={20} fill="currentColor" />
-              <Star size={20} fill="currentColor" />
-              <Star size={20} fill="currentColor" />
-              <Star size={20} fill="currentColor" />
-              <Star size={20} />
+              <Star size={16} color="#facc15" />
+              <Star size={16} color="#facc15" />
+              <Star size={16} color="#facc15" />
+              <Star size={16} color="#facc15" />
             </div>
             <p className={styles.ratingMessage}>Great Drive, Keep it up!</p>
+          </div>
+
+          <div className={styles.performance}>
+            <h3>Performance</h3>
+            <div className={styles.perfGrid}>
+              <div className={styles.perfItem}>
+                <div className={styles.perfValue}>12h</div>
+                <div className={styles.perfLabel}>Online Hours</div>
+              </div>
+              <div className={styles.perfItem}>
+                <div className={styles.perfValue}>150</div>
+                <div className={styles.perfLabel}>Total Ride Complete</div>
+              </div>
+              <div className={styles.perfItem}>
+                <div className={styles.perfValue}>2%</div>
+                <div className={styles.perfLabel}>Cancellation Rate</div>
+              </div>
+              <div className={styles.perfItem}>
+                <div className={styles.perfValue}>98%</div>
+                <div className={styles.perfLabel}>Acceptance Rate</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.shortcuts}>
+          <h3>ShortCuts</h3>
+          <div className={styles.shortcutGrid}>
+            <button className={styles.shortcutBtn}>
+              <CreditCard size={18} />
+              <span>Wallet</span>
+            </button>
+            <button className={styles.shortcutBtn}>
+              <Wrench size={18} />
+              <span>Support</span>
+            </button>
+            <button className={styles.shortcutBtn}>
+              <FileText size={18} />
+              <span>Ride History</span>
+            </button>
           </div>
         </section>
       </main>
 
       <aside className={styles.rightSidebar}>
-        {/* Vehicle Section */}
         <section className={styles.vehicleCard}>
           <div className={styles.vehicleHeader}>
             <div className={styles.vehicleHeaderLeft}>
@@ -336,7 +427,6 @@ const DriverDashboard = () => {
           </div>
         </section>
 
-        {/* Ride Requests Section */}
         <section className={styles.rideRequests}>
           <h3>Ride Requests</h3>
           <div className={styles.requestsList}>
@@ -363,7 +453,7 @@ const DriverDashboard = () => {
                       </div>
                       <div className={styles.requestInfo}>
                         <strong>
-                          {ride.user?.name || ride.userId?.name || "User"}
+                          {ride.user?.name || ride.userId?.name || "Rider"}
                         </strong>
                         <p>
                           {ride.pickup} to {ride.dropoff}
@@ -395,25 +485,27 @@ const DriverDashboard = () => {
                       </div>
                     </div>
                     <div className={styles.requestActions}>
-                      <span className={styles.fare}>₹ {ride.fare || 0}</span>
+                      <span className={styles.fare}>₹ {ride.fare || 199}</span>
                       <button
                         className={styles.viewDetailsBtn}
                         onClick={() => {
                           if (!ride._id) return;
-                          if (
-                            ride.status === "confirmed" ||
-                            ride.status === "ongoing"
-                          ) {
+                          if (ride.status === "confirmed") {
                             openSendOTPModal(ride);
+                          } else if (ride.status === "ongoing") {
+                            handleEndTrip(ride);
                           } else {
                             openModal(ride);
                           }
                         }}
+                        disabled={verifying}
                       >
                         {ride.status === "pending"
                           ? "View Details"
                           : ride.status === "confirmed"
                           ? "Start Ride"
+                          : verifying
+                          ? "Ending..."
                           : "End Trip"}
                       </button>
                     </div>
@@ -422,9 +514,57 @@ const DriverDashboard = () => {
             )}
           </div>
         </section>
+
+        {/* <section className={styles.rideHistory}>
+          <div className={styles.historyHeader}>
+            <h3>Ride History</h3>
+            <a href="#" className={styles.viewAll}>
+              View All <ArrowRight size={14} />
+            </a>
+          </div>
+          <p className={styles.historySubtitle}>My Previous Rides</p>
+          <div className={styles.historyItem}>
+            <div className={styles.historyIcon}>
+              <Car size={16} />
+            </div>
+            <div className={styles.historyDetails}>
+              <strong>June 15, 2025</strong>
+              <p>12:30 pm | 23 mahesh nagar to chandigarh</p>
+              <span className={styles.historyFare}>₹ 800</span>
+            </div>
+          </div>
+        </section> */}
+
+        <section className={styles.rideHistory}>
+          <div className={styles.historyHeader}>
+            <h3>Recent Rides</h3>
+          </div>
+
+          {getCompletedRides().length === 0 ? (
+            <p className={styles.noRides}>No completed rides</p>
+          ) : (
+            <div className={styles.historyList}>
+              {getCompletedRides().map((ride, index) => (
+                <div key={ride._id || index} className={styles.historyItem}>
+                  <div className={styles.historyIcon}>
+                    <Car size={16} />
+                  </div>
+                  <div className={styles.historyDetails}>
+                    <strong>{formatDate(ride.createdAt)}</strong>
+                    <p>
+                      {ride.pickup} to {ride.dropoff}
+                    </p>
+                    <span className={styles.historyFare}>
+                      ₹ {ride.fare || "199"}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
       </aside>
 
-      {/* Modals */}
       <RideModal
         isOpen={isModalOpen}
         onClose={closeModal}

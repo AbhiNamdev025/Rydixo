@@ -1,0 +1,20 @@
+.appContainer {
+  display: flex;
+  min-height: 100vh;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .appContainer {
+    display: block;
+  }
+
+  .mainContent {
+    padding: 60px 20px 20px 20px;
+  }
+}

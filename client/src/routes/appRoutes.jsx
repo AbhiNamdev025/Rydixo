@@ -21,6 +21,7 @@ import HistoryPage from "../pages/ridehistory/historyPage";
 import Dashboard from "../pages/driver/dashboard/dashboard";
 import OngoingTripPage from "../pages/driver/ongoingride/ongoingTrip";
 import TripCompletePage from "../pages/driver/tripcomplete/tripCompletePage";
+import RidesPage from "../pages/driver/ridepage/ridesPage";
 
 const AppRoutes = () => {
   return (
@@ -53,6 +54,7 @@ const AppRoutes = () => {
 
       {/* driver */}
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/rides" element={<RidesPage />} />
       <Route path="/ongoing" element={<OngoingTripPage />} />
       <Route path="/complete" element={<TripCompletePage />} />
     </Routes>
