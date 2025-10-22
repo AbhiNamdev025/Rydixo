@@ -1,96 +1,3 @@
-// import React, { useState } from "react";
-// import Modal from "../modal/modal";
-// import { MapPin, IndianRupee, User, Shield } from "lucide-react";
-// import styles from "./confirmotp.module.css";
-
-// const OTPVerificationModal = ({ isOpen, onClose, ride, onVerifyOTP }) => {
-//   const [enteredOTP, setEnteredOTP] = useState("");
-//   const [error, setError] = useState("");
-
-//   if (!ride) return null;
-
-//   const handleVerify = () => {
-//     if (enteredOTP.length === 4) {
-//       setError("");
-//       onVerifyOTP(enteredOTP);
-//     } else {
-//       setError("Please enter 4-digit OTP");
-//     }
-//   };
-
-//   return (
-//     <Modal isOpen={isOpen} onClose={onClose}>
-//       <div className={styles.confirmOtpModal}>
-//         <h2 className={styles.title}>OTP Verification</h2>
-
-//         <div className={styles.userInfo}>
-//           <div className={styles.avatarWrapper}>
-//             <User size={24} className={styles.avatarIcon} />
-//           </div>
-//           <div className={styles.userDetails}>
-//             <strong className={styles.userName}>
-//               {ride.user?.name || "Rahul"}
-//             </strong>
-//           </div>
-//         </div>
-
-//         <div className={styles.locationSection}>
-//           <div className={styles.locationItem}>
-//             <div className={styles.locationHeader}>
-//               <MapPin size={16} className={styles.locationIcon} />
-//               <span className={styles.locationLabel}>Pick Up</span>
-//             </div>
-//             <p className={styles.locationAddress}>
-//               {ride.pickup || "123,Main Bazar, Sadar Bazar, Ambala Cantt"}
-//             </p>
-//           </div>
-//         </div>
-
-//         <div className={styles.fareSection}>
-//           <div className={styles.fareHeader}>
-//             <IndianRupee size={20} className={styles.fareIcon} />
-//             <span>Estimate Fare</span>
-//           </div>
-//           <div className={styles.fareAmount}>₹{ride.fare || "1000"}</div>
-//         </div>
-
-//         <div className={styles.otpSection}>
-//           <div className={styles.otpHeader}>
-//             <Shield size={20} className={styles.otpIcon} />
-//             <span>Enter OTP to start Ride</span>
-//           </div>
-//           <input
-//             type="text"
-//             className={styles.otpInput}
-//             placeholder="Enter OTP"
-//             value={enteredOTP}
-//             onChange={(e) =>
-//               setEnteredOTP(e.target.value.replace(/\D/g, "").slice(0, 4))
-//             }
-//             maxLength={4}
-//           />
-//           {error && <p className={styles.errorText}>{error}</p>}
-//           <p className={styles.otpNote}>
-//             Please ask the customer to share the OTP before starting the ride.
-//             This step ensures your ride is secure.
-//           </p>
-//         </div>
-
-//         <div className={styles.actions}>
-//           <button className={styles.cancelBtn} onClick={onClose}>
-//             Cancel Ride
-//           </button>
-//           <button className={styles.acceptBtn} onClick={handleVerify}>
-//             Start Ride
-//           </button>
-//         </div>
-//       </div>
-//     </Modal>
-//   );
-// };
-
-// export default OTPVerificationModal;
-
 import React, { useState } from "react";
 import Modal from "../modal/modal";
 import { MapPin, IndianRupee, User, Shield } from "lucide-react";
@@ -113,7 +20,7 @@ const OTPVerificationModal = ({ isOpen, onClose, ride, onVerifyOTP }) => {
     setVerifying(true);
 
     try {
-      await onVerifyOTP(enteredOTP); // This should set status to "ongoing"
+      await onVerifyOTP(enteredOTP);
     } catch (error) {
       console.error("Error starting ride:", error);
       setError(error.message || "Invalid OTP. Please try again.");

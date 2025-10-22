@@ -50,9 +50,9 @@ const RideModal = ({
     if (responding) return;
     setResponding(true);
     try {
-      await onRideResponse(ride._id, "accepted"); // ✅ send accepted
+      await onRideResponse(ride._id, "accepted");
       onClose();
-      onOpenSendOTP(ride); // open OTP modal
+      onOpenSendOTP(ride);
     } catch (error) {
       console.error("Accept failed:", error);
       alert("Failed to confirm ride.");
