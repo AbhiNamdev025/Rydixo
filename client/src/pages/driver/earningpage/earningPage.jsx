@@ -1,18 +1,18 @@
 import React from "react";
 import Sidebar from "../../../components/local/driver/sidebar/sidebar";
-import OngoingRides from "./components/ongoing";
-import styles from "./ongoingtrip.module.css";
+import styles from "./earningpage.module.css";
+import Earning from "./components/earning";
 
-function OngoingTrip() {
+function EarningPage() {
   return (
     <div className={styles.appContainer}>
       <Sidebar />
 
       <div className={styles.mainContent}>
-        <OngoingRides />
+        <Earning />
       </div>
     </div>
   );
 }
 
-export default OngoingTrip;
+export default EarningPage;

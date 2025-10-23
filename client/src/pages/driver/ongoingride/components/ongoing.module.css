@@ -1,0 +1,319 @@
+.container {
+  padding: 30px;
+  margin: 0 auto;
+  background: white;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.onlineStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.onlineDot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.loading,
+.noRides {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.noRidesIcon {
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.rideCard {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+}
+
+.userSection {
+  padding: 25px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  flex: 1;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatarFallback {
+  color: #666;
+}
+
+.userDetails {
+  flex: 1;
+}
+
+.userName {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  color: #1a1a1a;
+}
+
+.userActions {
+  display: flex;
+  gap: 8px;
+}
+
+.contactBtn,
+.messageBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.contactBtn:hover,
+.messageBtn:hover {
+  background: #f8f8f8;
+  border-color: #d0d0d0;
+}
+
+.navigateBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+  margin: 15px 25px;
+}
+
+.navigateBtn:hover {
+  transform: translateY(-1px);
+}
+
+.mapSection {
+  height: 500px;
+  width: 100%;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.locations {
+  padding: 25px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.location {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.location:last-child {
+  margin-bottom: 0;
+}
+
+.locationIcon {
+  color: #666;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.locationDetails {
+  flex: 1;
+}
+
+.locationDetails strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+
+.locationDetails p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.rideInfo {
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.infoValue {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.infoLabel {
+  font-size: 12px;
+  color: #666;
+}
+
+.actions {
+  padding: 25px;
+  display: flex;
+  gap: 15px;
+}
+
+.endTripBtn {
+  flex: 1;
+  padding: 16px 24px;
+  background: #000;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.endTripBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .userName {
+    font-size: 18px;
+  }
+
+  .contactBtn,
+  .messageBtn {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .navigateBtn {
+    padding: 10px 14px;
+    font-size: 13px;
+    margin: 10px 15px;
+  }
+
+  .endTripBtn {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+
+  .mapSection {
+    height: 400px;
+  }
+
+  .rideCard {
+    flex-direction: column;
+    padding: 15px;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 360px) {
+  .userInfo {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .userActions {
+    justify-content: center;
+  }
+
+  .rideInfo {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .infoItem {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+}

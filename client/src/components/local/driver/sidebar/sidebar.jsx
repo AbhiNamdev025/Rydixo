@@ -201,15 +201,7 @@ const Sidebar = () => {
             <Navigation size={20} className={styles.navIcon} />
             <span>Ongoing Trip</span>
           </button>
-          <button
-            onClick={() => handleNavigation("/rating")}
-            className={`${styles.navItem} ${
-              isActive("/rating") ? styles.navItemActive : ""
-            }`}
-          >
-            <Star size={20} className={styles.navIcon} />
-            <span>Rating</span>
-          </button>
+
           <button
             onClick={() => handleNavigation("/profile")}
             className={`${styles.navItem} ${

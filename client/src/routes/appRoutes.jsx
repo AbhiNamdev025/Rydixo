@@ -20,8 +20,9 @@ import BookingStatus from "../pages/bookride/components/bookingStatus/bookingSta
 import HistoryPage from "../pages/ridehistory/historyPage";
 import Dashboard from "../pages/driver/dashboard/dashboard";
 import OngoingTripPage from "../pages/driver/ongoingride/ongoingTrip";
-import TripCompletePage from "../pages/driver/tripcomplete/tripCompletePage";
 import RidesPage from "../pages/driver/ridepage/ridesPage";
+import EarningPage from "../pages/driver/earningpage/earningPage";
+import ProfilePage from "../pages/driver/profilepage/profilePage";
 
 const AppRoutes = () => {
   return (
@@ -56,7 +57,8 @@ const AppRoutes = () => {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/rides" element={<RidesPage />} />
       <Route path="/ongoing" element={<OngoingTripPage />} />
-      <Route path="/complete" element={<TripCompletePage />} />
+      <Route path="/earning" element={<EarningPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
     </Routes>
   );
 };

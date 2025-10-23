@@ -1,0 +1,414 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #666;
+}
+
+/* Header Section */
+.header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.driverInfo {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #000;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.driverDetails {
+  flex: 1;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #1a1a1a;
+}
+
+.employeeInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.employeeType {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+}
+
+.status {
+  color: #22c55e;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.agreementSection {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.agreementHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.agreementTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.agreementBadge {
+  background: #ef4444;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.agreementText {
+  margin: 0 0 16px 0;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.agreementActions {
+  display: flex;
+  gap: 12px;
+}
+
+.btnUpload, .btnDone {
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnUpload {
+  background: #000;
+  color: white;
+  border-color: #000;
+}
+
+.btnUpload:hover {
+  background: #333;
+}
+
+.btnDone {
+  background: white;
+  color: #333;
+}
+
+.btnDone:hover {
+  background: #f8f8f8;
+}
+
+/* Content Sections */
+.content {
+  display: flex;
+  gap: 20px;
+}
+
+.section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+/* Info Grid Layout */
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.infoLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  margin: 0;
+}
+
+.infoValue {
+  font-size: 16px;
+  color: #1a1a1a;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Documents List */
+.documentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.documentItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.documentItem:last-child {
+  border-bottom: none;
+}
+
+.documentLabel {
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+.documentValue {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Upload Sections */
+.uploadSection {
+  margin-top: 24px;
+}
+
+.uploadTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 16px 0;
+}
+
+.uploadButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btnUploadDocument {
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.btnUploadDocument:hover {
+  background: #f8f8f8;
+  border-color: #999;
+}
+
+.uploadIcon {
+  color: #666;
+  font-weight: bold;
+}
+
+/* Edit Mode Styles */
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.btnEdit {
+  background: none;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.btnEdit:hover {
+  background: #f8f8f8;
+  color: #333;
+}
+
+.input, .select, .textarea {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: inherit;
+  background: white;
+}
+
+.input:focus, .select:focus, .textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.vehicleInputs {
+  display: flex;
+  gap: 8px;
+}
+
+.vehicleInput {
+  flex: 1;
+}
+
+.editActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.btnSave, .btnCancel {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.btnSave {
+  background: #000;
+  color: white;
+}
+
+.btnSave:hover {
+  background: #333;
+}
+
+.btnCancel {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.btnCancel:hover {
+  background: #e0e0e0;
+}
+
+/* Status Messages */
+.statusMessage {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.statusMessage.success {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.statusMessage.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+  
+  .header {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .driverInfo {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .agreementActions {
+    flex-direction: column;
+  }
+  
+  .vehicleInputs {
+    flex-direction: column;
+  }
+}
