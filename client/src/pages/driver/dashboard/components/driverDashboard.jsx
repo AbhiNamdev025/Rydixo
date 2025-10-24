@@ -16,7 +16,8 @@ import styles from "./home.module.css";
 import RideModal from "./modal/rideModal";
 import SendOTPModal from "../../../../components/local/sendotp/sendOtpModal";
 import OTPVerificationModal from "../../../../components/local/confirmotp/confirmOtp";
-
+import { BASE_URL_DRIVER } from "../../../../const/const";
+import { BASE_URL_RIDE } from "../../../../const/const";
 const DriverDashboard = () => {
   const [driverData, setDriverData] = useState(null);
   const [rides, setRides] = useState([]);
@@ -62,17 +63,14 @@ const DriverDashboard = () => {
     if (!activeRide || !activeRide._id) return;
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `http://localhost:2525/ride/${activeRide._id}/start`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ otp }),
-        }
-      );
+      const response = await fetch(`${BASE_URL_RIDE}/${activeRide._id}/start`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ otp }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -113,15 +111,12 @@ const DriverDashboard = () => {
       const payload = JSON.parse(atob(token.split(".")[1]));
       const driverId = payload.id || payload.userId || payload._id;
 
-      const response = await fetch(
-        `http://localhost:2525/driver/find/${driverId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL_DRIVER}/find/${driverId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) throw new Error("Failed to fetch driver data");
       const data = await response.json();
@@ -157,7 +152,7 @@ const DriverDashboard = () => {
       const userData = JSON.parse(localStorage.getItem("user"));
       const driverId = userData?._id;
 
-      const response = await fetch("http://localhost:2525/ride/find", {
+      const response = await fetch(`${BASE_URL_RIDE}/find`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -183,18 +178,15 @@ const DriverDashboard = () => {
     if (!userData || !userData._id) throw new Error("User not found");
     const otp = Math.floor(1000 + Math.random() * 9000);
 
-    const response = await fetch(
-      `http://localhost:2525/ride/${rideId}/respond`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action,
-          driverId: userData._id,
-          otp: action === "accepted" ? otp : undefined,
-        }),
-      }
-    );
+    const response = await fetch(`${BASE_URL_RIDE}/${rideId}/respond`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action,
+        driverId: userData._id,
+        otp: action === "accepted" ? otp : undefined,
+      }),
+    });
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -228,16 +220,13 @@ const DriverDashboard = () => {
 
       console.log("Ending trip for ride:", ride._id, "Status:", ride.status);
 
-      const response = await fetch(
-        `http://localhost:2525/ride/${ride._id}/complete`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL_RIDE}/${ride._id}/complete`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       const responseData = await response.json();
       console.log("Complete ride response:", response.status, responseData);

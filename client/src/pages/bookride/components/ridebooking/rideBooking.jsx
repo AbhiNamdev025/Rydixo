@@ -17,6 +17,7 @@ import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import styles from "./ridebooking.module.css";
 import { bookingService } from "../../services/bookingServices";
+import { BASE_URL_DRIVER } from "../../../../const/const";
 
 const BookingRoutingMachine = ({ pickup, dropoff }) => {
   const map = useMap();
@@ -196,16 +197,13 @@ const RideBookingFlow = ({ bookingId }) => {
       if (!token) throw new Error("No authentication token found");
 
       const driverIdStr = String(driverId).trim();
-      const response = await fetch(
-        `http://localhost:2525/driver/find/${driverIdStr}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL_AUTH}/find/${driverIdStr}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
 

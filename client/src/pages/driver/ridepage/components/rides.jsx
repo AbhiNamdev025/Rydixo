@@ -16,7 +16,7 @@ import styles from "./rides.module.css";
 import DriverRide from "./driverRide";
 import SendOTPModal from "../../../../components/local/sendotp/sendOtpModal";
 import OTPVerificationModal from "../../../../components/local/confirmotp/confirmOtp";
-
+import { BASE_URL_RIDE } from "../../../../const/const";
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -51,7 +51,7 @@ const Rides = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:2525/ride/find", {
+      const response = await fetch(`${BASE_URL_RIDE}/find`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -132,23 +132,20 @@ const Rides = () => {
       const token = localStorage.getItem("token");
       const userData = JSON.parse(localStorage.getItem("user"));
 
-      const response = await fetch(
-        `http://localhost:2525/ride/${ride._id}/respond`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            action,
-            driverId: userData._id,
-            ...(action === "accepted" && {
-              otp: Math.floor(1000 + Math.random() * 9000),
-            }),
+      const response = await fetch(`${BASE_URL_RIDE}/${ride._id}/respond`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          action,
+          driverId: userData._id,
+          ...(action === "accepted" && {
+            otp: Math.floor(1000 + Math.random() * 9000),
           }),
-        }
-      );
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -182,17 +179,14 @@ const Rides = () => {
     if (!activeRide || !activeRide._id) return;
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `http://localhost:2525/ride/${activeRide._id}/start`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ otp }),
-        }
-      );
+      const response = await fetch(`${BASE_URL_RIDE}/${activeRide._id}/start`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ otp }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();

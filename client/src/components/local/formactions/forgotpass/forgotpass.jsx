@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./forget.module.css";
 import { toast } from "react-toastify";
-
+import { BASE_URL_AUTH } from "../../../../const/const";
 function ForgotPassword() {
   const navigate = useNavigate();
 
@@ -11,14 +11,11 @@ function ForgotPassword() {
     const email = e.target.email.value;
 
     try {
-      const response = await fetch(
-        "http://localhost:2525/auth/password/send-code",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        }
-      );
+      const response = await fetch(`${BASE_URL_AUTH}/password/send-code`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
 
       const data = await response.json();
       if (response.ok) {

@@ -27,11 +27,13 @@ L.Icon.Default.mergeOptions({
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
 
+import { BASE_URL_RIDE } from "../../../../const/const";
+
 const OngoingRides = () => {
   const [ongoingRides, setOngoingRides] = useState([]);
   const [loading, setLoading] = useState(true);
   const [verifying, setVerifying] = useState(false);
-  const [mapCenter, setMapCenter] = useState([30.3782, 76.7767]); 
+  const [mapCenter, setMapCenter] = useState([30.3782, 76.7767]);
 
   useEffect(() => {
     fetchOngoingRides();
@@ -42,7 +44,7 @@ const OngoingRides = () => {
   const fetchOngoingRides = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:2525/ride/find", {
+      const response = await fetch(`${BASE_URL_RIDE}/find`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -91,16 +93,13 @@ const OngoingRides = () => {
 
       console.log("Ending trip for ride:", ride._id);
 
-      const response = await fetch(
-        `http://localhost:2525/ride/${ride._id}/complete`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL_RIDE}/${ride._id}/complete`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       const responseData = await response.json();
       console.log("Complete ride response:", response.status, responseData);

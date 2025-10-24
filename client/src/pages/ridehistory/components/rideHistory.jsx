@@ -13,6 +13,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import styles from "./rideHistory.module.css";
+import { BASE_URL_RIDE } from "../../../const/const";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -214,9 +215,7 @@ const RideHistory = () => {
         return;
       }
 
-      const response = await fetch(
-        `http://localhost:2525/ride/find/user/${user.id}`
-      );
+      const response = await fetch(`${BASE_URL_RIDE}/find/user/${user.id}`);
 
       if (!response.ok) {
         throw new Error(`Failed to fetch rides: ${response.status}`);

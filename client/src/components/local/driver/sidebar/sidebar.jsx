@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./sidebar.module.css";
+import { BASE_URL_DRIVER } from "../../../../const/const";
 
 const Sidebar = () => {
   const [driverData, setDriverData] = useState(null);
@@ -67,15 +68,12 @@ const Sidebar = () => {
       const payload = JSON.parse(atob(token.split(".")[1]));
       const driverId = payload.id || payload.userId || payload._id;
 
-      const response = await fetch(
-        `http://localhost:2525/driver/find/${driverId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL_DRIVER}/find/${driverId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -96,7 +94,7 @@ const Sidebar = () => {
       const token = localStorage.getItem("token");
       if (!token || !driverData?._id) return;
 
-      await fetch(`http://localhost:2525/driver/status/${driverData._id}`, {
+      await fetch(`${BASE_URL_DRIVER}/status/${driverData._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

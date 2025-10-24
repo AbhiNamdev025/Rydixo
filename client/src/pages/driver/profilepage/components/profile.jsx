@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Star, Edit, Check, X, Car, Circle } from "lucide-react";
 import styles from "./Profile.module.css";
 import { FaStar } from "react-icons/fa";
+import { BASE_URL_DRIVER } from "../../../../const/const";
 
 const Profile = () => {
   const [driverData, setDriverData] = useState(null);
@@ -27,15 +28,12 @@ const Profile = () => {
       const payload = JSON.parse(atob(token.split(".")[1]));
       const driverId = payload.id || payload.userId || payload._id;
 
-      const response = await fetch(
-        `http://localhost:2525/driver/find/${driverId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL_DRIVER}/find/${driverId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -68,7 +66,7 @@ const Profile = () => {
       };
 
       const response = await fetch(
-        `http://localhost:2525/driver/update/${driverData._id}`,
+        `${BASE_URL_DRIVER}/update/${driverData._id}`,
         {
           method: "PUT",
           headers: {
@@ -111,7 +109,7 @@ const Profile = () => {
       const token = localStorage.getItem("token");
       if (!token || !driverData?._id) return;
 
-      await fetch(`http://localhost:2525/driver/status/${driverData._id}`, {
+      await fetch(`${BASE_URL_DRIVER}/status/${driverData._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

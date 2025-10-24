@@ -6,6 +6,9 @@ import { FaGoogle } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { BASE_URL_USER } from "../../const/const";
+import { BASE_URL_DRIVER } from "../../const/const";
+import { BASE_URL_AUTH } from "../../const/const";
 
 function SignUpForm() {
   const navigate = useNavigate();
@@ -36,8 +39,8 @@ function SignUpForm() {
 
     const apiUrl =
       formData.userType === "user"
-        ? "http://localhost:2525/user/add"
-        : "http://localhost:2525/driver/add";
+        ? `${BASE_URL_USER}/add`
+        : `${BASE_URL_DRIVER}/add`;
 
     try {
       const response = await fetch(apiUrl, {
@@ -88,7 +91,7 @@ function SignUpForm() {
   };
 
   const handleGoogleSignup = () => {
-    window.location.href = "http://localhost:2525/auth/google";
+    window.location.href = `${BASE_URL_AUTH}/google`;
   };
 
   return (
@@ -114,6 +117,8 @@ function SignUpForm() {
                 className={styles.input}
                 value={formData.firstName}
                 onChange={handleChange}
+                pattern="^[A-Za-z]{3,10}$"
+                title="First name should be 2-30 letters only"
                 required
               />
             </div>
@@ -126,6 +131,8 @@ function SignUpForm() {
                 className={styles.input}
                 value={formData.lastName}
                 onChange={handleChange}
+                pattern="^[A-Za-z]{3,10}$"
+                title="Last name should be 2-30 letters only"
               />
             </div>
           </div>
@@ -152,6 +159,8 @@ function SignUpForm() {
                 className={styles.input}
                 value={formData.phone}
                 onChange={handleChange}
+                pattern="^[6-9]\d{9}$"
+                title="Phone number should start with 6,7,8, or 9 and must be of 10 digits"
                 required
               />
             </div>
@@ -181,6 +190,8 @@ function SignUpForm() {
               value={formData.password}
               onChange={handleChange}
               required
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$"
+              title="Password must be at least 6 characters, include one uppercase letter, one lowercase letter, and one special character."
             />
           </div>
 
@@ -194,6 +205,8 @@ function SignUpForm() {
               value={formData.confirmPassword}
               onChange={handleChange}
               required
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$"
+              title="Password must be at least 6 characters, include one uppercase letter, one lowercase letter, and one special character."
             />
           </div>
 

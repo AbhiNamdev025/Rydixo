@@ -3,6 +3,7 @@ import Modal from "../modal/modal";
 import { MapPin, IndianRupee, User, Shield } from "lucide-react";
 import { toast } from "react-toastify";
 import styles from "./confirmotp.module.css";
+import { BASE_URL_RIDE } from "../../../const/const";
 
 const OTPVerificationModal = ({ isOpen, onClose, ride, onVerifyOTP }) => {
   const [enteredOTP, setEnteredOTP] = useState("");
@@ -35,16 +36,13 @@ const OTPVerificationModal = ({ isOpen, onClose, ride, onVerifyOTP }) => {
       setVerifying(true);
       const token = localStorage.getItem("token");
 
-      const response = await fetch(
-        `http://localhost:2525/ride/${ride._id}/complete`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL_RIDE}/${ride._id}/complete`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       const responseData = await response.json();
 

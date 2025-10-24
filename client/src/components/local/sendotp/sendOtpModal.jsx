@@ -30,7 +30,7 @@ const SendOTPModal = ({ isOpen, onClose, ride, onSendOTP }) => {
           </div>
           <div className={styles.userDetails}>
             <strong className={styles.userName}>
-              {ride.user?.name || "Nitin"}
+              {ride.user?.name || "NAMDEV"}
             </strong>
             <p className={styles.userLocation}>
               Pick Up:{" "}

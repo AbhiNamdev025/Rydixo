@@ -3,7 +3,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import { IndianRupee, Car, Clock, X } from "lucide-react";
 import styles from "./earning.module.css";
 import Image from "../../../../../public/assets/images/driver/earning.png";
-
+import { BASE_URL_DRIVER } from "../../../../const/const";
 const Earning = () => {
   const [driverData, setDriverData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,9 +32,7 @@ const Earning = () => {
           return;
         }
 
-        const res = await fetch(
-          `http://localhost:2525/driver/find/${driverId}`
-        );
+        const res = await fetch(`${BASE_URL_DRIVER}/find/${driverId}`);
         if (!res.ok) throw new Error("Failed to fetch driver data");
         const data = await res.json();
         setDriverData(data);
@@ -66,12 +64,12 @@ const Earning = () => {
     return <div className={styles.loading}>Loading earnings data...</div>;
   }
 
-  // Get amounts safely from arrays
+  // Get amount
   const totalBalance = driverData?.income?.monthly?.[0]?.amount || 0;
   const todayEarning = driverData?.income?.daily?.[0]?.amount || 0;
   const incentive = driverData?.incentive || 0;
 
-  // Chart data based on selected timeframe
+  // Chart data
   let chartData = [];
   if (timeFrame === "daily") {
     chartData =
@@ -152,11 +150,7 @@ const Earning = () => {
         <div className={styles.rightColumn}>
           <div className={styles.incentiveCard}>
             <div className={styles.cardImageContainer}>
-              <img
-                src={Image}
-                alt="Credit Card"
-                className={styles.cardImage}
-              />
+              <img src={Image} alt="Credit Card" className={styles.cardImage} />
             </div>
             <div className={styles.incentiveContent}>
               <h3>Incentive</h3>

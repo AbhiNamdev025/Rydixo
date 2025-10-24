@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://localhost:2525/ride";
+import { BASE_URL_RIDE } from "../../../const/const";
+
+const API_BASE_URL = `${BASE_URL_RIDE}`;
 
 export const bookingService = {
   // Create a new booking

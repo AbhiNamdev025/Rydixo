@@ -85,6 +85,7 @@
   font-family: inherit;
   font-size: 16px;
   box-sizing: border-box;
+  transition: border 0.2s ease-in-out;
 }
 
 .form input {
@@ -95,6 +96,11 @@
   height: 120px;
   resize: vertical;
   min-height: 100px;
+}
+.form input:focus,
+.form textarea:focus {
+  outline: none;
+  border: 2px solid black;
 }
 
 .form input::placeholder,

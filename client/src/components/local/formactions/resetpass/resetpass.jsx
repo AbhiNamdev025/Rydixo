@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./resetpass.module.css";
 import { toast } from "react-toastify";
-
+import { BASE_URL_AUTH } from "../../../../const/const";
 function ResetPassword() {
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ function ResetPassword() {
 
     try {
       const response = await fetch(
-        "http://localhost:2525/auth/password/reset-password",
+        `${BASE_URL_DRIVER}/password/reset-password`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
