@@ -8,7 +8,8 @@ function ChooseRider({ isOpen, onClose, onRiderSelected }) {
 
   const getCurrentUser = () => {
     try {
-      const userData = localStorage.getItem("user");
+      const userData =
+        localStorage.getItem("user") || sessionStorage.getItem("user");
       return userData ? JSON.parse(userData) : null;
     } catch (error) {
       console.error("Error getting user data:", error);
@@ -17,7 +18,9 @@ function ChooseRider({ isOpen, onClose, onRiderSelected }) {
   };
 
   const getUserName = () => {
-    return localStorage.getItem("userName");
+    return (
+      localStorage.getItem("userName") || sessionStorage.getItem("userName")
+    );
   };
 
   const user = getCurrentUser();
@@ -29,7 +32,7 @@ function ChooseRider({ isOpen, onClose, onRiderSelected }) {
       name: user?.name || getUserName() || "You",
       phone: user?.phone || "",
       icon: "👤",
-    }
+    },
   ]);
 
   const handleRemoveRider = (id) => {

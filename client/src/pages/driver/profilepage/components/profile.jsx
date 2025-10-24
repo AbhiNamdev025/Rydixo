@@ -19,7 +19,8 @@ const Profile = () => {
 
   const fetchDriverData = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
       if (!token) {
         setLoading(false);
         return;
@@ -56,7 +57,8 @@ const Profile = () => {
 
   const handleSave = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
       if (!token || !driverData?._id) return;
 
       setUpdateStatus({ type: "loading", message: "Updating profile..." });
@@ -106,7 +108,8 @@ const Profile = () => {
     setIsOnline(!isOnline);
 
     try {
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
       if (!token || !driverData?._id) return;
 
       await fetch(`${BASE_URL_DRIVER}/status/${driverData._id}`, {

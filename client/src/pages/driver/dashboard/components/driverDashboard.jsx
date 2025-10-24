@@ -62,7 +62,8 @@ const DriverDashboard = () => {
   const handleVerifyOTP = async (otp) => {
     if (!activeRide || !activeRide._id) return;
     try {
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
       const response = await fetch(`${BASE_URL_RIDE}/${activeRide._id}/start`, {
         method: "POST",
         headers: {
@@ -106,7 +107,8 @@ const DriverDashboard = () => {
 
   const fetchDriverData = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
       if (!token) throw new Error("No authentication token found");
       const payload = JSON.parse(atob(token.split(".")[1]));
       const driverId = payload.id || payload.userId || payload._id;
@@ -128,31 +130,10 @@ const DriverDashboard = () => {
     }
   };
 
-  // const fetchAllRides = async () => {
-  //   try {
-  //     const token = localStorage.getItem("token");
-  //     const response = await fetch("http://localhost:2525/ride/find", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-
-  //     if (!response.ok) throw new Error("Failed to fetch rides");
-  //     const data = await response.json();
-  //     setRides(data);
-  //   } catch (err) {
-  //     console.error("Error fetching rides:", err);
-  //   }
-  // };
-
   const fetchAllRides = async () => {
     try {
       const token = localStorage.getItem("token");
-      const userData = JSON.parse(localStorage.getItem("user"));
-      const driverId = userData?._id;
-
-      const response = await fetch(`${BASE_URL_RIDE}/find`, {
+      const response = await fetch("http://localhost:2525/ride/find", {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -161,20 +142,45 @@ const DriverDashboard = () => {
 
       if (!response.ok) throw new Error("Failed to fetch rides");
       const data = await response.json();
-
-      const filteredRides = data.filter(
-        (ride) => ride.driverId?._id === driverId || ride.driverId === driverId
-      );
-
-      setRides(filteredRides);
+      setRides(data);
     } catch (err) {
       console.error("Error fetching rides:", err);
     }
   };
 
+  // const fetchAllRides = async () => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const userData = JSON.parse(
+  //       localStorage.getItem("user") || sessionStorage.getItem("user")
+  //     );
+  //     const driverId = userData?._id;
+
+  //     const response = await fetch(`${BASE_URL_RIDE}/find`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+
+  //     if (!response.ok) throw new Error("Failed to fetch rides");
+  //     const data = await response.json();
+
+  //     const filteredRides = data.filter(
+  //       (ride) => ride.driverId?._id === driverId || ride.driverId === driverId
+  //     );
+
+  //     setRides(filteredRides);
+  //   } catch (err) {
+  //     console.error("Error fetching rides:", err);
+  //   }
+  // };
+
   const handleRideResponse = async (rideId, action) => {
     if (!rideId) throw new Error("Invalid ride ID");
-    const userData = JSON.parse(localStorage.getItem("user"));
+    const userData = JSON.parse(
+      localStorage.getItem("user") || sessionStorage.getItem("user")
+    );
     if (!userData || !userData._id) throw new Error("User not found");
     const otp = Math.floor(1000 + Math.random() * 9000);
 
@@ -216,7 +222,8 @@ const DriverDashboard = () => {
   const handleEndTrip = async (ride) => {
     try {
       setVerifying(true);
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
 
       console.log("Ending trip for ride:", ride._id, "Status:", ride.status);
 

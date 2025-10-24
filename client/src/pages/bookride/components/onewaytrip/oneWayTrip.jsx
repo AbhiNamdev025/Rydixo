@@ -2,11 +2,19 @@ import React, { useState } from "react";
 import Modal from "../../../../components/local/modal/modal";
 import styles from "./oneWayTrip.module.css";
 import { bookingService } from "../../services/bookingServices";
+import { toast } from "react-toastify";
 
-function OneWayTrip({ isOpen, onClose, initialData, onBookingSuccess }) {
+function OneWayTrip({
+  isOpen,
+  onClose,
+  initialData,
+  onBookingSuccess,
+  calculatedFare,
+}) {
   const getCurrentUser = () => {
     try {
-      const userData = localStorage.getItem("user");
+      const userData =
+        localStorage.getItem("user") || sessionStorage.getItem("user");
       return userData ? JSON.parse(userData) : null;
     } catch (error) {
       return null;
@@ -14,11 +22,13 @@ function OneWayTrip({ isOpen, onClose, initialData, onBookingSuccess }) {
   };
 
   const getUserName = () => {
-    return localStorage.getItem("userName");
+    return (
+      localStorage.getItem("userName") || sessionStorage.getItem("userName")
+    );
   };
 
   const isAuthenticated = () => {
-    return !!localStorage.getItem("token");
+    return !!localStorage.getItem("token") || sessionStorage.getItem("token");
   };
 
   const user = getCurrentUser();
@@ -43,23 +53,36 @@ function OneWayTrip({ isOpen, onClose, initialData, onBookingSuccess }) {
       name: "SUV",
       details: "Arriving in 6 min",
       description: "Affordable AC Cabs with free Wi-Fi",
-      price: "₹ 1049",
+      basePrice: 1049,
     },
     {
       id: 2,
       name: "MINI",
       details: "Indica Micro itz",
       description: "Affordable AC Cabs with free Wi-Fi",
-      price: "₹ 1049",
+      basePrice: 849,
     },
     {
       id: 3,
       name: "Sedan",
       details: "Desire,Etios,Sunny",
       description: "Affordable AC Cabs with free Wi-Fi",
-      price: "₹ 1231",
+      basePrice: 949,
     },
   ];
+
+  const getFinalFare = () => {
+    if (!calculatedFare) return 0;
+
+    const selectedVehicle = vehicles.find(
+      (v) => v.name === formData.vehicleType
+    );
+    if (!selectedVehicle) return calculatedFare.total;
+
+    //  vehicle type price
+    const vehicleMultiplier = selectedVehicle.basePrice / 1000;
+    return Math.round(calculatedFare.total * vehicleMultiplier);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,7 +94,7 @@ function OneWayTrip({ isOpen, onClose, initialData, onBookingSuccess }) {
 
   const handleSubmit = async () => {
     if (!isAuthenticated() || !user) {
-      alert("Please log in to book a ride");
+      toast.warn("Please log in to book a ride");
       return;
     }
 
@@ -83,12 +106,19 @@ function OneWayTrip({ isOpen, onClose, initialData, onBookingSuccess }) {
       !formData.riderName ||
       !formData.riderPhone
     ) {
-      alert("Please fill all required fields");
+      toast.warn("Please fill all required fields");
+      return;
+    }
+
+    if (!calculatedFare) {
+      toast.warn("Please wait while we calculate your fare");
       return;
     }
 
     setLoading(true);
     try {
+      const finalFare = getFinalFare();
+
       const bookingData = {
         userId: user._id,
         pickup: formData.pickup,
@@ -100,25 +130,25 @@ function OneWayTrip({ isOpen, onClose, initialData, onBookingSuccess }) {
         riderName: formData.riderName,
         riderPhone: formData.riderPhone,
         bookingType: "oneWay",
+        fare: finalFare,
+        distance: calculatedFare.distanceKm,
       };
 
       const result = await bookingService.createBooking(bookingData);
       console.log("Booking created:", result);
 
-      // CLOSE MODAL FIRST
       onClose();
 
-      // ADD TIMEOUT TO ENSURE MODAL IS CLOSED BEFORE REDIRECT
       setTimeout(() => {
         if (result.booking && result.booking._id) {
           console.log("Redirecting to booking status...");
           window.location.href = `/booking-status/${result.booking._id}`;
         } else {
-          alert("Booking created! Check your bookings.");
+          toast.success("Booking created! Check your bookings.");
         }
       }, 100);
     } catch (error) {
-      alert("Failed to create booking. Please try again.");
+      toast.warn("Failed to create booking. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -149,10 +179,41 @@ function OneWayTrip({ isOpen, onClose, initialData, onBookingSuccess }) {
     );
   }
 
+  const finalFare = getFinalFare();
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className={styles.container}>
         <h2 className={styles.title}>One Way Trip</h2>
+
+        {/* Fare Summary Section */}
+        {calculatedFare && (
+          <div className={styles.fareSummary}>
+            <h3>Fare Summary</h3>
+            <div className={styles.fareBreakdown}>
+              <div className={styles.fareRow}>
+                <span>Base Fare:</span>
+                <span>₹{calculatedFare.base}</span>
+              </div>
+              <div className={styles.fareRow}>
+                <span>Distance Fare ({calculatedFare.distanceKm} km):</span>
+                <span>₹{calculatedFare.distance}</span>
+              </div>
+              <div className={styles.fareRow}>
+                <span>Tax (18%):</span>
+                <span>₹{calculatedFare.tax}</span>
+              </div>
+              <div className={styles.fareRow}>
+                <span>Vehicle Type ({formData.vehicleType}):</span>
+                <span>+ ₹{finalFare - calculatedFare.total}</span>
+              </div>
+              <div className={styles.fareTotal}>
+                <span>Total Fare:</span>
+                <span>₹{finalFare}</span>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className={styles.form}>
           <div className={styles.formGroup}>
@@ -192,7 +253,7 @@ function OneWayTrip({ isOpen, onClose, initialData, onBookingSuccess }) {
                 required
               >
                 <option value="Sedan">Sedan</option>
-                <option value="Mini">Mini</option>
+                <option value="MINI">MINI</option>
                 <option value="SUV">SUV</option>
               </select>
             </div>
@@ -266,28 +327,34 @@ function OneWayTrip({ isOpen, onClose, initialData, onBookingSuccess }) {
 
           <div className={styles.vehicleList}>
             <h4>Select Vehicle Type</h4>
-            {vehicles.map((vehicle) => (
-              <div
-                key={vehicle.id}
-                className={`${styles.vehicleCard} ${
-                  formData.vehicleType === vehicle.name ? styles.selected : ""
-                }`}
-                onClick={() =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    vehicleType: vehicle.name,
-                  }))
-                }
-              >
-                <div className={styles.vehicleIcon}>🚗</div>
-                <div className={styles.vehicleInfo}>
-                  <h4 className={styles.vehicleName}>{vehicle.name}</h4>
-                  <p className={styles.vehicleDetails}>{vehicle.details}</p>
-                  <p className={styles.vehicleDesc}>{vehicle.description}</p>
+            {vehicles.map((vehicle) => {
+              const vehicleFare = calculatedFare
+                ? Math.round(calculatedFare.total * (vehicle.basePrice / 1000))
+                : vehicle.basePrice;
+
+              return (
+                <div
+                  key={vehicle.id}
+                  className={`${styles.vehicleCard} ${
+                    formData.vehicleType === vehicle.name ? styles.selected : ""
+                  }`}
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      vehicleType: vehicle.name,
+                    }))
+                  }
+                >
+                  <div className={styles.vehicleIcon}>🚗</div>
+                  <div className={styles.vehicleInfo}>
+                    <h4 className={styles.vehicleName}>{vehicle.name}</h4>
+                    <p className={styles.vehicleDetails}>{vehicle.details}</p>
+                    <p className={styles.vehicleDesc}>{vehicle.description}</p>
+                  </div>
+                  <div className={styles.vehiclePrice}>₹ {vehicleFare}</div>
                 </div>
-                <div className={styles.vehiclePrice}>{vehicle.price}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className={styles.buttonGroup}>
@@ -302,10 +369,10 @@ function OneWayTrip({ isOpen, onClose, initialData, onBookingSuccess }) {
             <button
               className={styles.continueBtn}
               onClick={handleSubmit}
-              disabled={loading}
+              disabled={loading || !calculatedFare}
               type="button"
             >
-              {loading ? "Booking..." : "Confirm Booking"}
+              {loading ? "Booking..." : `Confirm Booking - ₹${finalFare}`}
             </button>
           </div>
         </div>

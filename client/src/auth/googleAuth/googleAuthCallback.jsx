@@ -41,7 +41,7 @@ function GoogleAuthCallback() {
       };
       localStorage.setItem("user", JSON.stringify(userData));
 
-      console.log("Google Auth Success ", userData);
+      console.log("Google Auth Success ");
       navigate("/");
       toast.success("Login successful");
     } else {

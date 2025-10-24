@@ -180,7 +180,8 @@ const RideHistory = () => {
 
   const getCurrentUser = () => {
     try {
-      const userData = localStorage.getItem("user");
+      const userData =
+        localStorage.getItem("user") || sessionStorage.getItem("user");
       if (userData) {
         const user = JSON.parse(userData);
         return {
@@ -189,7 +190,8 @@ const RideHistory = () => {
           email: user.email,
         };
       }
-      const userId = localStorage.getItem("userId");
+      const userId =
+        localStorage.getItem("userId") || sessionStorage.getItem("userId");
       if (userId) {
         return { id: userId };
       }

@@ -22,6 +22,18 @@
   }
 }
 
+/* Fare */
+.distanceLabel {
+  color: #666;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.distanceInfo {
+  color: #666;
+  font-size: 14px;
+  margin-top: 5px;
+}
 /* Map Section */
 .mapSection {
   background: white;

@@ -34,7 +34,8 @@ const OTPVerificationModal = ({ isOpen, onClose, ride, onVerifyOTP }) => {
   const handleEndTrip = async () => {
     try {
       setVerifying(true);
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
 
       const response = await fetch(`${BASE_URL_RIDE}/${ride._id}/complete`, {
         method: "POST",

@@ -18,6 +18,7 @@ import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import styles from "./ridebooking.module.css";
 import { bookingService } from "../../services/bookingServices";
 import { BASE_URL_DRIVER } from "../../../../const/const";
+import { toast } from "react-toastify";
 
 const BookingRoutingMachine = ({ pickup, dropoff }) => {
   const map = useMap();
@@ -114,7 +115,7 @@ const RideBookingFlow = ({ bookingId }) => {
 
   const getCurrentUser = () => {
     try {
-      const u = localStorage.getItem("user");
+      const u = localStorage.getItem("user") || sessionStorage.getItem("user");
       return u ? JSON.parse(u) : null;
     } catch (e) {
       return null;
@@ -193,7 +194,8 @@ const RideBookingFlow = ({ bookingId }) => {
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
       if (!token) throw new Error("No authentication token found");
 
       const driverIdStr = String(driverId).trim();
@@ -249,7 +251,7 @@ const RideBookingFlow = ({ bookingId }) => {
       updateStageFromStatus(res.booking);
     } catch (e) {
       console.error(e);
-      alert("Failed to update booking");
+      toast.warn("Failed to update booking");
     } finally {
       setUpdatingStatus(false);
     }
@@ -396,7 +398,10 @@ const RideBookingFlow = ({ bookingId }) => {
                 <div className={styles.fareInfo}>
                   <Clock className={styles.icon} size={20} />
                   <span className={styles.fareLabel}>
-                    Estimated Fare: ₹ 499
+                    Estimated Fare: ₹ {bookingData?.fare || 499}
+                  </span>
+                  <span className={styles.distanceLabel}>
+                    Distance: {bookingData?.distance || 20} km
                   </span>
                   <span className={styles.fareType}>Cash</span>
                 </div>
@@ -448,7 +453,10 @@ const RideBookingFlow = ({ bookingId }) => {
                 <div className={styles.fareInfo}>
                   <Clock className={styles.icon} size={20} />
                   <span className={styles.fareLabel}>
-                    Estimated Fare: ₹ 264.51
+                    Estimated Fare: ₹ {bookingData?.fare || 264}
+                  </span>
+                  <span className={styles.distanceLabel}>
+                    Distance: {bookingData?.distance || 0} km
                   </span>
                   <span className={styles.fareType}>Cash</span>
                 </div>
@@ -484,6 +492,12 @@ const RideBookingFlow = ({ bookingId }) => {
                       <span className={styles.label}>Drop-off Location</span>
                       <span className={styles.value}>
                         {bookingData.dropoff}
+                      </span>
+                    </div>
+                    <div className={styles.infoRow}>
+                      <span className={styles.label}>Total Fare</span>
+                      <span className={styles.value}>
+                        ₹ {bookingData?.fare}
                       </span>
                     </div>
                   </div>
@@ -573,6 +587,12 @@ const RideBookingFlow = ({ bookingId }) => {
                         {bookingData.dropoff}
                       </span>
                     </div>
+                    <div className={styles.infoRow}>
+                      <span className={styles.label}>Total Fare</span>
+                      <span className={styles.value}>
+                        ₹ {bookingData?.fare}
+                      </span>
+                    </div>
                   </div>
                 )}
 
@@ -653,6 +673,16 @@ const RideBookingFlow = ({ bookingId }) => {
                   <p className={styles.successText}>
                     Thank you for choosing Rydixo
                   </p>
+
+                  {bookingData?.fare && (
+                    <div className={styles.fareSummary}>
+                      <h4>Total Fare Paid</h4>
+                      <div className={styles.fareAmount}>
+                        ₹ {bookingData.fare}
+                      </div>
+                    </div>
+                  )}
+
                   {driverData && (
                     <div className={styles.driverEta}>
                       <p>

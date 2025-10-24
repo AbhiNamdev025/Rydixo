@@ -1,3 +1,5 @@
+/* ongoing.module.css */
+
 .container {
   padding: 30px;
   margin: 0 auto;
@@ -252,10 +254,348 @@
 
 .endTripBtn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-@media (max-width: 480px) {
+.endTripBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Trip Complete Fullscreen */
+.tripCompleteScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f5f5f5;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.completeHeader {
+  background: white;
+  padding: 20px 30px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.completeHeader h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.completeContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.leftSection,
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.combinedPaymentSection {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  gap: 30px;
+}
+
+.paymentLeft {
+  flex: 1;
+  border-right: 1px solid #e5e7eb;
+  padding-right: 30px;
+}
+
+.paymentRight {
+  flex: 1;
+}
+
+.paymentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.paymentHeader h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.paidBadge {
+  background: #000;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.fareAmount {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 15px 0;
+}
+
+.fareBreakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.breakdownItem {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #666;
+}
+
+.paymentMethod h3 {
+  margin: 0 0 20px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.paymentOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.paymentOption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.paymentOption input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.paymentOption:has(input:checked) {
+  border-color: #000;
+  background: #f5f5f5;
+}
+
+.doneBtn {
+  width: 100%;
+  padding: 14px;
+  background: #000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.doneBtn:hover {
+  transform: translateY(-1px);
+}
+
+/* Map Card */
+.mapCard {
+  background: white;
+  border-radius: 16px;
+  padding: 15px;
+  height: 500px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.combinedImageSummary {
+  background: white;
+  border-radius: 16px;
+  padding: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+}
+
+.imageSection {
+  padding: 25px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.summarySection {
+  padding: 25px;
+}
+
+.illustrationCard {
+  border-radius: 12px;
+}
+
+.illustrationContent h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+
+.illustrationContent p {
+  font-size: 16px;
+  margin: 0 0 20px 0;
+  opacity: 0.9;
+}
+
+.successImage {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  margin: 0 auto;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.summaryCard {
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.summaryCard h2 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.summaryLocation {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.summaryLocation:last-child {
+  margin-bottom: 0;
+}
+
+.locationInfo {
+  flex: 1;
+}
+
+.locationInfo strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+
+.locationInfo p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.summaryStats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* Action Buttons */
+.actionButtons {
+  display: flex;
+  gap: 15px;
+}
+
+.dashboardBtn,
+.nextRideBtn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+}
+
+.dashboardBtn {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.dashboardBtn:hover {
+  background: #d1d5db;
+}
+
+.nextRideBtn {
+  background: #22c55e;
+  color: white;
+}
+
+.nextRideBtn:hover {
+  background: #16a34a;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .completeContent {
+    grid-template-columns: 1fr;
+  }
+
+  .combinedPaymentSection {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .paymentLeft {
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding-right: 0;
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-width: 768px) {
   .container {
     padding: 15px;
   }
@@ -293,10 +633,18 @@
     flex-direction: column;
     padding: 15px;
   }
+
+  .completeContent {
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .fareAmount {
+    font-size: 28px;
+  }
 }
 
-/* For very small screens */
-@media (max-width: 360px) {
+@media (max-width: 480px) {
   .userInfo {
     flex-direction: column;
     text-align: center;
@@ -315,5 +663,13 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+  }
+
+  .paymentOptions {
+    flex-direction: column;
+  }
+
+  .actionButtons {
+    flex-direction: column;
   }
 }

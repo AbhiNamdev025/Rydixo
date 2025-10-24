@@ -17,6 +17,7 @@ const createBooking = async (req, res) => {
       riderPhone,
       bookingType,
       fare,
+      distance,
     } = req.body;
     const booking = new Booking({
       userId,
@@ -32,6 +33,7 @@ const createBooking = async (req, res) => {
       riderPhone,
       bookingType,
       fare: fare || 0,
+      distance: distance || 0,
     });
     await booking.save();
     res.status(201).json({ message: "Booking created successfully", booking });

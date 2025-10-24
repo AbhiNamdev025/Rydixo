@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "../../../../../components/local/modal/modal";
 import { Car, IndianRupee, Clock, MapPin, User } from "lucide-react";
 import styles from "./rideModal.module.css";
+import { toast } from "react-toastify";
 
 const RideModal = ({
   isOpen,
@@ -55,7 +56,7 @@ const RideModal = ({
       onOpenSendOTP(ride);
     } catch (error) {
       console.error("Accept failed:", error);
-      alert("Failed to confirm ride.");
+      toast.warn("Failed to confirm ride.");
     } finally {
       setResponding(false);
     }

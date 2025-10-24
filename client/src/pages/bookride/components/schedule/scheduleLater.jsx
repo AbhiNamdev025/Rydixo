@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "../../../../components/local/modal/modal";
 import styles from "./schedule.module.css";
+import { toast } from "react-toastify";
 
 function ScheduleLater({ isOpen, onClose, onSchedule }) {
   const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ function ScheduleLater({ isOpen, onClose, onSchedule }) {
 
   const handleSchedule = async () => {
     if (!formData.date || !formData.time) {
-      alert("Please select both date and time");
+      toast.warn("Please select both date and time");
       return;
     }
 
@@ -32,7 +33,7 @@ function ScheduleLater({ isOpen, onClose, onSchedule }) {
       onClose();
     } catch (error) {
       console.error("Error scheduling ride:", error);
-      alert("Failed to schedule ride. Please try again.");
+      toast.warn("Failed to schedule ride. Please try again.");
     } finally {
       setLoading(false);
     }

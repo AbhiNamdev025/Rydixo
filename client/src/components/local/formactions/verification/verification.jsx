@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 import { BASE_URL_AUTH } from "../../../../const/const";
 function VerificationCode() {
   const navigate = useNavigate();
-  const email = localStorage.getItem("userEmail");
+  const email =
+    localStorage.getItem("userEmail") || sessionStorage.getItem("userEmail");
 
   const [codeInput, setCodeInput] = useState(["", "", "", ""]);
 

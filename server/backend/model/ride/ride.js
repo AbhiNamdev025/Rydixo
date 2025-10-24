@@ -61,6 +61,7 @@ const bookingSchema = new mongoose.Schema(
     },
     otp: { type: Number },
     fare: { type: Number, default: 199 },
+    distance: { type: Number, default: 20 },
     startTime: { type: Date },
     endTime: { type: Date },
     driverResponseTimeout: { type: Date },

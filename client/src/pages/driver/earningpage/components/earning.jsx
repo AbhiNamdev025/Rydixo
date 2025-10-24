@@ -12,10 +12,13 @@ const Earning = () => {
   useEffect(() => {
     const fetchDriverData = async () => {
       try {
-        let driverId = localStorage.getItem("driverId");
+        let driverId =
+          localStorage.getItem("driverId") ||
+          sessionStorage.getItem("driverId");
 
         if (!driverId) {
-          const userStr = localStorage.getItem("user");
+          const userStr =
+            localStorage.getItem("user") || sessionStorage.getItem("user");
           if (userStr) {
             try {
               const user = JSON.parse(userStr);

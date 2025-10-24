@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Car, IndianRupee, Clock, MapPin, User, X } from "lucide-react";
 import styles from "./driveride.module.css";
+import { toast } from "react-toastify";
 
 const DriverRide = ({
   isOpen,
@@ -52,7 +53,7 @@ const DriverRide = ({
       onOpenSendOTP();
     } catch (error) {
       console.error("Accept failed:", error);
-      alert("Failed to confirm ride.");
+      toast.warn("Failed to confirm ride.");
     } finally {
       setResponding(false);
     }

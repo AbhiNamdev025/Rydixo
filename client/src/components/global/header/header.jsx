@@ -35,7 +35,8 @@ function Header() {
     setIsMenuOpen(false);
   };
 
-  const userName = localStorage.getItem("userName");
+  const userName =
+    localStorage.getItem("userName") || sessionStorage.getItem("userName");
 
   return (
     <>

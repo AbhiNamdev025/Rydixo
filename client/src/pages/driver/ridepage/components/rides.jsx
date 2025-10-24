@@ -17,6 +17,7 @@ import DriverRide from "./driverRide";
 import SendOTPModal from "../../../../components/local/sendotp/sendOtpModal";
 import OTPVerificationModal from "../../../../components/local/confirmotp/confirmOtp";
 import { BASE_URL_RIDE } from "../../../../const/const";
+import { toast } from "react-toastify";
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -43,8 +44,11 @@ const Rides = () => {
 
   const fetchLatestRide = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const userData = JSON.parse(localStorage.getItem("user"));
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
+      const userData = JSON.parse(
+        localStorage.getItem("user") || sessionStorage.getItem("user")
+      );
 
       if (!token || !userData?._id) {
         setLoading(false);
@@ -129,8 +133,11 @@ const Rides = () => {
 
     setResponding(true);
     try {
-      const token = localStorage.getItem("token");
-      const userData = JSON.parse(localStorage.getItem("user"));
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
+      const userData = JSON.parse(
+        localStorage.getItem("user") || sessionStorage.getItem("user")
+      );
 
       const response = await fetch(`${BASE_URL_RIDE}/${ride._id}/respond`, {
         method: "POST",
@@ -159,7 +166,7 @@ const Rides = () => {
       }
     } catch (err) {
       console.error("Ride response failed:", err);
-      alert(err.message || "Failed to process ride request");
+      toast.warn(err.message || "Failed to process ride request");
     } finally {
       setResponding(false);
     }
@@ -171,14 +178,15 @@ const Rides = () => {
       openConfirmOTPModal();
     } catch (error) {
       console.error("Error sending OTP:", error);
-      alert("Failed to send OTP. Please try again.");
+      toast.warn("Failed to send OTP. Please try again.");
     }
   };
 
   const handleVerifyOTP = async (otp) => {
     if (!activeRide || !activeRide._id) return;
     try {
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
       const response = await fetch(`${BASE_URL_RIDE}/${activeRide._id}/start`, {
         method: "POST",
         headers: {
@@ -194,11 +202,11 @@ const Rides = () => {
       }
 
       closeConfirmOTPModal();
-      alert("Ride Started Successfully!");
+      toast.success("Ride Started Successfully!");
       await fetchLatestRide();
     } catch (error) {
       console.error("Error starting ride:", error);
-      alert(error.message || "Invalid OTP. Please try again.");
+      toast.warn(error.message || "Invalid OTP. Please try again.");
     }
   };
 

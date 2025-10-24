@@ -28,8 +28,10 @@ const passwordRoute = require("./backend/router/auth/passwordRoute");
 const rideBook = require("./backend/router/ride/rideBooking");
 
 //driver
-
 const driver = require("./backend/router/driver/driverRoute");
+
+//email
+const Email = require("./backend/router/email/emailRoutes");
 
 const app = express();
 
@@ -75,8 +77,10 @@ app.use("/auth/password", passwordRoute);
 app.use("/ride", rideBook);
 
 //driver
-
 app.use("/driver", driver);
+
+//email
+app.use("/", Email);
 
 //test
 app.get("/", (req, res) => {

@@ -29,10 +29,12 @@ const BookRide = () => {
   });
   const [selectedRider, setSelectedRider] = useState(null);
   const [tripType, setTripType] = useState("");
+  const [calculatedFare, setCalculatedFare] = useState(null);
 
   const getCurrentUser = () => {
     try {
-      const userData = localStorage.getItem("user");
+      const userData =
+        localStorage.getItem("user") || sessionStorage.getItem("user");
       return userData ? JSON.parse(userData) : null;
     } catch (error) {
       console.error("Error getting user data:", error);
@@ -41,7 +43,67 @@ const BookRide = () => {
   };
 
   const isAuthenticated = () => {
-    return !!localStorage.getItem("token");
+    return !!localStorage.getItem("token") || sessionStorage.getItem("token");
+  };
+
+  const calculateFare = (pickup, dropoff, tripType = "oneWay") => {
+    const getDistance = (pickup, dropoff) => {
+      const locations = {
+        chandigarh: 0,
+        panchkula: 15,
+        ambala: 45,
+        kalka: 25,
+        shimla: 115,
+        delhi: 250,
+        nahan: 65,
+        rajpura: 35,
+        yamunanagar: 85,
+        karnal: 125,
+        panipat: 160,
+        kurukshetra: 95,
+      };
+
+      const getCityDistance = (city) => {
+        const normalizedCity = city.toLowerCase();
+        for (const [key, distance] of Object.entries(locations)) {
+          if (normalizedCity.includes(key)) {
+            return distance;
+          }
+        }
+        return 20;
+      };
+
+      const pickupDistance = getCityDistance(pickup);
+      const dropoffDistance = getCityDistance(dropoff);
+
+      return Math.abs(dropoffDistance - pickupDistance) || 20;
+    };
+
+    const distance = getDistance(pickup, dropoff);
+
+    const baseFare = 50;
+    const distanceFare = distance * 8;
+    const tax = (baseFare + distanceFare) * 0.18;
+
+    let totalFare = baseFare + distanceFare + tax;
+
+    if (tripType === "roundTrip") {
+      totalFare *= 1.8;
+    } else if (activeTab === "outstation") {
+      totalFare *= 1.3;
+    } else if (activeTab === "rental") {
+      totalFare *= 2.0;
+    }
+
+    const fareDetails = {
+      total: Math.round(totalFare),
+      base: baseFare,
+      distance: Math.round(distanceFare),
+      tax: Math.round(tax),
+      distanceKm: distance,
+    };
+
+    return fareDetails;
   };
 
   const handleInputChange = (e) => {
@@ -50,6 +112,19 @@ const BookRide = () => {
       ...prev,
       [name]: value,
     }));
+
+    if (
+      (name === "pickup" || name === "dropoff") &&
+      formData.pickup &&
+      formData.dropoff
+    ) {
+      const fare = calculateFare(
+        name === "pickup" ? value : formData.pickup,
+        name === "dropoff" ? value : formData.dropoff,
+        tripType
+      );
+      setCalculatedFare(fare);
+    }
   };
 
   const handleSearch = (e) => {
@@ -69,6 +144,9 @@ const BookRide = () => {
       toast.warn("Please select One Way or Round Trip");
       return;
     }
+
+    const fare = calculateFare(formData.pickup, formData.dropoff, tripType);
+    setCalculatedFare(fare);
 
     setShowChooseRider(true);
   };
@@ -91,7 +169,6 @@ const BookRide = () => {
   };
 
   const handleRiderSelected = (riderData) => {
-    console.log("Rider selected:", riderData);
     setSelectedRider(riderData);
 
     if (activeTab === "outstation") {
@@ -106,7 +183,6 @@ const BookRide = () => {
   };
 
   const handleNewRiderAdded = (riderData) => {
-    console.log("New rider added:", riderData);
     setSelectedRider(riderData);
     setShowChooseRider(false);
 
@@ -131,9 +207,6 @@ const BookRide = () => {
   };
 
   const handleBookingSuccess = (bookingData) => {
-    console.log("Booking successful:", bookingData);
-
-    // Reset form
     setFormData({
       pickup: "",
       dropoff: "",
@@ -143,18 +216,23 @@ const BookRide = () => {
     setSelectedRider(null);
     setWhenValue("Pick Now");
     setTripType("");
+    setCalculatedFare(null);
 
-    // Show success message
     toast.success("Booking confirmed successfully!");
   };
 
-  //  outstation
   const handleOneWayClick = () => {
     if (!isAuthenticated()) {
       toast.error("Please log in to book a ride");
       return;
     }
     setTripType("oneWay");
+
+    if (formData.pickup && formData.dropoff) {
+      const fare = calculateFare(formData.pickup, formData.dropoff, "oneWay");
+      setCalculatedFare(fare);
+    }
+
     setShowChooseRider(true);
   };
 
@@ -164,6 +242,16 @@ const BookRide = () => {
       return;
     }
     setTripType("roundTrip");
+
+    if (formData.pickup && formData.dropoff) {
+      const fare = calculateFare(
+        formData.pickup,
+        formData.dropoff,
+        "roundTrip"
+      );
+      setCalculatedFare(fare);
+    }
+
     setShowChooseRider(true);
   };
 
@@ -190,7 +278,11 @@ const BookRide = () => {
                   className={`${styles.tab} ${
                     activeTab === tab ? styles.active : ""
                   }`}
-                  onClick={() => setActiveTab(tab)}
+                  onClick={() => {
+                    setActiveTab(tab);
+                    setTripType("");
+                    setCalculatedFare(null);
+                  }}
                 >
                   {tab === "daily"
                     ? "Daily Ride"
@@ -226,6 +318,19 @@ const BookRide = () => {
                   />
                 </div>
               </div>
+
+              {calculatedFare && (
+                <div className={styles.fareEstimate}>
+                  <div className={styles.fareBadge}>
+                    Estimated Fare: ₹{calculatedFare.total}
+                  </div>
+                  <div className={styles.fareBreakdown}>
+                    <span>Base: ₹{calculatedFare.base}</span>
+                    <span>Distance: ₹{calculatedFare.distance}</span>
+                    <span>Tax: ₹{calculatedFare.tax}</span>
+                  </div>
+                </div>
+              )}
 
               {activeTab === "outstation" && (
                 <>
@@ -349,7 +454,6 @@ const BookRide = () => {
             </form>
           </div>
 
-          {/* Info Section */}
           <div className={styles.infoSection}>
             <img src={Image} alt="Rydixo Ride" className={styles.image} />
             <h3>Why Choose Rydixo?</h3>
@@ -389,7 +493,6 @@ const BookRide = () => {
           </div>
         </div>
 
-        {/* FAQ Section */}
         <div className={styles.faqSection}>
           <h3>Frequently Asked Questions</h3>
           <details>
@@ -423,7 +526,6 @@ const BookRide = () => {
         </div>
       </div>
 
-      {/* Trip Type Modals */}
       <OneWayTrip
         isOpen={showOneWay}
         onClose={() => {
@@ -433,6 +535,7 @@ const BookRide = () => {
         initialData={formData}
         selectedRider={selectedRider}
         onBookingSuccess={handleBookingSuccess}
+        calculatedFare={calculatedFare}
       />
 
       <RoundTrip
@@ -444,9 +547,9 @@ const BookRide = () => {
         initialData={formData}
         selectedRider={selectedRider}
         onBookingSuccess={handleBookingSuccess}
+        calculatedFare={calculatedFare}
       />
 
-      {/* Other Modals */}
       <ChooseRider
         isOpen={showChooseRider}
         onClose={() => setShowChooseRider(false)}

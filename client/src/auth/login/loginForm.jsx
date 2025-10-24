@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./loginform.module.css";
-import { FaFacebook, FaTwitter } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -14,6 +14,8 @@ function LoginForm() {
     email: "",
     password: "",
   });
+  const [rememberMe, setRememberMe] = useState(false);
+
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -33,16 +35,20 @@ function LoginForm() {
 
       if (response.status === 200) {
         const token = userData.token;
-        localStorage.setItem("token", token);
 
-        localStorage.setItem("user", JSON.stringify(userData.user));
-        localStorage.setItem("userName", userData.user.name);
+        if (rememberMe) {
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(userData.user));
+          localStorage.setItem("userName", userData.user.name);
+        } else {
+          sessionStorage.setItem("token", token);
+          sessionStorage.setItem("user", JSON.stringify(userData.user));
+          sessionStorage.setItem("userName", userData.user.name);
+        }
 
         toast.success("Login successful");
-        console.log("Login successful:", userData);
 
         setTimeout(() => {
-          // Check user role
           if (userData.user.role === "driver") {
             navigate("/dashboard");
           } else {
@@ -61,6 +67,7 @@ function LoginForm() {
   const handleSignUpClick = () => {
     navigate("/signup");
   };
+
   const handleGoogleLogin = () => {
     window.location.href = `${BASE_URL_AUTH}/google`;
   };
@@ -88,6 +95,7 @@ function LoginForm() {
               value={formData.email}
               onChange={changeHandler}
               required
+              autoComplete="email"
             />
           </div>
 
@@ -101,12 +109,19 @@ function LoginForm() {
               value={formData.password}
               onChange={changeHandler}
               required
+              autoComplete="current-password"
             />
           </div>
 
           <div className={styles.actions}>
             <label htmlFor="remember" className={styles.action}>
-              <input type="checkbox" name="remember" id="remember" />
+              <input
+                type="checkbox"
+                name="remember"
+                id="remember"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
               Remember me
             </label>
             <a href="/forgotpassword" className={styles.action}>

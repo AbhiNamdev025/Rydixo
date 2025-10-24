@@ -19,7 +19,8 @@ function ResetPassword() {
     e.preventDefault();
     const newPassword = e.target.newPassword.value;
     const confirmPassword = e.target.confirmPassword.value;
-    const email = localStorage.getItem("userEmail");
+    const email =
+      localStorage.getItem("userEmail") || sessionStorage.getItem("userEmail");
 
     if (newPassword !== confirmPassword) {
       toast.error("Passwords do not match");

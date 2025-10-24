@@ -6,7 +6,8 @@ function ProtectedPath({ children }) {
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
 
     if (token) {
       setIsAuthenticated(true);

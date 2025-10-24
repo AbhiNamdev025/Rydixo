@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "../../../../components/local/modal/modal";
 import styles from "./newRider.module.css";
+import { toast } from "react-toastify";
 
 function NewRider({ isOpen, onClose, onRiderAdded }) {
   const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ function NewRider({ isOpen, onClose, onRiderAdded }) {
     e.preventDefault();
 
     if (!formData.firstName || !formData.lastName || !formData.phoneNumber) {
-      alert("Please fill all fields");
+      toast.warn("Please fill all fields");
       return;
     }
 
@@ -41,7 +42,7 @@ function NewRider({ isOpen, onClose, onRiderAdded }) {
       onClose();
     } catch (error) {
       console.error("Error adding rider:", error);
-      alert("Failed to add rider. Please try again.");
+      toast.warn("Failed to add rider. Please try again.");
     } finally {
       setLoading(false);
     }

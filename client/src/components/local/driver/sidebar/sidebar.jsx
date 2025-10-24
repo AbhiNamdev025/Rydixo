@@ -59,7 +59,8 @@ const Sidebar = () => {
 
   const fetchDriverData = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
       if (!token) {
         setLoading(false);
         return;
