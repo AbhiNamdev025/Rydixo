@@ -2,7 +2,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: #f8fafc;
   min-height: 100vh;
 }
@@ -16,9 +16,7 @@
 
 /* Header Section */
 .header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  display: block;
   margin-bottom: 32px;
 }
 
@@ -27,27 +25,25 @@
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  gap: 16px;
 }
 
 .avatar {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background: #000;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 36px;
   font-weight: bold;
   flex-shrink: 0;
 }
 
 .driverDetails {
-  flex: 1;
+  display: flex;
+  justify-content: space-between;
 }
 
 .name {
@@ -59,14 +55,24 @@
 
 .employeeInfo {
   display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.mainData {
+  display: flex;
+  gap: 20px;
+}
+.driverName {
+  display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
 .employeeType {
-  color: #666;
+  color: #000;
   font-size: 14px;
-  margin: 0;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
 }
 
 .status {
@@ -81,6 +87,8 @@
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
 }
 
 .agreementHeader {
@@ -116,10 +124,13 @@
 .agreementActions {
   display: flex;
   gap: 12px;
+  align-items: center;
 }
 
-.btnUpload, .btnDone {
-  padding: 8px 20px;
+.btnUpload,
+.btnDone {
+  padding: 8px 12px;
+  height: 40px;
   border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
@@ -151,6 +162,7 @@
 .content {
   display: flex;
   gap: 20px;
+  margin-bottom: 20px;
 }
 
 .section {
@@ -228,6 +240,104 @@
   font-size: 14px;
 }
 
+/* Vehicle section */
+
+.vehicleCard {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
+  margin-top: 20px;
+}
+
+.vehicleHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.vehicleHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vehicleIcon {
+  font-size: 18px;
+}
+
+.vehicleHeader h3 {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.activeBadge {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  background-color: #e8f5e9;
+  border-radius: 20px;
+  color: #2e7d32;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.activeIndicator {
+  color: #4caf50;
+  font-size: 10px;
+}
+
+.vehicleInfo {
+  display: flex;
+  gap: 24px;
+}
+.vehicleData {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.vehicleImage {
+  width: 100%;
+  height: 154px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.carImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vehicleInfo h4 {
+  margin: 0 0 8px 0;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.vehicleNumber {
+  margin: 4px 0;
+  color: #666;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.fuelType {
+  margin: 4px 0;
+  color: #999;
+  font-size: 13px;
+}
+
 /* Upload Sections */
 .uploadSection {
   margin-top: 24px;
@@ -272,6 +382,80 @@
   font-weight: bold;
 }
 
+/* toggle */
+.onlineStatus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.onlineStatus label {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.toggleSwitch {
+  position: relative;
+  width: 50px;
+  height: 25px;
+}
+
+.toggleSwitch input {
+  opacity: 0;
+  width: 50px;
+  height: 25px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 25px;
+  border-radius: 50px;
+  background: linear-gradient(to bottom, #b3b3b3, #e6e6e6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.slider::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.toggleSwitch input:checked + .slider {
+  background: linear-gradient(to bottom, #4cd964, #5de24e);
+}
+
+.toggleSwitch input:checked + .slider::after {
+  transform: translateX(25px);
+}
+
+.slider:hover {
+  background: linear-gradient(to bottom, #b3b3b3, #e6e6e6);
+}
+
+.slider:hover::after {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
 /* Edit Mode Styles */
 .sectionHeader {
   display: flex;
@@ -297,7 +481,9 @@
   color: #333;
 }
 
-.input, .select, .textarea {
+.input,
+.select,
+.textarea {
   padding: 8px 12px;
   border: 1px solid #d1d5db;
   border-radius: 6px;
@@ -306,7 +492,9 @@
   background: white;
 }
 
-.input:focus, .select:focus, .textarea:focus {
+.input:focus,
+.select:focus,
+.textarea:focus {
   outline: none;
   border-color: #3b82f6;
 }
@@ -333,7 +521,8 @@
   border-top: 1px solid #e5e5e5;
 }
 
-.btnSave, .btnCancel {
+.btnSave,
+.btnCancel {
   padding: 8px 16px;
   border-radius: 6px;
   font-size: 14px;
@@ -389,25 +578,23 @@
   .container {
     padding: 16px;
   }
-  
-  .header {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  .content {
+    flex-wrap: wrap;
   }
-  
+
   .infoGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .driverInfo {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .agreementActions {
     flex-direction: column;
   }
-  
+
   .vehicleInputs {
     flex-direction: column;
   }

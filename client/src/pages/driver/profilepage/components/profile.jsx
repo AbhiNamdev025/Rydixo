@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Upload, Edit, Check, X } from "lucide-react";
+import { Star, Edit, Check, X, Car, Circle } from "lucide-react";
 import styles from "./Profile.module.css";
+import { FaStar } from "react-icons/fa";
 
 const Profile = () => {
   const [driverData, setDriverData] = useState(null);
@@ -9,6 +10,7 @@ const Profile = () => {
   const [editSection, setEditSection] = useState(null);
   const [formData, setFormData] = useState({});
   const [updateStatus, setUpdateStatus] = useState({ type: "", message: "" });
+  const [isOnline, setIsOnline] = useState(true);
 
   useEffect(() => {
     fetchDriverData();
@@ -39,6 +41,7 @@ const Profile = () => {
         const data = await response.json();
         setDriverData(data);
         setFormData(data);
+        setIsOnline(data.status === "online");
       }
     } catch (err) {
       console.error("Error fetching driver data:", err);
@@ -100,6 +103,26 @@ const Profile = () => {
       });
     }
   };
+  const handleOnlineToggle = async () => {
+    const newStatus = isOnline ? "offline" : "online";
+    setIsOnline(!isOnline);
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token || !driverData?._id) return;
+
+      await fetch(`http://localhost:2525/driver/status/${driverData._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
 
   const handleCancel = () => {
     setIsEditing(false);
@@ -132,6 +155,7 @@ const Profile = () => {
       },
     }));
   };
+  //gpt hlp
 
   const formatDate = (dateString) => {
     if (!dateString) return "";
@@ -167,30 +191,58 @@ const Profile = () => {
       )}
 
       {/* Header Section */}
+
       <div className={styles.header}>
         <div className={styles.driverInfo}>
-          <div className={styles.avatar}>
-            {driverData?.name?.charAt(0).toUpperCase() || "D"}
-          </div>
           <div className={styles.driverDetails}>
-            <h1 className={styles.name}>{driverData?.name || "Driver"}</h1>
+            <div className={styles.mainData}>
+              <div>
+                <div className={styles.avatar}>
+                  {driverData?.name?.charAt(0).toUpperCase() || "D"}
+                </div>
+              </div>
+              <div className={styles.driverName}>
+                <h1 className={styles.name}>{driverData?.name || "Driver"}</h1>
+                <p className={styles.rating}>
+                  <FaStar color="#ffff00" />
+                  <FaStar color="#ffff00" />
+                  <FaStar color="#ffff00" />
+                  <FaStar color="#ffff00" />
+                  <FaStar color="#ccc" />
+                </p>
+              </div>
+            </div>
             <div className={styles.employeeInfo}>
-              <p className={styles.employeeType}>Full Time Employee</p>
-              <p className={styles.status}>
-                {driverData?.status === "online" ? "Online" : "Offline"}
-              </p>
+              <div className={styles.employeeType}>
+                <h2 className={styles.employeeType}> Employee Type </h2>
+                <p className={styles.employeeType}>Full Time Employee</p>
+              </div>
+              <div className={styles.onlineStatus}>
+                <label>{isOnline ? "Online" : "Offline"}</label>
+                <div className={styles.toggleSwitch}>
+                  <input
+                    type="checkbox"
+                    checked={isOnline}
+                    onChange={handleOnlineToggle}
+                  />
+                  <span className={styles.slider}></span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
+      </div>
+      <div className={styles.header}>
         <div className={styles.agreementSection}>
-          <div className={styles.agreementHeader}>
-            <h3 className={styles.agreementTitle}>Annual agreement update</h3>
-            <span className={styles.agreementBadge}>New</span>
+          <div>
+            <div className={styles.agreementHeader}>
+              <h3 className={styles.agreementTitle}>Annual agreement update</h3>
+              <span className={styles.agreementBadge}>New</span>
+            </div>
+            <p className={styles.agreementText}>
+              Don't forgot to send a new version of the agreement to be signed.
+            </p>
           </div>
-          <p className={styles.agreementText}>
-            Don't forgot to send a new version of the agreement to be signed.
-          </p>
           <div className={styles.agreementActions}>
             <button className={styles.btnUpload}>Upload</button>
             <button className={styles.btnDone}>Done</button>
@@ -600,6 +652,39 @@ const Profile = () => {
               )}
             </div>
           </div>
+
+          <section className={styles.vehicleCard}>
+            <div className={styles.vehicleHeader}>
+              <div className={styles.vehicleHeaderLeft}>
+                <Car size={18} className={styles.vehicleIcon} />
+                <h3>Vehicle</h3>
+              </div>
+              <span className={styles.activeBadge}>
+                Active
+                <Circle
+                  size={8}
+                  fill="#4caf50"
+                  className={styles.activeIndicator}
+                />
+              </span>
+            </div>
+            <div className={styles.vehicleInfo}>
+              <div className={styles.vehicleData}>
+                <h4>{driverData?.vehicle_details?.vehicle_name || "Etios"}</h4>
+                <p className={styles.vehicleNumber}>
+                  {driverData?.vehicle_details?.vehicle_number || "HR 09-2026"}
+                </p>
+                <p className={styles.fuelType}>Petrol</p>
+              </div>
+              <div className={styles.vehicleImage}>
+                <img
+                  src="https://www.group1mahindra.co.za/wp-content/uploads/mahindra-scorpio-n-review.jpg"
+                  className={styles.carImage}
+                  alt="Vehicle"
+                />
+              </div>
+            </div>
+          </section>
 
           {isEditing && editSection === "vehicle_details" && (
             <div className={styles.editActions}>

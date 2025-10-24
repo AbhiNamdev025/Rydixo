@@ -8,6 +8,7 @@ import {
   User,
   Menu,
   X,
+  LogOut,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./sidebar.module.css";
@@ -21,6 +22,11 @@ const Sidebar = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   useEffect(() => {
     if (driverData?.status) {
@@ -210,6 +216,10 @@ const Sidebar = () => {
           >
             <User size={20} className={styles.navIcon} />
             <span>Profile</span>
+          </button>
+          <button onClick={handleLogout} className={styles.navItem}>
+            <LogOut className={styles.navIcon} />
+            <span>Logout</span>
           </button>
         </nav>
       </aside>

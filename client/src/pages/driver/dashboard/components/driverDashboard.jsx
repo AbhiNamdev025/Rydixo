@@ -2,18 +2,14 @@ import React, { useState, useEffect } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import {
   BarChart3,
-  Wallet,
-  Settings,
-  History,
   Car,
-  Star,
   Circle,
-  ArrowRight,
   User,
   CreditCard,
   Wrench,
   FileText,
 } from "lucide-react";
+import { FaStar } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./home.module.css";
@@ -137,9 +133,30 @@ const DriverDashboard = () => {
     }
   };
 
+  // const fetchAllRides = async () => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const response = await fetch("http://localhost:2525/ride/find", {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+
+  //     if (!response.ok) throw new Error("Failed to fetch rides");
+  //     const data = await response.json();
+  //     setRides(data);
+  //   } catch (err) {
+  //     console.error("Error fetching rides:", err);
+  //   }
+  // };
+
   const fetchAllRides = async () => {
     try {
       const token = localStorage.getItem("token");
+      const userData = JSON.parse(localStorage.getItem("user"));
+      const driverId = userData?._id;
+
       const response = await fetch("http://localhost:2525/ride/find", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -149,7 +166,12 @@ const DriverDashboard = () => {
 
       if (!response.ok) throw new Error("Failed to fetch rides");
       const data = await response.json();
-      setRides(data);
+
+      const filteredRides = data.filter(
+        (ride) => ride.driverId?._id === driverId || ride.driverId === driverId
+      );
+
+      setRides(filteredRides);
     } catch (err) {
       console.error("Error fetching rides:", err);
     }
@@ -343,10 +365,11 @@ const DriverDashboard = () => {
             <h3>My Drive Rating</h3>
             <div className={styles.ratingScore}>4.0</div>
             <div className={styles.stars}>
-              <Star size={16} color="#facc15" />
-              <Star size={16} color="#facc15" />
-              <Star size={16} color="#facc15" />
-              <Star size={16} color="#facc15" />
+              <FaStar color="#ffff00" />
+              <FaStar color="#ffff00" />
+              <FaStar color="#ffff00" />
+              <FaStar color="#ffff00" />
+              <FaStar color="#ccc" />
             </div>
             <p className={styles.ratingMessage}>Great Drive, Keep it up!</p>
           </div>
