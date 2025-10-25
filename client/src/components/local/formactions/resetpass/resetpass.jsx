@@ -28,14 +28,11 @@ function ResetPassword() {
     }
 
     try {
-      const response = await fetch(
-        `${BASE_URL_DRIVER}/password/reset-password`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, newPassword }),
-        }
-      );
+      const response = await fetch(`${BASE_URL_AUTH}/password/reset-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, newPassword }),
+      });
 
       const data = await response.json();
       if (response.ok) {
@@ -71,6 +68,7 @@ function ResetPassword() {
               placeholder="New Password"
               className={styles.input}
               required
+              autoComplete="password"
             />
           </div>
 
@@ -82,6 +80,7 @@ function ResetPassword() {
               placeholder="Confirm Password"
               className={styles.input}
               required
+              autoComplete="password"
             />
           </div>
 

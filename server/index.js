@@ -7,7 +7,7 @@ const session = require("express-session");
 const port = process.env.PORT;
 const mongourl = process.env.MongoURL;
 
-//google and fb auth
+//google auth
 const passport = require("./backend/controller/auth/googleAuth");
 const authRoutes = require("./backend/router/auth/googleRoute");
 //User
