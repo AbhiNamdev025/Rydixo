@@ -12,18 +12,6 @@ const sendContactEmail = async (req, res) => {
       },
     });
 
-    // const mailOptions = {
-    //   from: email,
-    //   to: process.env.EMAIL_USER,
-    //   subject: `Contact form submission from ${firstName} ${lastName}`,
-    //   text: `
-    //     Name: ${firstName} ${lastName}
-    //     Phone: ${number}
-    //     Email: ${email}
-    //     Message: ${message}
-    //   `,
-    // };
-
     const mailOptions = {
       from: email,
       to: process.env.EMAIL_USER,
